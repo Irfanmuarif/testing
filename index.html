@@ -1,150 +1,185 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Admin e-Murai</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard e-Murai</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: sans-serif; padding: 20px; }
-        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f4f4f4; }
-        .loading { color: blue; font-style: italic; }
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        .sidebar-item.active { background-color: #3b82f6; color: white; }
+        .table-container { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border-radius: 8px; overflow: hidden; }
+        [contenteditable]:focus { outline: 2px solid #3b82f6; background: #fff; padding: 2px; border-radius: 4px; }
+        .loader { border-top-color: #3b82f6; animation: spinner 1.5s linear infinite; }
+        @keyframes spinner { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
-<body>
+<body class="flex min-h-screen">
 
-<h2>Admin Panel e-Murai</h2>
+    <aside class="w-64 bg-white border-r border-gray-200 hidden md:flex flex-col">
+        <div class="p-6">
+            <h1 class="text-2xl font-bold text-blue-600">e-Murai</h1>
+            <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mt-1">Admin Panel</p>
+        </div>
+        <nav class="flex-1 px-4 space-y-2 mt-4">
+            <button onclick="changeSheet(this, 'PENGUMUMAN')" class="sidebar-item active w-full text-left px-4 py-3 rounded-lg flex items-center transition">
+                <span>📢 Pengumuman</span>
+            </button>
+            <button onclick="changeSheet(this, 'IURAN BULANAN')" class="sidebar-item w-full text-left px-4 py-3 rounded-lg flex items-center text-gray-600 hover:bg-gray-100 transition">
+                <span>💰 Iuran Bulanan</span>
+            </button>
+            <button onclick="changeSheet(this, 'UANG KAS')" class="sidebar-item w-full text-left px-4 py-3 rounded-lg flex items-center text-gray-600 hover:bg-gray-100 transition">
+                <span>🏦 Uang Kas</span>
+            </button>
+            <button onclick="changeSheet(this, 'JADWAL RONDA')" class="sidebar-item w-full text-left px-4 py-3 rounded-lg flex items-center text-gray-600 hover:bg-gray-100 transition">
+                <span>👮 Jadwal Ronda</span>
+            </button>
+        </nav>
+    </aside>
 
-<select id="sheet">
-    <option value="PENGUMUMAN">PENGUMUMAN</option>
-    <option value="IURAN BULANAN">IURAN BULANAN</option>
-    <option value="UANG KAS">UANG KAS</option>
-    <option value="JADWAL RONDA">JADWAL RONDA</option>
-</select>
-<button onclick="loadData()">Load Data</button>
-<span id="status"></span>
+    <main class="flex-1 flex flex-col">
+        <header class="bg-white border-b border-gray-200 h-16 flex items-center justify-between px-8">
+            <h2 id="current-sheet-title" class="text-lg font-semibold text-gray-800">PENGUMUMAN</h2>
+            <div class="flex items-center space-x-4">
+                <span id="status-badge" class="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full hidden">Tersimpan</span>
+                <div id="main-loader" class="loader w-5 h-5 border-2 border-gray-200 rounded-full hidden"></div>
+            </div>
+        </header>
 
-<table>
-    <thead id="thead"></thead>
-    <tbody id="tbody"></tbody>
-</table>
+        <div class="p-8 flex-1 overflow-auto">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800">Kelola Data</h3>
+                    <p class="text-sm text-gray-500">Klik pada sel tabel untuk mengedit data secara langsung.</p>
+                </div>
+                <button onclick="addRow()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-medium transition flex items-center shadow-lg shadow-blue-200">
+                    <span class="mr-2">+</span> Tambah Baris
+                </button>
+            </div>
 
-<br>
-<button onclick="addRow()">+ Tambah Baris Baru</button>
+            <div class="table-container bg-white">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead id="thead" class="bg-gray-50">
+                        </thead>
+                    <tbody id="tbody" class="bg-white divide-y divide-gray-200">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
 
-<script>
-// Pastikan URL API ini adalah URL 'Web App' yang paling baru
-const API = "https://script.google.com/macros/s/AKfycbxULcQjQAV-Lo6QiJwuAcpNL-vJYOtZsyy6JatS7ztrZUEqK5LFvUHUJW0vyNbOmHbV/exec";
+    <script>
+        const API = "https://script.google.com/macros/s/AKfycbyxvcSvrKp1LYuBisVdyhNjlO5RmHfA16KreXE37MMPqc4_LYbhDsVPLPaUr4IrlXZX/exec";
+        let currentSheet = "PENGUMUMAN";
 
-async function loadData() {
-    const sheet = document.getElementById("sheet").value;
-    const status = document.getElementById("status");
-    const thead = document.getElementById("thead");
-    const tbody = document.getElementById("tbody");
+        // Load data saat pertama kali buka
+        window.onload = () => loadData();
 
-    status.innerText = " Memuat data...";
-    thead.innerHTML = "";
-    tbody.innerHTML = "";
-
-    try {
-        // Menggunakan mode 'cors' dan redirect 'follow'
-        const res = await fetch(`${API}?sheet=${encodeURIComponent(sheet)}`, {
-            method: "GET",
-            redirect: "follow"
-        });
-        
-        const data = await res.json();
-
-        if (data.error) {
-            alert("Error: " + data.error);
-            return;
+        function changeSheet(btn, sheetName) {
+            // Update UI Active State
+            document.querySelectorAll('.sidebar-item').forEach(el => {
+                el.classList.remove('active', 'bg-blue-600', 'text-white');
+                el.classList.add('text-gray-600');
+            });
+            btn.classList.add('active', 'bg-blue-600', 'text-white');
+            btn.classList.remove('text-gray-600');
+            
+            currentSheet = sheetName;
+            document.getElementById('current-sheet-title').innerText = sheetName;
+            loadData();
         }
 
-        // Render Header
-        let headerHtml = "<tr>";
-        data.headers.forEach(h => {
-            headerHtml += `<th>${h}</th>`;
-        });
-        headerHtml += "<th>Aksi</th></tr>";
-        thead.innerHTML = headerHtml;
+        async function loadData() {
+            toggleLoader(true);
+            try {
+                const res = await fetch(`${API}?sheet=${encodeURIComponent(currentSheet)}`, {
+                    method: "GET",
+                    redirect: "follow"
+                });
+                const data = await res.json();
 
-        // Render Baris
-        tbody.innerHTML = data.rows.map(r => `
-            <tr>
-                ${data.headers.map(h => 
-                    `<td contenteditable="true" onblur="handleSave(event, '${sheet}', ${r._row})">${r[h] || ""}</td>`
-                ).join("")}
-                <td><button onclick="hapus('${sheet}', ${r._row})">Hapus</button></td>
-            </tr>
-        `).join("");
+                // Render Headers
+                const thead = document.getElementById("thead");
+                thead.innerHTML = `<tr>${data.headers.map(h => `<th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">${h}</th>`).join("")}<th class="px-6 py-3 text-right">Aksi</th></tr>`;
 
-        status.innerText = " Selesai.";
-    } catch (err) {
-        console.error(err);
-        status.innerText = " Gagal memuat data.";
-    }
-}
+                // Render Rows
+                const tbody = document.getElementById("tbody");
+                tbody.innerHTML = data.rows.map(r => `
+                    <tr class="hover:bg-gray-50 transition">
+                        ${data.headers.map(h => `
+                            <td class="px-6 py-4 text-sm text-gray-700 whitespace-nowrap" 
+                                contenteditable="true" 
+                                onblur="handleAutoSave(event, ${r._row})">${r[h] || ""}</td>
+                        `).join("")}
+                        <td class="px-6 py-4 text-right text-sm font-medium">
+                            <button onclick="hapus(${r._row})" class="text-red-600 hover:text-red-900 bg-red-50 px-3 py-1 rounded">Hapus</button>
+                        </td>
+                    </tr>
+                `).join("");
 
-// Fungsi pembantu agar event target terbaca benar
-async function handleSave(event, sheet, row) {
-    const cells = [...event.target.parentElement.children]
-        .slice(0, -1)
-        .map(td => td.innerText);
-    
-    await save(sheet, row, cells);
-}
+            } catch (err) {
+                alert("Gagal memuat data. Cek koneksi atau deployment.");
+            }
+            toggleLoader(false);
+        }
 
-async function save(sheet, row, values) {
-    document.getElementById("status").innerText = " Menyimpan...";
-    await fetch(API, {
-        method: "POST",
-        mode: "no-cors", // Penting untuk Apps Script POST
-        body: JSON.stringify({
-            action: "update",
-            sheet,
-            row,
-            values
-        })
-    });
-    document.getElementById("status").innerText = " Tersimpan.";
-}
+        async function handleAutoSave(event, row) {
+            const cells = [...event.target.parentElement.children]
+                .slice(0, -1)
+                .map(td => td.innerText);
+            
+            showStatus("Menyimpan...");
+            await fetch(API, {
+                method: "POST",
+                mode: "no-cors",
+                body: JSON.stringify({
+                    action: "update",
+                    sheet: currentSheet,
+                    row,
+                    values: cells
+                })
+            });
+            showStatus("Tersimpan", true);
+        }
 
-async function hapus(sheet, row) {
-    if (!confirm("Hapus baris ini?")) return;
-    document.getElementById("status").innerText = " Menghapus...";
+        async function hapus(row) {
+            if (!confirm("Hapus baris ini secara permanen?")) return;
+            toggleLoader(true);
+            await fetch(API, {
+                method: "POST",
+                mode: "no-cors",
+                body: JSON.stringify({ action: "delete", sheet: currentSheet, row })
+            });
+            await loadData();
+        }
 
-    await fetch(API, {
-        method: "POST",
-        mode: "no-cors",
-        body: JSON.stringify({
-            action: "delete",
-            sheet,
-            row
-        })
-    });
-    loadData();
-}
+        async function addRow() {
+            const headersCount = document.querySelectorAll("#thead th").length - 1;
+            if (headersCount <= 0) return;
 
-async function addRow() {
-    const sheet = document.getElementById("sheet").value;
-    const headersCount = document.querySelectorAll("#thead th").length - 1;
-    if (headersCount <= 0) return alert("Pilih sheet dan klik Load dulu");
+            toggleLoader(true);
+            const values = Array(headersCount).fill("");
+            await fetch(API, {
+                method: "POST",
+                mode: "no-cors",
+                body: JSON.stringify({ action: "create", sheet: currentSheet, values })
+            });
+            await loadData();
+        }
 
-    const values = Array(headersCount).fill("");
-    document.getElementById("status").innerText = " Menambah baris...";
+        function toggleLoader(show) {
+            document.getElementById('main-loader').classList.toggle('hidden', !show);
+        }
 
-    await fetch(API, {
-        method: "POST",
-        mode: "no-cors",
-        body: JSON.stringify({
-            action: "create",
-            sheet,
-            values
-        })
-    });
-    loadData();
-}
-</script>
-
+        function showStatus(text, autoHide = false) {
+            const badge = document.getElementById('status-badge');
+            badge.innerText = text;
+            badge.classList.remove('hidden');
+            if (autoHide) {
+                setTimeout(() => badge.classList.add('hidden'), 3000);
+            }
+        }
+    </script>
 </body>
 </html>
