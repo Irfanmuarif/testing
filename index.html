@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>CRUD Spreadsheet</title>
+</head>
+<body>
+
+<h2>Input Data</h2>
+<form id="form">
+  <input id="nama" placeholder="Nama" required>
+  <input id="bulan" placeholder="Bulan" required>
+  <select id="status">
+    <option>LUNAS</option>
+    <option>BELUM</option>
+  </select>
+  <button>Simpan</button>
+</form>
+
+<h2>Data</h2>
+<table border="1">
+  <thead>
+    <tr>
+      <th>ID</th><th>Nama</th><th>Bulan</th><th>Status</th><th>Aksi</th>
+    </tr>
+  </thead>
+  <tbody id="data"></tbody>
+</table>
+
+<script>
+const API = "URL_WEB_APP_GAS";
+
+/* READ */
+async function loadData() {
+  const res = await fetch(API);
+  const data = await res.json();
+
+  document.getElementById("data").innerHTML = data.map(d => `
+    <tr>
+      <td>${d.id}</td>
+      <td>${d.nama}</td>
+      <td>${d.bulan}</td>
+      <td>${d.status}</td>
+      <td>
+        <button onclick="hapus(${d.id})">Hapus</button>
+        <button onclick="edit(${d.id},'${d.nama}','${d.bulan}','${d.status}')">Edit</button>
+      </td>
+    </tr>
+  `).join("");
+}
+
+/* CREATE */
+document.getElementById("form").onsubmit = async e => {
+  e.preventDefault();
+
+  await fetch(API, {
+    method: "POST",
+    body: JSON.stringify({
+      action: "create",
+      nama: nama.value,
+      bulan: bulan.value,
+      status: status.value
+    })
+  });
+
+  e.target.reset();
+  loadData();
+};
+
+/* UPDATE */
+async function edit(id, nama, bulan, status) {
+  const n = prompt("Nama", nama);
+  const b = prompt("Bulan", bulan);
+  const s = prompt("Status", status);
+
+  await fetch(API, {
+    method: "POST",
+    body: JSON.stringify({
+      action: "update",
+      id, nama: n, bulan: b, status: s
+    })
+  });
+
+  loadData();
+}
+
+/* DELETE */
+async function hapus(id) {
+  if (!confirm("Hapus data?")) return;
+
+  await fetch(API, {
+    method: "POST",
+    body: JSON.stringify({
+      action: "delete",
+      id
+    })
+  });
+
+  loadData();
+}
+
+loadData();
+</script>
+
+</body>
+</html>
