@@ -1,96 +1,148 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Admin e-Murai</title>
+    <meta charset="UTF-8">
+    <title>Admin e-Murai</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .loading { color: blue; font-style: italic; }
+    </style>
 </head>
 <body>
 
 <h2>Admin Panel e-Murai</h2>
 
 <select id="sheet">
-  <option>PENGUMUMAN</option>
-  <option>IURAN BULANAN</option>
-  <option>UANG KAS</option>
-  <option>JADWAL RONDA</option>
+    <option value="PENGUMUMAN">PENGUMUMAN</option>
+    <option value="IURAN BULANAN">IURAN BULANAN</option>
+    <option value="UANG KAS">UANG KAS</option>
+    <option value="JADWAL RONDA">JADWAL RONDA</option>
 </select>
-<button onclick="loadData()">Load</button>
+<button onclick="loadData()">Load Data</button>
+<span id="status"></span>
 
-<table border="1">
-  <thead id="thead"></thead>
-  <tbody id="tbody"></tbody>
+<table>
+    <thead id="thead"></thead>
+    <tbody id="tbody"></tbody>
 </table>
 
-<button onclick="addRow()">Tambah Baris</button>
+<br>
+<button onclick="addRow()">+ Tambah Baris Baru</button>
 
 <script>
+// Pastikan URL API ini adalah URL 'Web App' yang paling baru
 const API = "https://script.google.com/macros/s/AKfycbyxvcSvrKp1LYuBisVdyhNjlO5RmHfA16KreXE37MMPqc4_LYbhDsVPLPaUr4IrlXZX/exec";
 
 async function loadData() {
-  const sheet = document.getElementById("sheet").value;
-  const res = await fetch(`${API}?sheet=${sheet}`);
-  const data = await res.json();
+    const sheet = document.getElementById("sheet").value;
+    const status = document.getElementById("status");
+    const thead = document.getElementById("thead");
+    const tbody = document.getElementById("tbody");
 
-  document.getElementById("thead").innerHTML =
-    `<tr>${data.headers.map(h => `<th>${h}</th>`).join("")}<th>Aksi</th></tr>`;
+    status.innerText = " Memuat data...";
+    thead.innerHTML = "";
+    tbody.innerHTML = "";
 
-  document.getElementById("tbody").innerHTML =
-    data.rows.map(r => `
-      <tr>
-        ${data.headers.map(h =>
-          `<td contenteditable onblur="save('${sheet}',${r._row})">${r[h] ?? ""}</td>`
-        ).join("")}
-        <td><button onclick="hapus('${sheet}',${r._row})">Hapus</button></td>
-      </tr>
-    `).join("");
+    try {
+        // Menggunakan mode 'cors' dan redirect 'follow'
+        const res = await fetch(`${API}?sheet=${encodeURIComponent(sheet)}`, {
+            method: "GET",
+            redirect: "follow"
+        });
+        
+        const data = await res.json();
+
+        if (data.error) {
+            alert("Error: " + data.error);
+            return;
+        }
+
+        // Render Header
+        let headerHtml = "<tr>";
+        data.headers.forEach(h => {
+            headerHtml += `<th>${h}</th>`;
+        });
+        headerHtml += "<th>Aksi</th></tr>";
+        thead.innerHTML = headerHtml;
+
+        // Render Baris
+        tbody.innerHTML = data.rows.map(r => `
+            <tr>
+                ${data.headers.map(h => 
+                    `<td contenteditable="true" onblur="handleSave(event, '${sheet}', ${r._row})">${r[h] || ""}</td>`
+                ).join("")}
+                <td><button onclick="hapus('${sheet}', ${r._row})">Hapus</button></td>
+            </tr>
+        `).join("");
+
+        status.innerText = " Selesai.";
+    } catch (err) {
+        console.error(err);
+        status.innerText = " Gagal memuat data.";
+    }
 }
 
-async function save(sheet, row) {
-  const cells = [...event.target.parentElement.children]
-    .slice(0, -1)
-    .map(td => td.innerText);
+// Fungsi pembantu agar event target terbaca benar
+async function handleSave(event, sheet, row) {
+    const cells = [...event.target.parentElement.children]
+        .slice(0, -1)
+        .map(td => td.innerText);
+    
+    await save(sheet, row, cells);
+}
 
-  await fetch(API, {
-    method: "POST",
-    body: JSON.stringify({
-      action: "update",
-      sheet,
-      row,
-      values: cells
-    })
-  });
+async function save(sheet, row, values) {
+    document.getElementById("status").innerText = " Menyimpan...";
+    await fetch(API, {
+        method: "POST",
+        mode: "no-cors", // Penting untuk Apps Script POST
+        body: JSON.stringify({
+            action: "update",
+            sheet,
+            row,
+            values
+        })
+    });
+    document.getElementById("status").innerText = " Tersimpan.";
 }
 
 async function hapus(sheet, row) {
-  if (!confirm("Hapus baris ini?")) return;
+    if (!confirm("Hapus baris ini?")) return;
+    document.getElementById("status").innerText = " Menghapus...";
 
-  await fetch(API, {
-    method: "POST",
-    body: JSON.stringify({
-      action: "delete",
-      sheet,
-      row
-    })
-  });
-
-  loadData();
+    await fetch(API, {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify({
+            action: "delete",
+            sheet,
+            row
+        })
+    });
+    loadData();
 }
 
 async function addRow() {
-  const sheet = document.getElementById("sheet").value;
-  const count = document.querySelectorAll("#thead th").length - 1;
-  const values = Array(count).fill("");
+    const sheet = document.getElementById("sheet").value;
+    const headersCount = document.querySelectorAll("#thead th").length - 1;
+    if (headersCount <= 0) return alert("Pilih sheet dan klik Load dulu");
 
-  await fetch(API, {
-    method: "POST",
-    body: JSON.stringify({
-      action: "create",
-      sheet,
-      values
-    })
-  });
+    const values = Array(headersCount).fill("");
+    document.getElementById("status").innerText = " Menambah baris...";
 
-  loadData();
+    await fetch(API, {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify({
+            action: "create",
+            sheet,
+            values
+        })
+    });
+    loadData();
 }
 </script>
 
