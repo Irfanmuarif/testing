@@ -4,182 +4,108 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard e-Murai</title>
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
-        .sidebar-item.active { background-color: #3b82f6; color: white; }
-        .table-container { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border-radius: 8px; overflow: hidden; }
-        [contenteditable]:focus { outline: 2px solid #3b82f6; background: #fff; padding: 2px; border-radius: 4px; }
-        .loader { border-top-color: #3b82f6; animation: spinner 1.5s linear infinite; }
-        @keyframes spinner { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="flex min-h-screen">
+<body class="bg-slate-50 flex min-h-screen text-slate-800">
 
-    <aside class="w-64 bg-white border-r border-gray-200 hidden md:flex flex-col">
-        <div class="p-6">
-            <h1 class="text-2xl font-bold text-blue-600">e-Murai</h1>
-            <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mt-1">Admin Panel</p>
+    <aside class="w-72 bg-white border-r border-slate-200 hidden md:flex flex-col sticky top-0 h-screen">
+        <div class="p-8">
+            <div class="flex items-center gap-3">
+                <div class="bg-blue-600 p-2 rounded-xl">
+                    <i data-lucide="layout-dashboard" class="text-white w-6 h-6"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-slate-900">e-Murai</h1>
+                    <p class="text-[10px] text-blue-600 font-bold uppercase tracking-widest">Master Admin</p>
+                </div>
+            </div>
         </div>
-        <nav class="flex-1 px-4 space-y-2 mt-4">
-            <button onclick="changeSheet(this, 'PENGUMUMAN')" class="sidebar-item active w-full text-left px-4 py-3 rounded-lg flex items-center transition">
-                <span>📢 Pengumuman</span>
+
+        <nav class="flex-1 px-4 space-y-1">
+            <p class="px-4 text-[11px] font-semibold text-slate-400 uppercase mb-2">Menu Utama</p>
+            
+            <button onclick="changeSheet(this, 'PENGUMUMAN')" class="nav-link active">
+                <i data-lucide="megaphone" class="w-5 h-5"></i>
+                <span>Pengumuman</span>
             </button>
-            <button onclick="changeSheet(this, 'IURAN BULANAN')" class="sidebar-item w-full text-left px-4 py-3 rounded-lg flex items-center text-gray-600 hover:bg-gray-100 transition">
-                <span>💰 Iuran Bulanan</span>
+            
+            <button onclick="changeSheet(this, 'IURAN BULANAN')" class="nav-link">
+                <i data-lucide="credit-card" class="w-5 h-5"></i>
+                <span>Iuran Bulanan</span>
             </button>
-            <button onclick="changeSheet(this, 'UANG KAS')" class="sidebar-item w-full text-left px-4 py-3 rounded-lg flex items-center text-gray-600 hover:bg-gray-100 transition">
-                <span>🏦 Uang Kas</span>
+            
+            <button onclick="changeSheet(this, 'UANG KAS')" class="nav-link">
+                <i data-lucide="wallet" class="w-5 h-5"></i>
+                <span>Uang Kas</span>
             </button>
-            <button onclick="changeSheet(this, 'JADWAL RONDA')" class="sidebar-item w-full text-left px-4 py-3 rounded-lg flex items-center text-gray-600 hover:bg-gray-100 transition">
-                <span>👮 Jadwal Ronda</span>
+            
+            <button onclick="changeSheet(this, 'JADWAL RONDA')" class="nav-link">
+                <i data-lucide="shield-check" class="w-5 h-5"></i>
+                <span>Jadwal Ronda</span>
             </button>
         </nav>
+
+        <div class="p-4 border-t border-slate-100">
+            <div class="bg-slate-50 rounded-xl p-4 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">A</div>
+                <div>
+                    <p class="text-sm font-semibold">Admin Murai</p>
+                    <p class="text-xs text-slate-500">Superuser</p>
+                </div>
+            </div>
+        </div>
     </aside>
 
-    <main class="flex-1 flex flex-col">
-        <header class="bg-white border-b border-gray-200 h-16 flex items-center justify-between px-8">
-            <h2 id="current-sheet-title" class="text-lg font-semibold text-gray-800">PENGUMUMAN</h2>
-            <div class="flex items-center space-x-4">
-                <span id="status-badge" class="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full hidden">Tersimpan</span>
-                <div id="main-loader" class="loader w-5 h-5 border-2 border-gray-200 rounded-full hidden"></div>
+    <main class="flex-1 flex flex-col min-w-0">
+        <header class="bg-white/80 backdrop-blur-md border-b border-slate-200 h-20 flex items-center justify-between px-8 sticky top-0 z-10">
+            <div class="flex items-center gap-4">
+                <div class="md:hidden p-2 bg-slate-100 rounded-lg">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </div>
+                <h2 id="current-sheet-title" class="text-xl font-bold text-slate-800">PENGUMUMAN</h2>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <div id="status-container" class="hidden animate-fade-in">
+                    <span id="status-badge" class="flex items-center gap-2 text-xs font-medium bg-emerald-50 text-emerald-600 px-4 py-2 rounded-full border border-emerald-100">
+                        <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                        Tersimpan
+                    </span>
+                </div>
+                <div id="main-loader" class="hidden">
+                    <div class="custom-loader"></div>
+                </div>
             </div>
         </header>
 
-        <div class="p-8 flex-1 overflow-auto">
-            <div class="flex justify-between items-center mb-6">
+        <div class="p-8 max-w-7xl mx-auto w-full">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                 <div>
-                    <h3 class="text-xl font-bold text-gray-800">Kelola Data</h3>
-                    <p class="text-sm text-gray-500">Klik pada sel tabel untuk mengedit data secara langsung.</p>
+                    <h3 class="text-2xl font-bold text-slate-900 tracking-tight">Manajemen Data</h3>
+                    <p class="text-slate-500 mt-1">Kelola informasi warga dengan sistem edit otomatis.</p>
                 </div>
-                <button onclick="addRow()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-medium transition flex items-center shadow-lg shadow-blue-200">
-                    <span class="mr-2">+</span> Tambah Baris
+                <button onclick="addRow()" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold transition-all shadow-lg shadow-blue-200 hover:-translate-y-0.5 active:scale-95">
+                    <i data-lucide="plus-circle" class="w-5 h-5"></i>
+                    Tambah Baris
                 </button>
             </div>
 
-            <div class="table-container bg-white">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead id="thead" class="bg-gray-50">
-                        </thead>
-                    <tbody id="tbody" class="bg-white divide-y divide-gray-200">
-                        </tbody>
-                </table>
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden transition-all duration-300">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead id="thead" class="bg-slate-50/50 border-b border-slate-200">
+                            </thead>
+                        <tbody id="tbody" class="divide-y divide-slate-100">
+                            </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </main>
 
-    <script>
-        const API = "https://script.google.com/macros/s/AKfycbyxvcSvrKp1LYuBisVdyhNjlO5RmHfA16KreXE37MMPqc4_LYbhDsVPLPaUr4IrlXZX/exec";
-        let currentSheet = "PENGUMUMAN";
-
-        // Load data saat pertama kali buka
-        window.onload = () => loadData();
-
-        function changeSheet(btn, sheetName) {
-            // Update UI Active State
-            document.querySelectorAll('.sidebar-item').forEach(el => {
-                el.classList.remove('active', 'bg-blue-600', 'text-white');
-                el.classList.add('text-gray-600');
-            });
-            btn.classList.add('active', 'bg-blue-600', 'text-white');
-            btn.classList.remove('text-gray-600');
-            
-            currentSheet = sheetName;
-            document.getElementById('current-sheet-title').innerText = sheetName;
-            loadData();
-        }
-
-        async function loadData() {
-            toggleLoader(true);
-            try {
-                const res = await fetch(`${API}?sheet=${encodeURIComponent(currentSheet)}`, {
-                    method: "GET",
-                    redirect: "follow"
-                });
-                const data = await res.json();
-
-                // Render Headers
-                const thead = document.getElementById("thead");
-                thead.innerHTML = `<tr>${data.headers.map(h => `<th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">${h}</th>`).join("")}<th class="px-6 py-3 text-right">Aksi</th></tr>`;
-
-                // Render Rows
-                const tbody = document.getElementById("tbody");
-                tbody.innerHTML = data.rows.map(r => `
-                    <tr class="hover:bg-gray-50 transition">
-                        ${data.headers.map(h => `
-                            <td class="px-6 py-4 text-sm text-gray-700 whitespace-nowrap" 
-                                contenteditable="true" 
-                                onblur="handleAutoSave(event, ${r._row})">${r[h] || ""}</td>
-                        `).join("")}
-                        <td class="px-6 py-4 text-right text-sm font-medium">
-                            <button onclick="hapus(${r._row})" class="text-red-600 hover:text-red-900 bg-red-50 px-3 py-1 rounded">Hapus</button>
-                        </td>
-                    </tr>
-                `).join("");
-
-            } catch (err) {
-                alert("Gagal memuat data. Cek koneksi atau deployment.");
-            }
-            toggleLoader(false);
-        }
-
-        async function handleAutoSave(event, row) {
-            const cells = [...event.target.parentElement.children]
-                .slice(0, -1)
-                .map(td => td.innerText);
-            
-            showStatus("Menyimpan...");
-            await fetch(API, {
-                method: "POST",
-                mode: "no-cors",
-                body: JSON.stringify({
-                    action: "update",
-                    sheet: currentSheet,
-                    row,
-                    values: cells
-                })
-            });
-            showStatus("Tersimpan", true);
-        }
-
-        async function hapus(row) {
-            if (!confirm("Hapus baris ini secara permanen?")) return;
-            toggleLoader(true);
-            await fetch(API, {
-                method: "POST",
-                mode: "no-cors",
-                body: JSON.stringify({ action: "delete", sheet: currentSheet, row })
-            });
-            await loadData();
-        }
-
-        async function addRow() {
-            const headersCount = document.querySelectorAll("#thead th").length - 1;
-            if (headersCount <= 0) return;
-
-            toggleLoader(true);
-            const values = Array(headersCount).fill("");
-            await fetch(API, {
-                method: "POST",
-                mode: "no-cors",
-                body: JSON.stringify({ action: "create", sheet: currentSheet, values })
-            });
-            await loadData();
-        }
-
-        function toggleLoader(show) {
-            document.getElementById('main-loader').classList.toggle('hidden', !show);
-        }
-
-        function showStatus(text, autoHide = false) {
-            const badge = document.getElementById('status-badge');
-            badge.innerText = text;
-            badge.classList.remove('hidden');
-            if (autoHide) {
-                setTimeout(() => badge.classList.add('hidden'), 3000);
-            }
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
