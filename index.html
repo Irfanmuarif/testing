@@ -1,93 +1,98 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <base target="_top">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <style>
-      body { padding: 20px; font-family: sans-serif; }
-      .tab-content { margin-top: 20px; }
-      .table-container { max-height: 300px; overflow-y: auto; }
-    </style>
-  </head>
-  <body>
-    <h3>Panel Admin Database RT</h3>
-    
-    <select id="sheetSelector" class="form-select mb-3" onchange="loadData()">
-      <option value="PENGUMUMAN">PENGUMUMAN</option>
-      <option value="IURAN BULANAN">IURAN BULANAN</option>
-      <option value="UANG KAS">UANG KAS</option>
-      <option value="JADWAL RONDA">JADWAL RONDA</option>
-    </select>
+<head>
+<meta charset="UTF-8">
+<title>Admin e-Murai</title>
+</head>
+<body>
 
-    <div id="tableArea" class="table-container mb-3">
-      <p class="text-muted">Pilih sheet untuk melihat data...</p>
-    </div>
+<h2>Admin Panel e-Murai</h2>
 
-    <hr>
-    <h5>Tambah Data Baru</h5>
-    <div id="formInput" class="row g-2">
-      </div>
-    <button class="btn btn-primary mt-3" onclick="submitData()">Simpan Data</button>
+<select id="sheet">
+  <option>PENGUMUMAN</option>
+  <option>IURAN BULANAN</option>
+  <option>UANG KAS</option>
+  <option>JADWAL RONDA</option>
+</select>
+<button onclick="loadData()">Load</button>
 
-    <script>
-      let currentHeaders = [];
+<table border="1">
+  <thead id="thead"></thead>
+  <tbody id="tbody"></tbody>
+</table>
 
-      function loadData() {
-        const sheetName = document.getElementById('sheetSelector').value;
-        google.script.run.withSuccessHandler(displayTable).getDataFromSheet(sheetName);
-      }
+<button onclick="addRow()">Tambah Baris</button>
 
-      function displayTable(data) {
-        const container = document.getElementById('tableArea');
-        const formInput = document.getElementById('formInput');
-        currentHeaders = data[0];
-        
-        // Buat Tabel
-        let html = '<table class="table table-sm table-bordered"><thead><tr>';
-        currentHeaders.forEach(h => html += `<th>${h}</th>`);
-        html += '<th>Aksi</th></tr></thead><tbody>';
+<script>
+const API = "https://script.google.com/macros/s/AKfycbz2m2Nv9qYwF48cOL2UrtFQXGNQqWV5fbTWT7s1BMKHBWv1JCiyQlF9ysisOazukJZ7/exec";
 
-        for (let i = 1; i < data.length; i++) {
-          html += '<tr>';
-          data[i].forEach(cell => html += `<td>${cell}</td>`);
-          html += `<td><button class="btn btn-danger btn-sm" onclick="deleteRow(${i})">Hapus</button></td>`;
-          html += '</tr>';
-        }
-        html += '</tbody></table>';
-        container.innerHTML = html;
+async function loadData() {
+  const sheet = document.getElementById("sheet").value;
+  const res = await fetch(`${API}?sheet=${sheet}`);
+  const data = await res.json();
 
-        // Buat Form Input Otomatis
-        let formHtml = '';
-        currentHeaders.forEach((h, index) => {
-          formHtml += `<div class="col-md-4"><label class="small">${h}</label>
-                       <input type="text" id="input_${index}" class="form-control form-control-sm"></div>`;
-        });
-        formInput.innerHTML = formHtml;
-      }
+  document.getElementById("thead").innerHTML =
+    `<tr>${data.headers.map(h => `<th>${h}</th>`).join("")}<th>Aksi</th></tr>`;
 
-      function submitData() {
-        const sheetName = document.getElementById('sheetSelector').value;
-        let rowData = [];
-        currentHeaders.forEach((_, i) => {
-          rowData.push(document.getElementById(`input_${i}`).value);
-        });
+  document.getElementById("tbody").innerHTML =
+    data.rows.map(r => `
+      <tr>
+        ${data.headers.map(h =>
+          `<td contenteditable onblur="save('${sheet}',${r._row})">${r[h] ?? ""}</td>`
+        ).join("")}
+        <td><button onclick="hapus('${sheet}',${r._row})">Hapus</button></td>
+      </tr>
+    `).join("");
+}
 
-        google.script.run.withSuccessHandler(() => {
-          alert('Data Berhasil Ditambah!');
-          loadData();
-        }).addRowToSheet(sheetName, rowData);
-      }
+async function save(sheet, row) {
+  const cells = [...event.target.parentElement.children]
+    .slice(0, -1)
+    .map(td => td.innerText);
 
-      function deleteRow(index) {
-        if(confirm('Yakin ingin menghapus baris ini?')) {
-          const sheetName = document.getElementById('sheetSelector').value;
-          google.script.run.withSuccessHandler(() => {
-            loadData();
-          }).deleteRowFromSheet(sheetName, index);
-        }
-      }
+  await fetch(API, {
+    method: "POST",
+    body: JSON.stringify({
+      action: "update",
+      sheet,
+      row,
+      values: cells
+    })
+  });
+}
 
-      window.onload = loadData;
-    </script>
-  </body>
+async function hapus(sheet, row) {
+  if (!confirm("Hapus baris ini?")) return;
+
+  await fetch(API, {
+    method: "POST",
+    body: JSON.stringify({
+      action: "delete",
+      sheet,
+      row
+    })
+  });
+
+  loadData();
+}
+
+async function addRow() {
+  const sheet = document.getElementById("sheet").value;
+  const count = document.querySelectorAll("#thead th").length - 1;
+  const values = Array(count).fill("");
+
+  await fetch(API, {
+    method: "POST",
+    body: JSON.stringify({
+      action: "create",
+      sheet,
+      values
+    })
+  });
+
+  loadData();
+}
+</script>
+
+</body>
 </html>
