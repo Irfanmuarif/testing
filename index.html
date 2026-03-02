@@ -1859,7 +1859,14 @@
                         <td class="font-weight-bold text-right saldo-kumulatif">Rp ${formatNumber(bulanDataItem.saldoKumulatif)}</td>
                     </tr>
                 `;
-                
+
+                // --- PERUBAHAN DIMULAI DI SINI ---
+                // Hitung selisih (Net) per bulan
+                const netBulan = bulanDataItem.saldoBulan; 
+                const isPlus = netBulan >= 0;
+                const warnaTeks = isPlus ? 'var(--success-color)' : 'var(--danger-color)';
+                const tanda = isPlus ? '+' : '-';
+
                 const accDiv = document.createElement('div');
                 accDiv.className = `month-accordion ${idx === 0 ? 'active' : ''}`;
                 
@@ -1870,6 +1877,10 @@
                             <span class="month-name">${bulanDataItem.namaBulan}</span>
                         </div>
                         <div class="acc-right">
+                            <!-- Tampilkan Selisih (Pemasukan - Pengeluaran) di header -->
+                            <span style="color: ${warnaTeks}; font-weight: 700; margin-right: 8px; font-size: 0.9rem;">
+                                ${tanda} Rp ${formatNumber(Math.abs(netBulan))}
+                            </span>
                             <i class="fas fa-chevron-down ml-10"></i>
                         </div>
                     </div>
@@ -1892,6 +1903,8 @@
                             </table>
                         </div>
                     </div>`;
+                // --- PERUBAHAN BERAKHIR DI SINI ---
+
                 kasContainer.appendChild(accDiv);
             });
         }
