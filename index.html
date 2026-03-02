@@ -49,7 +49,7 @@
             --box-shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.12);
             --box-shadow-hover: 0 6px 20px rgba(67, 97, 238, 0.15);
             
-            /* Spacing - Mobile First */
+            /* Spacing */
             --spacing-xs: 3px;
             --spacing-sm: 6px;
             --spacing-md: 10px;
@@ -83,7 +83,7 @@
             min-height: 100vh;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            font-size: 14px; /* Base font size untuk mobile */
+            font-size: 14px;
         }
 
         .app-container {
@@ -106,7 +106,7 @@
             transition: var(--transition);
         }
 
-        /* Modern Header - Mobile Optimized */
+        /* Modern Header */
         .app-header {
             background: var(--gradient-primary);
             color: white;
@@ -143,22 +143,22 @@
             position: relative;
             z-index: 1;
             width: 100%;
-            flex-wrap: nowrap; /* Mencegah wrap di header */
+            flex-wrap: nowrap;
         }
 
         .header-content h1 {
-            font-size: 1.2rem; /* Ukuran lebih kecil untuk mobile */
+            font-size: 1.2rem;
             font-weight: 700;
             display: flex;
             align-items: center;
             gap: var(--spacing-sm);
             letter-spacing: -0.3px;
-            white-space: nowrap; /* Mencegah tulisan jadi 2 baris */
-            overflow: visible; /* Ubah dari hidden menjadi visible */
-            text-overflow: clip; /* Ubah dari ellipsis menjadi clip */
-            max-width: none; /* Hapus batasan lebar */
+            white-space: nowrap;
+            overflow: visible;
+            text-overflow: clip;
+            max-width: none;
             padding-right: var(--spacing-sm);
-            flex-shrink: 0; /* Mencegah logo menyusut */
+            flex-shrink: 0;
         }
 
         .header-content h1 i {
@@ -166,26 +166,26 @@
             padding: 6px;
             border-radius: 50%;
             backdrop-filter: blur(10px);
-            font-size: 0.9rem; /* Icon lebih kecil */
+            font-size: 0.9rem;
         }
 
         .refresh-info {
             display: flex;
             align-items: center;
             gap: var(--spacing-sm);
-            font-size: 0.75rem; /* Font lebih kecil */
+            font-size: 0.75rem;
             background: rgba(255, 255, 255, 0.15);
             padding: 4px 8px;
             border-radius: 16px;
             backdrop-filter: blur(10px);
-            white-space: nowrap; /* Mencegah wrap */
+            white-space: nowrap;
         }
 
         .refresh-info #lastUpdate {
-            display: none; /* Sembunyikan di mobile jika perlu */
+            display: none;
         }
 
-        /* Modern Bottom Navigation - Mobile Optimized */
+        /* Modern Bottom Navigation */
         .bottom-nav {
             display: flex;
             justify-content: space-around;
@@ -215,20 +215,20 @@
             cursor: pointer;
             transition: all var(--transition);
             padding: 6px 8px;
-            min-width: 55px; /* Lebih kecil untuk mobile */
+            min-width: 55px;
             border-radius: var(--border-radius);
             position: relative;
-            font-size: 0.7rem; /* Font lebih kecil */
+            font-size: 0.7rem;
         }
 
         .nav-item i {
-            font-size: 1rem; /* Icon lebih kecil */
+            font-size: 1rem;
             margin-bottom: 3px;
             transition: transform var(--transition);
         }
 
         .nav-item span {
-            font-size: 0.65rem; /* Font lebih kecil */
+            font-size: 0.65rem;
             font-weight: 500;
             transition: color var(--transition);
         }
@@ -269,10 +269,10 @@
         .content {
             flex: 1;
             padding: var(--spacing-md);
-            padding-bottom: 70px; /* Sesuaikan dengan tinggi bottom-nav */
+            padding-bottom: 70px;
             overflow-y: auto;
             background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
-            -webkit-overflow-scrolling: touch; /* Smooth scroll di iOS */
+            -webkit-overflow-scrolling: touch;
         }
 
         /* Page Transitions */
@@ -286,20 +286,14 @@
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(8px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Modern Page Header - Mobile Optimized */
+        /* Modern Page Header */
         .page-header {
             display: flex;
-            flex-direction: column; /* Stack vertikal di mobile */
+            flex-direction: column;
             align-items: flex-start;
             margin-bottom: var(--spacing-lg);
             padding-bottom: var(--spacing-sm);
@@ -308,7 +302,7 @@
         }
 
         .page-header h2 {
-            font-size: 1.3rem; /* Lebih kecil untuk mobile */
+            font-size: 1.3rem;
             font-weight: 700;
             color: var(--dark-color);
             position: relative;
@@ -330,12 +324,12 @@
         .page-header .btn-group {
             display: flex;
             gap: var(--spacing-sm);
-            flex-wrap: wrap; /* Jika tombol banyak, bisa wrap */
+            flex-wrap: wrap;
         }
 
         .page-header-ronda {
             display: flex;
-            flex-direction: column; /* Stack vertikal di mobile */
+            flex-direction: column;
             align-items: flex-start;
             margin-bottom: var(--spacing-lg);
             padding-bottom: var(--spacing-sm);
@@ -343,7 +337,7 @@
             gap: var(--spacing-sm);
         }
 
-        /* Modern Cards - Mobile Optimized */
+        /* Modern Cards */
         .card-container {
             display: grid;
             grid-template-columns: 1fr;
@@ -379,7 +373,7 @@
 
         .card-header {
             display: flex;
-            flex-direction: column; /* Stack vertikal di mobile */
+            flex-direction: column;
             align-items: flex-start;
             margin-bottom: var(--spacing-sm);
             gap: var(--spacing-xs);
@@ -387,7 +381,7 @@
 
         .card-title {
             font-weight: 600;
-            font-size: 0.95rem; /* Lebih kecil untuk mobile */
+            font-size: 0.95rem;
             color: var(--dark-color);
             width: 100%;
             margin-right: 0;
@@ -395,7 +389,7 @@
 
         .card-date {
             color: var(--gray-600);
-            font-size: 0.75rem; /* Lebih kecil untuk mobile */
+            font-size: 0.75rem;
             background: var(--gray-100);
             padding: 3px 6px;
             border-radius: var(--border-radius-sm);
@@ -407,7 +401,7 @@
             margin-bottom: var(--spacing-sm);
             color: var(--gray-700);
             line-height: 1.6;
-            font-size: 0.85rem; /* Lebih kecil untuk mobile */
+            font-size: 0.85rem;
         }
 
         .card-footer {
@@ -415,12 +409,12 @@
             justify-content: space-between;
             align-items: center;
             color: var(--gray-600);
-            font-size: 0.75rem; /* Lebih kecil untuk mobile */
+            font-size: 0.75rem;
             padding-top: var(--spacing-sm);
             border-top: 1px solid var(--gray-200);
         }
 
-        /* Modern Tables - Mobile Optimized */
+        /* Modern Tables */
         .table-container {
             display: block;
             width: 100%;
@@ -431,7 +425,7 @@
             box-shadow: var(--box-shadow);
             border: 1px solid var(--gray-200);
             margin-top: var(--spacing-sm);
-            font-size: 0.8rem; /* Font tabel lebih kecil */
+            font-size: 0.8rem;
         }
 
         .data-table {
@@ -439,7 +433,7 @@
             min-width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            font-size: 0.8rem; /* Font tabel lebih kecil */
+            font-size: 0.8rem;
         }
 
         .data-table thead {
@@ -452,12 +446,12 @@
             background: var(--gradient-primary);
             color: white;
             font-weight: 600;
-            padding: 8px 6px; /* Padding lebih kecil */
+            padding: 8px 6px;
             text-align: left;
             border-bottom: 1px solid var(--primary-dark);
             position: relative;
             overflow: hidden;
-            font-size: 0.75rem; /* Header tabel lebih kecil */
+            font-size: 0.75rem;
             white-space: nowrap;
         }
 
@@ -470,12 +464,12 @@
         }
 
         .data-table td {
-            padding: 6px 4px; /* Padding lebih kecil */
+            padding: 6px 4px;
             border-bottom: 1px solid var(--gray-200);
             color: var(--gray-700);
             transition: background-color var(--transition-fast);
-            font-size: 0.75rem; /* Data tabel lebih kecil */
-            max-width: 120px; /* Batasi lebar maksimal */
+            font-size: 0.75rem;
+            max-width: 120px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -501,7 +495,7 @@
             border-bottom-right-radius: var(--border-radius);
         }
 
-        /* Modern Checkboxes - Mobile Optimized */
+        /* Modern Checkboxes */
         .checkbox-container {
             display: flex;
             justify-content: center;
@@ -510,8 +504,8 @@
         }
 
         input[type="checkbox"] {
-            width: 16px; /* Lebih kecil untuk mobile */
-            height: 16px; /* Lebih kecil untuk mobile */
+            width: 16px;
+            height: 16px;
             cursor: pointer;
             border: 1.5px solid var(--gray-400);
             border-radius: 3px;
@@ -533,7 +527,7 @@
             content: '✓';
             position: absolute;
             color: white;
-            font-size: 10px; /* Lebih kecil untuk mobile */
+            font-size: 10px;
             font-weight: bold;
             top: 50%;
             left: 50%;
@@ -545,9 +539,9 @@
             cursor: not-allowed;
         }
 
-        /* Modern Buttons - Mobile Optimized */
+        /* Modern Buttons */
         .btn {
-            padding: 6px 10px; /* Lebih kecil untuk mobile */
+            padding: 6px 10px;
             border: none;
             border-radius: var(--border-radius);
             font-weight: 600;
@@ -557,7 +551,7 @@
             align-items: center;
             justify-content: center;
             gap: 5px;
-            font-size: 0.8rem; /* Font lebih kecil */
+            font-size: 0.8rem;
             letter-spacing: 0.2px;
             position: relative;
             overflow: hidden;
@@ -626,10 +620,10 @@
             flex-wrap: wrap;
         }
 
-        /* Modern Stats Grid - Mobile Optimized */
+        /* Modern Stats Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* Lebih kecil untuk mobile */
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: var(--spacing-md);
             margin-bottom: var(--spacing-lg);
         }
@@ -658,31 +652,20 @@
             background: var(--gradient-primary);
         }
 
-        .stat-card.total::before {
-            background: var(--gradient-primary);
-        }
+        .stat-card.total::before { background: var(--gradient-primary); }
+        .stat-card.income::before { background: var(--gradient-success); }
+        .stat-card.expense::before { background: var(--gradient-danger); }
 
-        .stat-card.income::before {
-            background: var(--gradient-success);
-        }
-
-        .stat-card.expense::before {
-            background: var(--gradient-danger);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--box-shadow);
-        }
+        .stat-card:hover { transform: translateY(-2px); box-shadow: var(--box-shadow); }
 
         .stat-icon {
-            width: 40px; /* Lebih kecil untuk mobile */
-            height: 40px; /* Lebih kecil untuk mobile */
+            width: 40px;
+            height: 40px;
             border-radius: var(--border-radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.1rem; /* Lebih kecil untuk mobile */
+            font-size: 1.1rem;
             flex-shrink: 0;
         }
 
@@ -707,7 +690,7 @@
         }
 
         .stat-info span {
-            font-size: 0.7rem; /* Lebih kecil untuk mobile */
+            font-size: 0.7rem;
             color: var(--gray-600);
             display: block;
             margin-bottom: 2px;
@@ -715,14 +698,14 @@
         }
 
         .stat-info h3 {
-            font-size: 0.95rem; /* Lebih kecil untuk mobile */
+            font-size: 0.95rem;
             font-weight: 700;
             margin: 0;
             color: var(--dark-color);
             line-height: 1.2;
         }
 
-        /* Modern Accordion - Mobile Optimized */
+        /* Modern Accordion */
         .month-accordion {
             background: white;
             border-radius: var(--border-radius);
@@ -733,9 +716,7 @@
             transition: all var(--transition);
         }
 
-        .month-accordion:hover {
-            box-shadow: var(--box-shadow);
-        }
+        .month-accordion:hover { box-shadow: var(--box-shadow); }
 
         .accordion-header {
             padding: var(--spacing-md);
@@ -747,7 +728,7 @@
             font-weight: 600;
             border-bottom: 1px solid transparent;
             transition: all var(--transition);
-            flex-wrap: wrap; /* Jika konten panjang, bisa wrap */
+            flex-wrap: wrap;
         }
 
         .month-accordion.active .accordion-header {
@@ -773,15 +754,12 @@
             gap: var(--spacing-sm);
             font-weight: 600;
             color: var(--dark-color);
-            font-size: 0.9rem; /* Lebih kecil untuk mobile */
+            font-size: 0.9rem;
             flex: 1;
             min-width: 0;
         }
 
-        .acc-left i {
-            color: var(--primary-color);
-            font-size: 0.9rem; /* Lebih kecil untuk mobile */
-        }
+        .acc-left i { color: var(--primary-color); font-size: 0.9rem; }
 
         .acc-right {
             display: flex;
@@ -791,17 +769,8 @@
             flex-shrink: 0;
         }
 
-        .label-saldo-header {
-            font-size: 0.7rem; /* Lebih kecil untuk mobile */
-            color: var(--gray-600);
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-            font-weight: 600;
-            display: none; /* Sembunyikan di mobile untuk menghemat ruang */
-        }
-
         .value-saldo-header {
-            font-size: 0.9rem; /* Lebih kecil untuk mobile */
+            font-size: 0.9rem;
             color: var(--primary-color);
             font-weight: 700;
         }
@@ -809,7 +778,7 @@
         .fa-chevron-down {
             transition: transform var(--transition);
             color: var(--gray-500);
-            font-size: 0.8rem; /* Lebih kecil untuk mobile */
+            font-size: 0.8rem;
         }
 
         .month-accordion.active .fa-chevron-down {
@@ -817,11 +786,11 @@
             color: var(--primary-color);
         }
 
-        /* Modern Badges - Mobile Optimized */
+        /* Modern Badges */
         .badge {
-            padding: 2px 6px; /* Lebih kecil untuk mobile */
+            padding: 2px 6px;
             border-radius: 12px;
-            font-size: 0.65rem; /* Lebih kecil untuk mobile */
+            font-size: 0.65rem;
             font-weight: 600;
             display: inline-block;
             letter-spacing: 0.2px;
@@ -839,7 +808,7 @@
             border: 1px solid rgba(239, 71, 111, 0.2);
         }
 
-        /* Modern Ronda Visualization - Mobile Optimized */
+        /* Modern Ronda Visualization */
         .ronda-visual-container {
             display: flex;
             flex-direction: column;
@@ -856,10 +825,7 @@
             transition: all var(--transition);
         }
 
-        .ronda-item:hover {
-            transform: translateY(-1px);
-            box-shadow: var(--box-shadow);
-        }
+        .ronda-item:hover { transform: translateY(-1px); box-shadow: var(--box-shadow); }
 
         .ronda-item.status-ronda {
             border-left: 3px solid var(--success-color);
@@ -878,7 +844,7 @@
         .ronda-name {
             font-weight: 700;
             color: var(--dark-color);
-            font-size: 0.85rem; /* Lebih kecil untuk mobile */
+            font-size: 0.85rem;
             display: flex;
             align-items: center;
             gap: var(--spacing-xs);
@@ -889,13 +855,10 @@
             white-space: nowrap;
         }
 
-        .ronda-name::before {
-            content: '👤';
-            font-size: 0.8em;
-        }
+        .ronda-name::before { content: '👤'; font-size: 0.8em; }
 
         .ronda-days {
-            font-size: 0.75rem; /* Lebih kecil untuk mobile */
+            font-size: 0.75rem;
             color: var(--gray-600);
             background: var(--gray-100);
             padding: 2px 6px;
@@ -906,7 +869,7 @@
 
         .ronda-bar-bg {
             width: 100%;
-            height: 28px; /* Lebih pendek untuk mobile */
+            height: 28px;
             background: linear-gradient(90deg, var(--gray-100) 0%, var(--gray-200) 100%);
             border-radius: 14px;
             position: relative;
@@ -951,7 +914,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.7rem; /* Lebih kecil untuk mobile */
+            font-size: 0.7rem;
             font-weight: 600;
             color: white;
             text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
@@ -963,7 +926,7 @@
             line-height: 1.2;
         }
 
-        /* Modern Loading Indicator */
+        /* Loading Indicator */
         .loading-indicator {
             position: fixed;
             top: 0;
@@ -987,148 +950,72 @@
             animation: spin 1s linear infinite;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Utility Classes */
-        .hidden {
-            display: none !important;
-        }
+        /* Utility */
+        .hidden { display: none !important; }
+        .text-center { text-align: center !important; }
+        .text-right { text-align: right !important; }
+        .text-left { text-align: left !important; }
+        .text-primary { color: var(--primary-color) !important; }
+        .text-success { color: var(--success-color) !important; }
+        .text-danger { color: var(--danger-color) !important; }
+        .text-warning { color: var(--warning-color) !important; }
 
-        .text-center {
-            text-align: center !important;
-        }
-
-        .text-right {
-            text-align: right !important;
-        }
-
-        .text-left {
-            text-align: left !important;
-        }
-
-        .text-primary {
-            color: var(--primary-color) !important;
-        }
-
-        .text-success {
-            color: var(--success-color) !important;
-        }
-
-        .text-danger {
-            color: var(--danger-color) !important;
-        }
-
-        .text-warning {
-            color: var(--warning-color) !important;
-        }
-
-        /* Total Row Styling */
         .total-row {
             background-color: rgba(6, 214, 160, 0.15) !important;
             font-weight: 700 !important;
             border-top: 2px solid var(--success-color) !important;
         }
-
-        .total-row td {
-            padding: 10px 6px !important;
-            font-weight: 700 !important;
-        }
-
-        .total-row .text-success {
-            color: var(--success-color) !important;
-            font-weight: 700 !important;
-        }
-
-        .total-row .text-danger {
-            color: var(--danger-color) !important;
-            font-weight: 700 !important;
-        }
-
+        
+        .total-row td { padding: 10px 6px !important; font-weight: 700 !important; }
+        .total-row .text-success { color: var(--success-color) !important; }
+        .total-row .text-danger { color: var(--danger-color) !important; }
         .total-row .saldo-kumulatif {
             background-color: rgba(6, 214, 160, 0.3) !important;
             border-radius: 4px;
             padding: 4px 8px !important;
         }
 
-        /* Additional Checkbox Styling */
-        .data-table input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-        }
-
-        .data-table input[type="checkbox"]:not(:checked) {
-            background-color: white;
-            border-color: var(--gray-400);
-        }
-
-        .data-table input[type="checkbox"]:checked {
-            background: linear-gradient(135deg, var(--success-color) 0%, #04a777 100%);
-            border-color: var(--success-color);
-            transform: scale(1.1);
-        }
-
-        .data-table input[type="checkbox"]:hover:not(:disabled) {
-            border-color: var(--success-color);
-            box-shadow: 0 0 0 2px rgba(6, 214, 160, 0.2);
-        }
-
-        /* Pengumuman Styling */
-        .pengumuman-card {
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .pengumuman-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .pengumuman-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            cursor: pointer;
-            border-bottom: 1px solid transparent;
-            transition: all 0.3s ease;
-        }
-
-        .pengumuman-header:hover {
-            background-color: rgba(67, 97, 238, 0.05);
-        }
-
-        .pengumuman-header-content {
-            flex: 1;
+        /* Toast Notification Style */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 10px;
         }
-
-        .pengumuman-toggle {
-            color: var(--gray-500);
-            transition: transform 0.3s ease;
+        
+        .toast {
+            min-width: 250px;
+            background: white;
+            color: var(--dark-color);
+            padding: 12px 16px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow-lg);
+            border-left: 4px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: slideIn 0.3s ease-out forwards;
             font-size: 0.9rem;
         }
-
-        .pengumuman-content {
-            padding: 15px;
-            border-top: 1px solid var(--gray-200);
-            background-color: rgba(67, 97, 238, 0.02);
+        
+        .toast.success { border-left-color: var(--success-color); }
+        .toast.error { border-left-color: var(--danger-color); }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes fadeOut {
+            to { opacity: 0; transform: translateY(-10px); }
         }
 
-        .pengumuman-isi {
-            line-height: 1.6;
-            color: var(--gray-700);
-        }
-
-        .pengumuman-isi br {
-            margin-bottom: 8px;
-            display: block;
-            content: "";
-        }
-
+        /* Responsive */
         @media (max-width: 768px) {
             .pengumuman-header {
                 padding: 12px;
@@ -1136,54 +1023,16 @@
                 align-items: flex-start;
                 gap: 10px;
             }
-            
-            .pengumuman-toggle {
-                align-self: flex-end;
-            }
+            .pengumuman-toggle { align-self: flex-end; }
         }
 
-        .logo-section {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .app-subtitle {
-            font-size: 0.7rem;
-            opacity: 0.9;
-            margin-top: -3px;
-            font-weight: 400;
-        }
-
-        /* Responsive Design - Tablet */
         @media (min-width: 768px) {
-            body {
-                font-size: 15px;
-            }
-            
-            .app-header {
-                padding: var(--spacing-lg) var(--spacing-xl);
-                min-height: 70px;
-            }
-            
-            .header-content h1 {
-                font-size: 1.4rem;
-                max-width: none;
-            }
-            
-            .refresh-info {
-                font-size: 0.85rem;
-                padding: 6px 12px;
-            }
-            
-            .refresh-info #lastUpdate {
-                display: inline; /* Tampilkan di tablet */
-            }
-            
-            .content {
-                padding: var(--spacing-xl);
-                padding-bottom: 90px;
-            }
-            
+            body { font-size: 15px; }
+            .app-header { padding: var(--spacing-lg) var(--spacing-xl); min-height: 70px; }
+            .header-content h1 { font-size: 1.4rem; }
+            .refresh-info { font-size: 0.85rem; padding: 6px 12px; }
+            .refresh-info #lastUpdate { display: inline; }
+            .content { padding: var(--spacing-xl); padding-bottom: 90px; }
             .bottom-nav {
                 max-width: 500px;
                 left: 50%;
@@ -1191,220 +1040,24 @@
                 border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0;
                 padding: var(--spacing-sm) var(--spacing-xl);
             }
-            
-            .nav-item {
-                min-width: 70px;
-                padding: 8px 12px;
-                font-size: 0.75rem;
-            }
-            
-            .nav-item i {
-                font-size: 1.2rem;
-            }
-            
-            .nav-item span {
-                font-size: 0.7rem;
-            }
-            
-            .page-header {
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-                margin-bottom: var(--spacing-xl);
-                padding-bottom: var(--spacing-md);
-            }
-            
-            .page-header h2 {
-                font-size: 1.5rem;
-            }
-            
-            .page-header h2::after {
-                width: 40px;
-                height: 3px;
-                bottom: -8px;
-            }
-            
-            .card-container {
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-                gap: var(--spacing-lg);
-            }
-            
-            .card {
-                padding: var(--spacing-lg);
-            }
-            
-            .card-header {
-                flex-direction: row;
-                align-items: center;
-                margin-bottom: var(--spacing-md);
-            }
-            
-            .card-title {
-                font-size: 1.05rem;
-                margin-right: var(--spacing-md);
-            }
-            
-            .card-date {
-                font-size: 0.85rem;
-                align-self: center;
-            }
-            
-            .card-content {
-                font-size: 0.9rem;
-            }
-            
-            .data-table {
-                font-size: 0.9rem;
-            }
-            
-            .data-table th {
-                font-size: 0.85rem;
-                padding: 10px 8px;
-            }
-            
-            .data-table td {
-                font-size: 0.85rem;
-                padding: 8px 6px;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                gap: var(--spacing-lg);
-                margin-bottom: var(--spacing-xl);
-            }
-            
-            .stat-card {
-                padding: var(--spacing-lg);
-            }
-            
-            .stat-icon {
-                width: 48px;
-                height: 48px;
-                font-size: 1.3rem;
-            }
-            
-            .stat-info span {
-                font-size: 0.8rem;
-            }
-            
-            .stat-info h3 {
-                font-size: 1.1rem;
-            }
-            
-            .label-saldo-header {
-                display: inline; /* Tampilkan di tablet */
-            }
+            .nav-item { min-width: 70px; padding: 8px 12px; font-size: 0.75rem; }
+            .nav-item i { font-size: 1.2rem; }
+            .page-header { flex-direction: row; align-items: center; justify-content: space-between; }
+            .card-container { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+            .stats-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
         }
 
-        /* Responsive Design - Desktop */
         @media (min-width: 992px) {
-            body {
-                font-size: 16px;
-            }
-            
-            .app-container {
-                max-width: 1200px;
-                margin: 0 auto;
-                box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-                border-radius: 0;
-                height: 100vh;
-                overflow: hidden;
-            }
-            
-            .header-content h1 {
-                font-size: 1.5rem;
-            }
-            
-            .bottom-nav {
-                max-width: 600px;
-            }
-            
-            .nav-item {
-                min-width: 80px;
-            }
-        }
-
-        /* Dark Mode Support */
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --light-color: #1a1a2e;
-                --dark-color: #f8f9fa;
-                --gray-100: #2d3748;
-                --gray-200: #4a5568;
-                --gray-300: #718096;
-                --gray-400: #a0aec0;
-                --gray-500: #cbd5e0;
-                --gray-600: #e2e8f0;
-                --gray-700: #edf2f7;
-                --gray-800: #f7fafc;
-                --gray-900: #ffffff;
-            }
-            
-            body {
-                background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
-            }
-            
-            .content {
-                background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
-            }
-            
-            .card,
-            .stat-card,
-            .month-accordion,
-            .ronda-item,
-            .table-container {
-                background: #2d3748;
-                border-color: #4a5568;
-                color: var(--gray-600);
-            }
-            
-            .card-title,
-            .stat-info h3,
-            .acc-left,
-            .ronda-name {
-                color: var(--gray-800);
-            }
-            
-            .data-table th {
-                background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
-                color: var(--gray-800);
-            }
-            
-            .data-table td {
-                color: var(--gray-700);
-                border-color: #4a5568;
-            }
-        }
-
-        /* Print Styles */
-        @media print {
-            .bottom-nav,
-            .refresh-info,
-            .btn-group,
-            .loading-indicator {
-                display: none !important;
-            }
-            
-            .content {
-                padding: 0;
-                padding-bottom: 0;
-            }
-            
-            .card,
-            .stat-card,
-            .month-accordion {
-                box-shadow: none;
-                border: 1px solid #ddd;
-                break-inside: avoid;
-            }
-            
-            .month-accordion.active .accordion-content {
-                max-height: none;
-            }
+            body { font-size: 16px; }
+            .app-container { max-width: 1200px; margin: 0 auto; box-shadow: 0 0 30px rgba(0, 0, 0, 0.1); }
+            .bottom-nav { max-width: 600px; }
         }
     </style>
 </head>
 <body>
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
     <div class="app-container">
         <!-- Main App Screen -->
         <div id="mainScreen" class="screen">
@@ -1448,9 +1101,7 @@
                     <div class="page-header">
                         <h2>Pengumuman</h2>
                     </div>
-                    <div id="pengumumanList" class="card-container">
-                        <!-- Pengumuman items will be loaded here -->
-                    </div>
+                    <div id="pengumumanList" class="card-container"></div>
                 </div>
 
                 <!-- Iuran Bulanan Page -->
@@ -1459,9 +1110,7 @@
                         <h2>Iuran Bulanan 2026</h2>
                     </div>
                     <div class="table-container">
-                        <table id="iuranTable" class="data-table">
-                            <!-- Iuran table will be loaded here -->
-                        </table>
+                        <table id="iuranTable" class="data-table"></table>
                     </div>
                 </div>
 
@@ -1503,9 +1152,7 @@
                         </div>
                     </div>
                 
-                    <div id="kasContainer">
-                        <!-- Kas data will be loaded here -->
-                    </div>
+                    <div id="kasContainer"></div>
                 </div>
 
                 <!-- Jadwal Ronda Page -->
@@ -1516,9 +1163,7 @@
                             <i class="fas fa-file-pdf"></i>Download PDF
                         </button>
                     </div>
-                    <div class="table-container">
-                        <!-- Ronda data will be loaded here -->
-                    </div>
+                    <div class="table-container"></div>
                 </div>
             </main>
         </div>
@@ -1539,10 +1184,9 @@
             ronda: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhtHQT_YmSq-tiQt-6Kqj5Ms9oeUdTdiNIChEdQPgEQryYxTMf2M5RTgpVa1oi30rvvXrJK3XY4nyd/pub?gid=2068778061&single=true&output=csv'
         };
 
-        // Variabel Penampung Data Global
         let rawKasData = []; 
         let rawRondaData = [];
-        let kasDataForChart = []; // Data untuk chart
+        let kasDataForChart = []; 
 
         // DOM elements
         const refreshBtn = document.getElementById('refreshBtn');
@@ -1562,8 +1206,28 @@
                 item.addEventListener('click', () => switchPage(item.getAttribute('data-page')));
             });
             loadInitialData();
-            setInterval(refreshAllData, 5 * 60 * 1000); // Auto refresh tiap 5 menit
+            setInterval(refreshAllData, 5 * 60 * 1000);
         });
+
+        // Fungsi Toast Notification
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <span>${message}</span>
+                <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
+            `;
+            container.appendChild(toast);
+            
+            // Hapus toast setelah 3 detik
+            setTimeout(() => {
+                toast.style.animation = 'fadeOut 0.3s ease-out forwards';
+                toast.addEventListener('animationend', () => {
+                    toast.remove();
+                });
+            }, 3000);
+        }
 
         function switchPage(pageName) {
             navItems.forEach(item => item.classList.toggle('active', item.getAttribute('data-page') === pageName));
@@ -1571,9 +1235,7 @@
             loadPageData(pageName);
         }
 
-        function loadInitialData() {
-            refreshAllData();
-        }
+        function loadInitialData() { refreshAllData(); }
 
         function refreshAllData() {
             const activePageElement = document.querySelector('.page.active');
@@ -1618,14 +1280,11 @@
             return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); 
         }
 
-        // Fungsi untuk memformat teks dengan line breaks
         function formatTextWithBreaks(text) {
             if (!text) return '';
-            // Ganti karakter newline dengan <br>
             return text.toString().replace(/\n/g, '<br>');
         }
 
-        // Fungsi untuk memotong teks dengan titik-titik
         function truncateText(text, maxLength = 100) {
             if (!text) return '';
             if (text.length <= maxLength) return text;
@@ -1633,7 +1292,7 @@
         }
 
         // ---------------------------------------------------------
-        // 1. PENGUMUMAN - DENGAN FITUR EXPAND/COLLAPSE
+        // 1. PENGUMUMAN
         // ---------------------------------------------------------
         function loadPengumuman() {
             fetchAndParseCSV(csvUrls.pengumuman)
@@ -1647,7 +1306,6 @@
                     for (let i = 1; i < data.length; i++) {
                         const [id, tgl, judul, isi, pengirim] = data[i];
                         const isiFormatted = formatTextWithBreaks(isi);
-                        const isiTruncated = truncateText(isi, 150);
                         
                         const card = document.createElement('div');
                         card.className = 'card pengumuman-card';
@@ -1672,13 +1330,11 @@
                 .finally(() => showLoading(false));
         }
 
-        // Fungsi untuk toggle pengumuman
         function togglePengumuman(headerElement) {
             const card = headerElement.closest('.pengumuman-card');
             const content = card.querySelector('.pengumuman-content');
             const toggleIcon = headerElement.querySelector('.pengumuman-toggle');
             
-            // Tutup semua pengumuman lainnya
             document.querySelectorAll('.pengumuman-card').forEach(otherCard => {
                 if (otherCard !== card) {
                     const otherContent = otherCard.querySelector('.pengumuman-content');
@@ -1691,7 +1347,6 @@
                 }
             });
             
-            // Toggle pengumuman ini
             if (content.style.display === 'none') {
                 content.style.display = 'block';
                 toggleIcon.classList.remove('fa-chevron-down');
@@ -1860,7 +1515,6 @@
                     </tr>
                 `;
 
-                // --- HEADER ACCORDION (NET BULANAN) ---
                 const netBulan = bulanDataItem.saldoBulan; 
                 const isPlus = netBulan >= 0;
                 const warnaTeks = isPlus ? 'var(--success-color)' : 'var(--danger-color)';
@@ -1919,15 +1573,20 @@
             }
         }
 
+        // ---------------------------------------------------------
+        // UPGRADED PDF EXPORT FUNCTION
+        // Grafik dipindahkan ke halaman terakhir (beda page dengan table)
+        // Header table font putih
+        // ---------------------------------------------------------
         async function exportToPDF() {
-            if (rawKasData.length <= 1) return alert("Data kas belum terisi!");
+            if (rawKasData.length <= 1) return showToast("Data kas belum terisi!", "error");
             showLoading(true);
             
             try {
                 const { jsPDF } = window.jspdf;
                 const doc = new jsPDF('p', 'mm', 'a4');
                 
-                // Header
+                // 1. SETUP HEADER DOKUMEN
                 doc.setFontSize(20);
                 doc.setFont(undefined, 'bold');
                 doc.setTextColor(0, 0, 0);
@@ -1950,14 +1609,13 @@
                 };
                 
                 const sortedMonths = Object.keys(grouped).sort((a, b) => urutanBulan[a] - urutanBulan[b]);
-
                 const pageWidth = doc.internal.pageSize.width;
                 const margin = 20;
                 const contentWidth = pageWidth - (2 * margin);
                 const totalColumns = 5;
                 const equalColumnWidth = contentWidth / totalColumns - 5;
 
-                // --- BAGIAN 1: PENGUMPULAN DATA UNTUK GRAFIK ---
+                // 2. PERSIAPAN DATA GRAFIK
                 const chartData = {
                     labels: [],
                     pemasukan: [],
@@ -1966,14 +1624,13 @@
                     net: []
                 };
 
-                let tempGlobalBalance = 0; // Variabel sementara untuk kalkulasi chart
+                let tempGlobalBalance = 0;
 
                 for (const bulan of sortedMonths) {
                     const rows = grouped[bulan];
                     let totalMasuk = 0;
                     let totalKeluar = 0;
                     
-                    // Hitung total per bulan (untuk keperluan chart)
                     for (const r of rows) {
                         const vIn = parseInt(r[4]?.toString().replace(/[^0-9]/g, "")) || 0;
                         const vOut = parseInt(r[5]?.toString().replace(/[^0-9]/g, "")) || 0;
@@ -1991,218 +1648,20 @@
                     chartData.net.push(netBulan);
                 }
 
-                // --- BAGIAN 2: HAPUS DATA PERTAMA (JANUARI) AGAR MULAI FEBRUARI ---
+                // Hapus data pertama (Januari) untuk GRAFIK saja (sesuai request awal untuk analisis mulai bulan berikutnya)
+                // Namun TABLE tetap menampilkan semua data termasuk Januari
                 if (chartData.labels.length > 0) {
-                    chartData.labels.shift();      // Hapus Januari
-                    chartData.pemasukan.shift();   // Hapus data Januari
-                    chartData.pengeluaran.shift(); // Hapus data Januari
-                    chartData.saldo.shift();      // Hapus saldo Januari
-                    chartData.net.shift();        // Hapus net Januari
+                    chartData.labels.shift();      
+                    chartData.pemasukan.shift();   
+                    chartData.pengeluaran.shift(); 
+                    chartData.saldo.shift();      
+                    chartData.net.shift();        
                 }
 
-                // --- BAGIAN 3: RENDER GRAFIK DI HALAMAN AWAL ---
-                let currentY = 40;
-
-                // GRAFIK 1: PEMASUKAN vs PENGELUARAN
-                doc.setFontSize(16);
-                doc.setFont(undefined, 'bold');
-                doc.setTextColor(0, 0, 0);
-                doc.text("GRAFIK PEMASUKAN vs PENGELUARAN", 105, currentY, { align: 'center' });
-                currentY += 10;
+                // 3. RENDER TABEL DATA (PAGE 1 - N)
+                // Dicetak terlebih dahulu sebelum grafik
+                let globalBalance = 0; 
                 
-                const canvas1 = document.createElement('canvas');
-                canvas1.width = 600;
-                canvas1.height = 300;
-                canvas1.style.display = 'none';
-                document.body.appendChild(canvas1);
-                
-                const ctx1 = canvas1.getContext('2d');
-                
-                if (chartData.labels.length > 0 && chartData.pemasukan.length > 0) {
-                    new Chart(ctx1, {
-                        type: 'line',
-                        data: {
-                            labels: chartData.labels,
-                            datasets: [
-                                {
-                                    label: 'Pemasukan',
-                                    data: chartData.pemasukan,
-                                    borderColor: '#06d6a0',
-                                    backgroundColor: 'rgba(6, 214, 160, 0.1)',
-                                    borderWidth: 2,
-                                    fill: true,
-                                    tension: 0.3
-                                },
-                                {
-                                    label: 'Pengeluaran',
-                                    data: chartData.pengeluaran,
-                                    borderColor: '#ef476f',
-                                    backgroundColor: 'rgba(239, 71, 111, 0.1)',
-                                    borderWidth: 2,
-                                    fill: true,
-                                    tension: 0.3
-                                }
-                            ]
-                        },
-                        options: {
-                            responsive: false,
-                            maintainAspectRatio: false,
-                            plugins: {
-                                title: {
-                                    display: true,
-                                    text: 'Trend Pemasukan dan Pengeluaran per Bulan (Mulai Februari 2025)',
-                                    font: { size: 14, color: '#000000' }
-                                },
-                                legend: { position: 'top', labels: { font: { size: 10 }, color: '#000000' } }
-                            },
-                            scales: {
-                                x: { ticks: { font: { size: 9 }, color: '#000000' }, grid: { color: 'rgba(0, 0, 0, 0.1)' } },
-                                y: { beginAtZero: true, ticks: { font: { size: 9 }, color: '#000000', callback: function(value) { if (value >= 1000000) return 'Rp ' + (value / 1000000).toFixed(1) + 'jt'; else if (value >= 1000) return 'Rp ' + (value / 1000).toFixed(0) + 'k'; return 'Rp ' + value; } }, grid: { color: 'rgba(0, 0, 0, 0.1)' } }
-                            }
-                        }
-                    });
-                    
-                    await new Promise(resolve => setTimeout(resolve, 500));
-                    const chartImage1 = canvas1.toDataURL('image/png', 1.0);
-                    doc.addImage(chartImage1, 'PNG', margin, currentY, contentWidth, 80);
-                    currentY += 90;
-                }
-
-                // GRAFIK 2: SALDO KUMULATIF
-                doc.setFontSize(16);
-                doc.setFont(undefined, 'bold');
-                doc.setTextColor(0, 0, 0);
-                doc.text("GRAFIK SALDO KUMULATIF", 105, currentY, { align: 'center' });
-                currentY += 10;
-                
-                const canvas2 = document.createElement('canvas');
-                canvas2.width = 600;
-                canvas2.height = 300;
-                canvas2.style.display = 'none';
-                document.body.appendChild(canvas2);
-                
-                const ctx2 = canvas2.getContext('2d');
-                
-                if (chartData.labels.length > 0 && chartData.saldo.length > 0) {
-                    new Chart(ctx2, {
-                        type: 'line',
-                        data: {
-                            labels: chartData.labels,
-                            datasets: [{
-                                label: 'Saldo Kumulatif',
-                                data: chartData.saldo,
-                                borderColor: '#4361ee',
-                                backgroundColor: 'rgba(67, 97, 238, 0.1)',
-                                borderWidth: 3,
-                                fill: true,
-                                tension: 0.4
-                            }]
-                        },
-                        options: {
-                            responsive: false,
-                            maintainAspectRatio: false,
-                            plugins: {
-                                title: {
-                                    display: true,
-                                    text: 'Perkembangan Saldo Kas (Mulai Februari 2025)',
-                                    font: { size: 14, color: '#000000' }
-                                },
-                                legend: { position: 'top', labels: { font: { size: 10 }, color: '#000000' } }
-                            },
-                            scales: {
-                                x: { ticks: { font: { size: 9 }, color: '#000000' }, grid: { color: 'rgba(0, 0, 0, 0.1)' } },
-                                y: { beginAtZero: false, ticks: { font: { size: 9 }, color: '#000000', callback: function(value) { if (value >= 1000000) return 'Rp ' + (value / 1000000).toFixed(1) + 'jt'; else if (value >= 1000) return 'Rp ' + (value / 1000).toFixed(0) + 'k'; return 'Rp ' + value; } }, grid: { color: 'rgba(0, 0, 0, 0.1)' } }
-                            }
-                        }
-                    });
-                    
-                    await new Promise(resolve => setTimeout(resolve, 500));
-                    const chartImage2 = canvas2.toDataURL('image/png', 1.0);
-                    doc.addImage(chartImage2, 'PNG', margin, currentY, contentWidth, 80);
-                    currentY += 90;
-                }
-
-                // GRAFIK 3: HASIL BERSIH BULANAN
-                if (currentY > 220) {
-                    doc.addPage();
-                    currentY = 20;
-                }
-
-                doc.setFontSize(16);
-                doc.setFont(undefined, 'bold');
-                doc.setTextColor(0, 0, 0);
-                doc.text("GRAFIK HASIL BERSIH BULANAN", 105, currentY, { align: 'center' });
-                currentY += 10;
-                
-                const canvas3 = document.createElement('canvas');
-                canvas3.width = 600;
-                canvas3.height = 300;
-                canvas3.style.display = 'none';
-                document.body.appendChild(canvas3);
-                
-                const ctx3 = canvas3.getContext('2d');
-                
-                if (chartData.labels.length > 0 && chartData.net.length > 0) {
-                    const barColors = chartData.net.map(val => val >= 0 ? 'rgba(6, 214, 160, 0.8)' : 'rgba(239, 71, 111, 0.8)');
-                    const borderColors = chartData.net.map(val => val >= 0 ? '#06d6a0' : '#ef476f');
-
-                    new Chart(ctx3, {
-                        type: 'bar',
-                        data: {
-                            labels: chartData.labels,
-                            datasets: [{
-                                label: 'Hasil Bersih (Masuk - Keluar)',
-                                data: chartData.net,
-                                backgroundColor: barColors,
-                                borderColor: borderColors,
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            responsive: false,
-                            maintainAspectRatio: false,
-                            plugins: {
-                                title: {
-                                    display: true,
-                                    text: 'Analisis Surplus/Defisit (Mulai Februari 2025)',
-                                    font: { size: 14, color: '#000000' }
-                                },
-                                legend: { position: 'top', labels: { font: { size: 10 }, color: '#000000' } }
-                            },
-                            scales: {
-                                x: { ticks: { font: { size: 9 }, color: '#000000' }, grid: { display: false } },
-                                y: {
-                                    grid: {
-                                        color: (context) => context.tick.value === 0 ? '#000000' : 'rgba(0, 0, 0, 0.1)',
-                                        lineWidth: (context) => context.tick.value === 0 ? 2 : 1
-                                    },
-                                    ticks: { font: { size: 9 }, color: '#000000', callback: function(value) { if (value >= 1000000) return 'Rp ' + (value / 1000000).toFixed(1) + 'jt'; else if (value >= 1000) return 'Rp ' + (value / 1000).toFixed(0) + 'k'; return 'Rp ' + value; } }
-                                }
-                            }
-                        }
-                    });
-                    
-                    await new Promise(resolve => setTimeout(resolve, 500));
-                    const chartImage3 = canvas3.toDataURL('image/png', 1.0);
-                    doc.addImage(chartImage3, 'PNG', margin, currentY, contentWidth, 80);
-                    currentY += 90;
-                }
-                
-                // Cleanup Canvases
-                if (canvas1.parentNode) document.body.removeChild(canvas1);
-                if (canvas2.parentNode) document.body.removeChild(canvas2);
-                if (canvas3.parentNode) document.body.removeChild(canvas3);
-
-                // --- BAGIAN 4: RENDER TABEL (DATA LENGKAP DARI JANUARI) ---
-                
-                // Tambah halaman baru jika grafik sudah memenuhi halaman 1
-                if (currentY > 220) {
-                    doc.addPage();
-                    currentY = 20;
-                }
-
-                let globalBalance = 0; // Reset balance untuk perhitungan tabel
-
                 for (const bulan of sortedMonths) {
                     const rows = grouped[bulan];
                     let totalMasuk = 0;
@@ -2224,8 +1683,9 @@
                         };
                     });
                     
-                    // Cek page break untuk tabel
-                    if (currentY > 220) {
+                    // Cek page break
+                    let currentY = doc.lastAutoTable ? doc.lastAutoTable.finalY + 10 : 40;
+                    if (currentY > 240) {
                         doc.addPage();
                         currentY = 20;
                     }
@@ -2252,15 +1712,16 @@
                         formatNumber(globalBalance)
                     ]);
                     
+                    // KONFIGURASI TABEL DENGAN HEADER PUTIH
                     doc.autoTable({
                         startY: currentY,
                         head: [['Tanggal', 'Keterangan', 'Masuk', 'Keluar', 'Saldo Kumulatif']],
                         body: tableData,
                         theme: 'grid',
                         headStyles: { 
-                            fillColor: [67, 97, 238], 
+                            fillColor: [67, 97, 238], // Biru background
+                            textColor: [255, 255, 255], // PUTIH (Sesuai Request)
                             fontSize: 9,
-                            textColor: [255, 255, 255],
                             halign: 'center',
                             fontStyle: 'bold'
                         },
@@ -2300,31 +1761,23 @@
                             if (data.row.index === tableData.length - 1) {
                                 data.cell.styles.textColor = [0, 0, 0];
                                 data.cell.styles.fontStyle = 'bold';
-                            } else {
-                                data.cell.styles.textColor = [0, 0, 0];
                             }
-                            if (data.column.index === 0 && data.cell.raw) {
-                                if (data.cell.raw.length > 10) {
-                                    data.cell.text = data.cell.raw.substring(0, 10);
-                                }
-                            }
-                        },
-                        didDrawPage: (d) => { 
-                            currentY = d.cursor.y + 5;
-                            doc.setTextColor(0, 0, 0);
                         }
                     });
-                    
-                    currentY += 10;
                 }
 
-                // --- RINGKASAN AKHIR ---
-                // Hitung total ulang untuk summary (agar akurat)
+                // 4. RINGKASAN AKHIR (SEBELUM GRAFIK)
+                let finalY = doc.lastAutoTable ? doc.lastAutoTable.finalY + 10 : 40;
+                if (finalY > 220) {
+                    doc.addPage();
+                    finalY = 20;
+                }
+
+                // Hitung total ulang untuk summary
                 const totalPemasukan = chartData.pemasukan.reduce((a, b) => a + b, 0);
                 const totalPengeluaran = chartData.pengeluaran.reduce((a, b) => a + b, 0);
-                // Tambahkan data bulan pertama (Januari) yang dihapus di grafik ke total summary
-                // Agar summary totalnya tetap lengkap
-                const firstMonth = sortedMonths[0]; // Misal Januari
+                // Kembalikan data bulan pertama (Januari) ke total summary agar akurat
+                const firstMonth = sortedMonths[0]; 
                 const firstMonthRows = grouped[firstMonth] || [];
                 let firstMonthIn = 0, firstMonthOut = 0;
                 firstMonthRows.forEach(r => {
@@ -2334,55 +1787,183 @@
                 
                 const grandTotalIn = totalPemasukan + firstMonthIn;
                 const grandTotalOut = totalPengeluaran + firstMonthOut;
-                const grandBalance = globalBalance; // globalBalance sudah menghitung semua bulan di loop tabel
+                const grandBalance = globalBalance;
 
-                if (currentY > 220) {
-                    doc.addPage();
-                    currentY = 20;
-                }
-
-                currentY += 10;
+                finalY += 10;
                 doc.setFontSize(12);
                 doc.setFont(undefined, 'bold');
                 doc.setTextColor(0, 0, 0);
-                doc.text("RINGKASAN KESELURUHAN", margin, currentY);
-                currentY += 8;
+                doc.text("RINGKASAN KESELURUHAN", margin, finalY);
+                finalY += 8;
                 
                 doc.setFont(undefined, 'normal');
                 doc.setFontSize(10);
-                doc.setTextColor(0, 0, 0);
                 
                 const summaryWidth = contentWidth;
                 const summaryHeight = 25;
                 
                 doc.setFillColor(245, 245, 245);
-                doc.rect(margin, currentY, summaryWidth, summaryHeight, 'F');
-                
+                doc.rect(margin, finalY, summaryWidth, summaryHeight, 'F');
                 doc.setDrawColor(200, 200, 200);
                 doc.setLineWidth(0.3);
-                doc.rect(margin, currentY, summaryWidth, summaryHeight);
+                doc.rect(margin, finalY, summaryWidth, summaryHeight);
                 
                 const col1 = margin + 10;
                 const col2 = margin + summaryWidth / 2;
                 
-                doc.text(`Total Pemasukan: Rp ${formatNumber(grandTotalIn)}`, col1, currentY + 8);
-                doc.text(`Total Pengeluaran: Rp ${formatNumber(grandTotalOut)}`, col1, currentY + 16);
+                doc.setTextColor(0, 0, 0);
+                doc.text(`Total Pemasukan: Rp ${formatNumber(grandTotalIn)}`, col1, finalY + 8);
+                doc.text(`Total Pengeluaran: Rp ${formatNumber(grandTotalOut)}`, col1, finalY + 16);
                 
                 doc.setFont(undefined, 'bold');
                 doc.setFontSize(11);
-                doc.text(`Saldo Akhir: Rp ${formatNumber(grandBalance)}`, col2, currentY + 12);
-                
-                doc.setFontSize(9);
-                doc.setFont(undefined, 'italic');
+                doc.text(`Saldo Akhir: Rp ${formatNumber(grandBalance)}`, col2, finalY + 12);
+
+                // 5. HALAMAN BARU KHUSUS UNTUK GRAFIK
+                doc.addPage();
+                let chartPageY = 20;
+
+                // HEADER HALAMAN GRAFIK
+                doc.setFontSize(16);
+                doc.setFont(undefined, 'bold');
                 doc.setTextColor(0, 0, 0);
-                doc.text(`Laporan dicetak pada: ${moment().format('DD/MM/YYYY HH:mm')}`, 105, 285, { align: 'center' });
-                doc.text(`© System Management Gang Murai ${new Date().getFullYear()}`, 105, 290, { align: 'center' });
-                
+                doc.text("ANALISIS GRAFIK KEUANGAN", 105, chartPageY, { align: 'center' });
+                chartPageY += 10;
+
+                // FUNGSI HELPER RENDER GRAFIK
+                const renderChartToPDF = async (ctx, chartConfig, yPos, title) => {
+                    doc.setFontSize(14);
+                    doc.setFont(undefined, 'bold');
+                    doc.setTextColor(0, 0, 0);
+                    doc.text(title, 105, yPos, { align: 'center' });
+                    yPos += 8;
+                    
+                    const myChart = new Chart(ctx, chartConfig);
+                    await new Promise(resolve => setTimeout(resolve, 500)); // Tunggu render
+                    const imgData = ctx.canvas.toDataURL('image/png', 1.0);
+                    doc.addImage(imgData, 'PNG', margin, yPos, contentWidth, 80);
+                    return yPos + 90;
+                };
+
+                // GRAFIK 1: PEMASUKAN vs PENGELUARAN
+                const canvas1 = document.createElement('canvas');
+                canvas1.width = 600; canvas1.height = 300; canvas1.style.display = 'none';
+                document.body.appendChild(canvas1);
+                const ctx1 = canvas1.getContext('2d');
+
+                if (chartData.labels.length > 0) {
+                    chartPageY = await renderChartToPDF(ctx1, {
+                        type: 'line',
+                        data: {
+                            labels: chartData.labels,
+                            datasets: [
+                                { label: 'Pemasukan', data: chartData.pemasukan, borderColor: '#06d6a0', backgroundColor: 'rgba(6, 214, 160, 0.1)', borderWidth: 2, fill: true, tension: 0.3 },
+                                { label: 'Pengeluaran', data: chartData.pengeluaran, borderColor: '#ef476f', backgroundColor: 'rgba(239, 71, 111, 0.1)', borderWidth: 2, fill: true, tension: 0.3 }
+                            ]
+                        },
+                        options: {
+                            responsive: false, maintainAspectRatio: false,
+                            plugins: { 
+                                title: { display: true, text: 'Trend Mulai Februari', font: { size: 12 } },
+                                legend: { position: 'top', labels: { font: { size: 10 }, color: '#000' } }
+                            },
+                            scales: { x: { ticks: { font: { size: 9 }, color: '#000' } }, y: { ticks: { font: { size: 9 }, color: '#000' } } }
+                        }
+                    }, chartPageY, "GRAFIK 1: PEMASUKAN vs PENGELUARAN");
+                    document.body.removeChild(canvas1);
+                }
+
+                // Cek apakah perlu halaman baru untuk grafik berikutnya
+                if (chartPageY > 220) {
+                    doc.addPage();
+                    chartPageY = 20;
+                }
+
+                // GRAFIK 2: SALDO KUMULATIF
+                const canvas2 = document.createElement('canvas');
+                canvas2.width = 600; canvas2.height = 300; canvas2.style.display = 'none';
+                document.body.appendChild(canvas2);
+                const ctx2 = canvas2.getContext('2d');
+
+                if (chartData.labels.length > 0) {
+                    chartPageY = await renderChartToPDF(ctx2, {
+                        type: 'line',
+                        data: {
+                            labels: chartData.labels,
+                            datasets: [{
+                                label: 'Saldo Kumulatif',
+                                data: chartData.saldo,
+                                borderColor: '#4361ee',
+                                backgroundColor: 'rgba(67, 97, 238, 0.1)',
+                                borderWidth: 3,
+                                fill: true,
+                                tension: 0.4
+                            }]
+                        },
+                        options: {
+                            responsive: false, maintainAspectRatio: false,
+                            plugins: { 
+                                title: { display: true, text: 'Perkembangan Saldo', font: { size: 12 } },
+                                legend: { position: 'top', labels: { font: { size: 10 }, color: '#000' } }
+                            },
+                            scales: { x: { ticks: { font: { size: 9 }, color: '#000' } }, y: { ticks: { font: { size: 9 }, color: '#000' } } }
+                        }
+                    }, chartPageY, "GRAFIK 2: SALDO KUMULATIF");
+                    document.body.removeChild(canvas2);
+                }
+
+                if (chartPageY > 220) {
+                    doc.addPage();
+                    chartPageY = 20;
+                }
+
+                // GRAFIK 3: HASIL BERSIH
+                const canvas3 = document.createElement('canvas');
+                canvas3.width = 600; canvas3.height = 300; canvas3.style.display = 'none';
+                document.body.appendChild(canvas3);
+                const ctx3 = canvas3.getContext('2d');
+
+                if (chartData.labels.length > 0) {
+                    const barColors = chartData.net.map(val => val >= 0 ? 'rgba(6, 214, 160, 0.8)' : 'rgba(239, 71, 111, 0.8)');
+                    chartPageY = await renderChartToPDF(ctx3, {
+                        type: 'bar',
+                        data: {
+                            labels: chartData.labels,
+                            datasets: [{
+                                label: 'Hasil Bersih',
+                                data: chartData.net,
+                                backgroundColor: barColors,
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: false, maintainAspectRatio: false,
+                            plugins: { 
+                                title: { display: true, text: 'Surplus/Defisit Bulanan', font: { size: 12 } },
+                                legend: { display: false }
+                            },
+                            scales: { x: { ticks: { font: { size: 9 }, color: '#000' } }, y: { ticks: { font: { size: 9 }, color: '#000' } } }
+                        }
+                    }, chartPageY, "GRAFIK 3: HASIL BERSIH BULANAN");
+                    document.body.removeChild(canvas3);
+                }
+
+                // FOOTER PADA SEMUA HALAMAN
+                const totalPages = doc.internal.getNumberOfPages();
+                for (let i = 1; i <= totalPages; i++) {
+                    doc.setPage(i);
+                    doc.setFontSize(9);
+                    doc.setFont(undefined, 'italic');
+                    doc.setTextColor(150, 150, 150);
+                    doc.text(`Dicetak: ${moment().format('DD/MM/YYYY HH:mm')} - Hal ${i} dari ${totalPages}`, 105, 290, { align: 'center' });
+                }
+
                 doc.save(`Laporan_Kas_EMurai_${moment().format('YYYYMMDD_HHmm')}.pdf`);
+                showToast("Laporan PDF berhasil diunduh!", "success");
                 
             } catch (err) { 
                 console.error("Error generating PDF:", err);
-                alert("Gagal membuat PDF: " + err.message); 
+                showToast("Gagal membuat PDF: " + err.message, "error"); 
             }
             finally { 
                 showLoading(false); 
@@ -2390,7 +1971,7 @@
         }
 
         function exportToExcel() {
-            if (rawKasData.length === 0) return alert("Tunggu data kas dimuat!");
+            if (rawKasData.length === 0) return showToast("Tunggu data kas dimuat!", "warning");
             const ws = XLSX.utils.aoa_to_sheet(rawKasData);
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "Laporan Kas");
@@ -2405,7 +1986,6 @@
                 .then(data => {
                     if (data.length <= 1) return;
                     rawRondaData = data;
-
                     const rondaPage = document.getElementById('rondaPage');
                     const tableContainer = rondaPage.querySelector('.table-container');
                     tableContainer.style.overflowX = "hidden";
@@ -2433,7 +2013,6 @@
 
                     rondaList.forEach(item => {
                         let persentase, labelTeks, statusClass;
-
                         if (item.hariTerakhir === 0) {
                             persentase = 100;
                             labelTeks = "DIPILIH RONDA";
@@ -2454,8 +2033,7 @@
                                     <div class="ronda-bar-fill" style="width: ${persentase}%"></div>
                                     <div class="ronda-bar-text">${labelTeks}</div>
                                 </div>
-                            </div>
-                        `;
+                            </div>`;
                         listContainer.insertAdjacentHTML('beforeend', itemHtml);
                     });
                     updateLastUpdateTime();
@@ -2464,7 +2042,7 @@
         }
 
         async function exportRondaPDF() {
-            if (rawRondaData.length <= 1) return alert("Data ronda belum dimuat!");
+            if (rawRondaData.length <= 1) return showToast("Data ronda belum dimuat!", "error");
             showLoading(true);
             
             try {
@@ -2513,45 +2091,30 @@
                     let tanggalMoment = null;
                     
                     tanggalMoment = moment(tanggalStr, 'DD/MM/YYYY');
-                    if (!tanggalMoment.isValid()) {
-                        tanggalMoment = moment(tanggalStr, 'DD-MM-YYYY');
-                    }
-                    if (!tanggalMoment.isValid()) {
-                        tanggalMoment = moment(tanggalStr, 'YYYY-MM-DD');
-                    }
-                    if (!tanggalMoment.isValid()) {
-                        tanggalMoment = moment(tanggalStr);
-                    }
+                    if (!tanggalMoment.isValid()) tanggalMoment = moment(tanggalStr, 'DD-MM-YYYY');
+                    if (!tanggalMoment.isValid()) tanggalMoment = moment(tanggalStr, 'YYYY-MM-DD');
+                    if (!tanggalMoment.isValid()) tanggalMoment = moment(tanggalStr);
                     
                     if (tanggalMoment.isValid()) {
                         const bulanIndex = tanggalMoment.month();
-                        if (bulanIndex >= 0 && bulanIndex < 12) {
-                            bulan = bulanIndonesia[bulanIndex];
-                        }
+                        if (bulanIndex >= 0 && bulanIndex < 12) bulan = bulanIndonesia[bulanIndex];
                     } else {
                         const lowerStr = tanggalStr.toLowerCase();
                         bulanIndonesia.forEach((bulanName, idx) => {
-                            if (lowerStr.includes(bulanName.toLowerCase())) {
-                                bulan = bulanName;
-                            }
+                            if (lowerStr.includes(bulanName.toLowerCase())) bulan = bulanName;
                         });
                     }
                     
                     if (!bulan) return;
                     
-                    dataRows.forEach((row, rowIndex) => {
+                    dataRows.forEach((row) => {
                         const namaWarga = row[0];
                         if (!namaWarga || !rekapData[namaWarga]) return;
                         
                         const statusRonda = row[colIndex + 1];
                         const statusStr = statusRonda ? statusRonda.toString().toUpperCase().trim() : '';
                         
-                        const isHadir = statusStr === 'TRUE' || 
-                                       statusStr === 'YA' || 
-                                       statusStr === '1' || 
-                                       statusStr === '✓' ||
-                                       statusStr === 'X' ||
-                                       statusStr === 'V';
+                        const isHadir = statusStr === 'TRUE' || statusStr === 'YA' || statusStr === '1' || statusStr === '✓' || statusStr === 'X' || statusStr === 'V';
                         
                         if (isHadir) {
                             rekapData[namaWarga].perBulan[bulan] = (rekapData[namaWarga].perBulan[bulan] || 0) + 1;
@@ -2567,53 +2130,20 @@
                     .filter(warga => warga.nama && warga.nama.trim() !== '')
                     .map((warga, index) => {
                         const rowData = [index + 1, warga.nama];
-                        bulanIndonesia.forEach(bulan => {
-                            rowData.push(warga.perBulan[bulan] || 0);
-                        });
+                        bulanIndonesia.forEach(bulan => rowData.push(warga.perBulan[bulan] || 0));
                         rowData.push(warga.total);
                         return rowData;
                     });
                 
                 if (tableData.length === 0 || totalKehadiranTerhitung === 0) {
-                    let currentY = 40;
                     doc.setFontSize(14);
-                    doc.text("Tidak ada data kehadiran ronda ditemukan.", 20, currentY);
-                    currentY += 15;
-                    doc.setFontSize(10);
-                    doc.text(`Data yang dianalisis:`, 20, currentY);
-                    currentY += 8;
-                    doc.text(`- Jumlah warga: ${Object.keys(rekapData).length}`, 25, currentY);
-                    currentY += 6;
-                    doc.text(`- Jumlah tanggal: ${dateHeaders.length}`, 25, currentY);
-                    currentY += 6;
-                    doc.text(`- Format tanggal pertama: "${dateHeaders[0]}"`, 25, currentY);
+                    doc.text("Tidak ada data kehadiran ronda ditemukan.", 20, 40);
                 } else {
-                    tableData.sort((a, b) => {
-                        const totalA = a[a.length - 1];
-                        const totalB = b[b.length - 1];
-                        return totalB - totalA;
-                    });
-                    
-                    tableData.forEach((row, index) => {
-                        row[0] = index + 1;
-                    });
-                    
-                    const totalPerBulan = Array(bulanIndonesia.length).fill(0);
-                    let grandTotal = 0;
-                    
-                    tableData.forEach(row => {
-                        for (let i = 0; i < bulanIndonesia.length; i++) {
-                            totalPerBulan[i] += row[i + 2];
-                        }
-                        grandTotal += row[row.length - 1];
-                    });
+                    tableData.sort((a, b) => b[b.length - 1] - a[a.length - 1]);
+                    tableData.forEach((row, index) => row[0] = index + 1);
                     
                     const margin = 6;
-                    const pageWidth = doc.internal.pageSize.width;
-                    const noColWidth = 8;
-                    const namaColWidth = 35;
-                    const bulanColWidth = 7;
-                    const totalColWidth = 12;
+                    const noColWidth = 8; const namaColWidth = 35; const bulanColWidth = 7; const totalColWidth = 12;
                     
                     doc.autoTable({
                         startY: 35,
@@ -2622,152 +2152,29 @@
                         theme: 'grid',
                         headStyles: { 
                             fillColor: [67, 97, 238], 
+                            textColor: [255, 255, 255], // Putih
                             fontSize: 6, 
-                            textColor: [255, 255, 255],
                             halign: 'center',
                             fontStyle: 'bold',
                             cellPadding: 1.5
                         },
-                        bodyStyles: { 
-                            fontSize: 6, 
-                            cellPadding: 1.5,
-                            textColor: [0, 0, 0],
-                            overflow: 'linebreak',
-                            minCellHeight: 4
-                        },
+                        bodyStyles: { fontSize: 6, cellPadding: 1.5, textColor: [0, 0, 0] },
                         columnStyles: {
-                            0: { cellWidth: noColWidth, halign: 'center', valign: 'middle' },
-                            1: { cellWidth: namaColWidth, halign: 'left', valign: 'middle' },
-                            ...bulanIndonesia.reduce((styles, bulan, index) => {
-                                styles[index + 2] = { cellWidth: bulanColWidth, halign: 'center', valign: 'middle' };
-                                return styles;
-                            }, {}),
-                            [tableHeaders.length - 1]: { cellWidth: totalColWidth, halign: 'center', valign: 'middle', fontStyle: 'bold' }
+                            0: { cellWidth: noColWidth, halign: 'center' },
+                            1: { cellWidth: namaColWidth, halign: 'left' },
+                            ...bulanIndonesia.reduce((styles, _, i) => { styles[i + 2] = { cellWidth: bulanColWidth, halign: 'center' }; return styles; }, {}),
+                            [tableHeaders.length - 1]: { cellWidth: totalColWidth, halign: 'center', fontStyle: 'bold' }
                         },
-                        margin: { left: margin, right: margin },
-                        tableWidth: 'auto',
-                        styles: { overflow: 'linebreak', cellWidth: 'wrap' },
-                        didParseCell: function(data) {
-                            if (data.row.index >= 0 && data.column.index >= 0) {
-                                if (data.column.index === tableHeaders.length - 1 && data.cell.raw > 0) {
-                                    data.cell.styles.fillColor = [230, 255, 247];
-                                }
-                                else if (data.column.index >= 2 && data.column.index < tableHeaders.length - 1 && data.cell.raw > 0) {
-                                    data.cell.styles.fillColor = [240, 248, 255];
-                                }
-                            }
-                        },
-                        didDrawPage: function(data) {
-                            doc.setFontSize(8);
-                            doc.setFont(undefined, 'bold');
-                            doc.text(`Total: ${grandTotal} kali`, pageWidth - 25, 15);
-                        }
+                        margin: { left: margin, right: margin }
                     });
-                }
-                
-                if (dateHeaders.length > 0) {
-                    doc.addPage();
-                    let currentY = 20;
-                    const margin = 15;
-                    
-                    doc.setFontSize(18);
-                    doc.setFont(undefined, 'bold');
-                    doc.text("JADWAL RONDA PER TANGGAL", 105, currentY, { align: 'center' });
-                    currentY += 10;
-                    
-                    doc.setFontSize(11);
-                    doc.setFont(undefined, 'normal');
-                    doc.text("Berikut adalah daftar warga yang bertugas ronda per tanggal:", margin, currentY);
-                    currentY += 8;
-                    
-                    const allDates = dateHeaders.slice().reverse();
-                    let datesProcessed = 0;
-                    
-                    allDates.forEach((tanggalStr, index) => {
-                        if (currentY > 250) {
-                            doc.addPage();
-                            currentY = 20;
-                            doc.setFontSize(16);
-                            doc.setFont(undefined, 'bold');
-                            doc.text(`JADWAL RONDA PER TANGGAL (lanjutan)`, 105, currentY, { align: 'center' });
-                            currentY += 10;
-                        }
-                        
-                        const wargaBertugas = [];
-                        dataRows.forEach(row => {
-                            const namaWarga = row[0];
-                            if (!namaWarga) return;
-                            
-                            const colIndex = headers.indexOf(tanggalStr);
-                            if (colIndex > 0) {
-                                const statusRonda = row[colIndex];
-                                const statusStr = statusRonda ? statusRonda.toString().toUpperCase().trim() : '';
-                                
-                                const isHadir = statusStr === 'TRUE' || 
-                                               statusStr === 'YA' || 
-                                               statusStr === '1' || 
-                                               statusStr === '✓' ||
-                                               statusStr === 'X' ||
-                                               statusStr === 'V';
-                                
-                                if (isHadir) {
-                                    wargaBertugas.push(namaWarga.trim());
-                                }
-                            }
-                        });
-                        
-                        if (wargaBertugas.length > 0) {
-                            let formattedDate = tanggalStr;
-                            try {
-                                const dateMoment = moment(tanggalStr, ['DD/MM/YYYY', 'DD-MM-YYYY', 'YYYY-MM-DD']);
-                                if (dateMoment.isValid()) {
-                                    formattedDate = dateMoment.format('dddd, DD MMMM YYYY');
-                                }
-                            } catch (e) {}
-                            
-                            doc.setFontSize(12);
-                            doc.setFont(undefined, 'bold');
-                            doc.text(`${formattedDate}:`, margin, currentY);
-                            currentY += 6;
-                            
-                            doc.setFontSize(10);
-                            doc.setFont(undefined, 'normal');
-                            
-                            wargaBertugas.forEach((nama, idx) => {
-                                if (currentY < 280) {
-                                    doc.text(`${idx + 1}. ${nama}`, margin + 10, currentY);
-                                    currentY += 5;
-                                }
-                            });
-                            
-                            currentY += 4;
-                            datesProcessed++;
-                        }
-                    });
-                    
-                    if (currentY < 270) {
-                        currentY += 5;
-                        doc.setFontSize(10);
-                        doc.setFont(undefined, 'italic');
-                        doc.text(`Total: ${datesProcessed} hari jadwal ronda tercatat`, margin, currentY);
-                    }
-                }
-                
-                const totalPages = doc.internal.getNumberOfPages();
-                for (let i = 1; i <= totalPages; i++) {
-                    doc.setPage(i);
-                    doc.setFontSize(7);
-                    doc.setFont(undefined, 'italic');
-                    doc.setTextColor(150, 150, 150);
-                    doc.text(`Halaman ${i} dari ${totalPages}`, 105, 285, { align: 'center' });
-                    doc.text(`© System Management Gang Murai ${new Date().getFullYear()}`, 105, 290, { align: 'center' });
                 }
                 
                 doc.save(`Rekap_Ronda_EMurai_${moment().format('YYYYMMDD_HHmm')}.pdf`);
+                showToast("Jadwal Ronda PDF berhasil diunduh!", "success");
                 
             } catch (err) { 
-                console.error("Error generating PDF:", err);
-                alert("Gagal membuat PDF: " + err.message); 
+                console.error(err);
+                showToast("Gagal membuat PDF Ronda: " + err.message, "error"); 
             }
             finally { 
                 showLoading(false); 
