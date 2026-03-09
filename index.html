@@ -83,7 +83,7 @@
             min-height: 100vh;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            font-size: 14px; /* Base font size untuk mobile */
+            font-size: 14px; 
         }
 
         .app-container {
@@ -106,7 +106,7 @@
             transition: var(--transition);
         }
 
-        /* Modern Header - Mobile Optimized */
+        /* Modern Header */
         .app-header {
             background: var(--gradient-primary);
             color: white;
@@ -143,22 +143,22 @@
             position: relative;
             z-index: 1;
             width: 100%;
-            flex-wrap: nowrap; /* Mencegah wrap di header */
+            flex-wrap: nowrap; 
         }
 
         .header-content h1 {
-            font-size: 1.2rem; /* Ukuran lebih kecil untuk mobile */
+            font-size: 1.2rem; 
             font-weight: 700;
             display: flex;
             align-items: center;
             gap: var(--spacing-sm);
             letter-spacing: -0.3px;
-            white-space: nowrap; /* Mencegah tulisan jadi 2 baris */
-            overflow: visible; /* Ubah dari hidden menjadi visible */
-            text-overflow: clip; /* Ubah dari ellipsis menjadi clip */
-            max-width: none; /* Hapus batasan lebar */
+            white-space: nowrap; 
+            overflow: visible; 
+            text-overflow: clip; 
+            max-width: none; 
             padding-right: var(--spacing-sm);
-            flex-shrink: 0; /* Mencegah logo menyusut */
+            flex-shrink: 0; 
         }
 
         .header-content h1 i {
@@ -166,26 +166,26 @@
             padding: 6px;
             border-radius: 50%;
             backdrop-filter: blur(10px);
-            font-size: 0.9rem; /* Icon lebih kecil */
+            font-size: 0.9rem; 
         }
 
         .refresh-info {
             display: flex;
             align-items: center;
             gap: var(--spacing-sm);
-            font-size: 0.75rem; /* Font lebih kecil */
+            font-size: 0.75rem; 
             background: rgba(255, 255, 255, 0.15);
             padding: 4px 8px;
             border-radius: 16px;
             backdrop-filter: blur(10px);
-            white-space: nowrap; /* Mencegah wrap */
+            white-space: nowrap; 
         }
 
         .refresh-info #lastUpdate {
-            display: none; /* Sembunyikan di mobile jika perlu */
+            display: none; 
         }
 
-        /* Modern Bottom Navigation - Mobile Optimized */
+        /* Modern Bottom Navigation */
         .bottom-nav {
             display: flex;
             justify-content: space-around;
@@ -215,20 +215,20 @@
             cursor: pointer;
             transition: all var(--transition);
             padding: 6px 8px;
-            min-width: 55px; /* Lebih kecil untuk mobile */
+            min-width: 55px; 
             border-radius: var(--border-radius);
             position: relative;
-            font-size: 0.7rem; /* Font lebih kecil */
+            font-size: 0.7rem; 
         }
 
         .nav-item i {
-            font-size: 1rem; /* Icon lebih kecil */
+            font-size: 1rem; 
             margin-bottom: 3px;
             transition: transform var(--transition);
         }
 
         .nav-item span {
-            font-size: 0.65rem; /* Font lebih kecil */
+            font-size: 0.65rem; 
             font-weight: 500;
             transition: color var(--transition);
         }
@@ -261,18 +261,13 @@
             opacity: 1;
         }
 
-        .nav-item:hover:not(.active) {
-            color: var(--primary-light);
-            background: rgba(67, 97, 238, 0.05);
-        }
-
         .content {
             flex: 1;
             padding: var(--spacing-md);
-            padding-bottom: 70px; /* Sesuaikan dengan tinggi bottom-nav */
+            padding-bottom: 70px; 
             overflow-y: auto;
             background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
-            -webkit-overflow-scrolling: touch; /* Smooth scroll di iOS */
+            -webkit-overflow-scrolling: touch; 
         }
 
         /* Page Transitions */
@@ -286,20 +281,14 @@
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(8px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Modern Page Header - Mobile Optimized */
+        /* Modern Page Header */
         .page-header {
             display: flex;
-            flex-direction: column; /* Stack vertikal di mobile */
+            flex-direction: column; 
             align-items: flex-start;
             margin-bottom: var(--spacing-lg);
             padding-bottom: var(--spacing-sm);
@@ -308,7 +297,7 @@
         }
 
         .page-header h2 {
-            font-size: 1.3rem; /* Lebih kecil untuk mobile */
+            font-size: 1.3rem; 
             font-weight: 700;
             color: var(--dark-color);
             position: relative;
@@ -330,20 +319,10 @@
         .page-header .btn-group {
             display: flex;
             gap: var(--spacing-sm);
-            flex-wrap: wrap; /* Jika tombol banyak, bisa wrap */
+            flex-wrap: wrap; 
         }
 
-        .page-header-ronda {
-            display: flex;
-            flex-direction: column; /* Stack vertikal di mobile */
-            align-items: flex-start;
-            margin-bottom: var(--spacing-lg);
-            padding-bottom: var(--spacing-sm);
-            border-bottom: 1px solid rgba(67, 97, 238, 0.1);
-            gap: var(--spacing-sm);
-        }
-
-        /* Modern Cards - Mobile Optimized */
+        /* Modern Cards */
         .card-container {
             display: grid;
             grid-template-columns: 1fr;
@@ -379,7 +358,7 @@
 
         .card-header {
             display: flex;
-            flex-direction: column; /* Stack vertikal di mobile */
+            flex-direction: column; 
             align-items: flex-start;
             margin-bottom: var(--spacing-sm);
             gap: var(--spacing-xs);
@@ -387,7 +366,7 @@
 
         .card-title {
             font-weight: 600;
-            font-size: 0.95rem; /* Lebih kecil untuk mobile */
+            font-size: 0.95rem; 
             color: var(--dark-color);
             width: 100%;
             margin-right: 0;
@@ -395,7 +374,7 @@
 
         .card-date {
             color: var(--gray-600);
-            font-size: 0.75rem; /* Lebih kecil untuk mobile */
+            font-size: 0.75rem; 
             background: var(--gray-100);
             padding: 3px 6px;
             border-radius: var(--border-radius-sm);
@@ -407,7 +386,7 @@
             margin-bottom: var(--spacing-sm);
             color: var(--gray-700);
             line-height: 1.6;
-            font-size: 0.85rem; /* Lebih kecil untuk mobile */
+            font-size: 0.85rem; 
         }
 
         .card-footer {
@@ -415,12 +394,12 @@
             justify-content: space-between;
             align-items: center;
             color: var(--gray-600);
-            font-size: 0.75rem; /* Lebih kecil untuk mobile */
+            font-size: 0.75rem; 
             padding-top: var(--spacing-sm);
             border-top: 1px solid var(--gray-200);
         }
 
-        /* Modern Tables - Mobile Optimized */
+        /* Modern Tables */
         .table-container {
             display: block;
             width: 100%;
@@ -431,7 +410,7 @@
             box-shadow: var(--box-shadow);
             border: 1px solid var(--gray-200);
             margin-top: var(--spacing-sm);
-            font-size: 0.8rem; /* Font tabel lebih kecil */
+            font-size: 0.8rem; 
         }
 
         .data-table {
@@ -439,7 +418,7 @@
             min-width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            font-size: 0.8rem; /* Font tabel lebih kecil */
+            font-size: 0.8rem; 
         }
 
         .data-table thead {
@@ -452,66 +431,38 @@
             background: var(--gradient-primary);
             color: white;
             font-weight: 600;
-            padding: 8px 6px; /* Padding lebih kecil */
+            padding: 8px 6px; 
             text-align: left;
             border-bottom: 1px solid var(--primary-dark);
             position: relative;
             overflow: hidden;
-            font-size: 0.75rem; /* Header tabel lebih kecil */
+            font-size: 0.75rem; 
             white-space: nowrap;
         }
 
-        .data-table th:first-child {
-            border-top-left-radius: var(--border-radius);
-        }
-
-        .data-table th:last-child {
-            border-top-right-radius: var(--border-radius);
-        }
+        .data-table th:first-child { border-top-left-radius: var(--border-radius); }
+        .data-table th:last-child { border-top-right-radius: var(--border-radius); }
 
         .data-table td {
-            padding: 6px 4px; /* Padding lebih kecil */
+            padding: 6px 4px; 
             border-bottom: 1px solid var(--gray-200);
             color: var(--gray-700);
             transition: background-color var(--transition-fast);
-            font-size: 0.75rem; /* Data tabel lebih kecil */
-            max-width: 120px; /* Batasi lebar maksimal */
+            font-size: 0.75rem; 
+            max-width: 120px; 
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
 
-        .data-table tbody tr {
-            transition: all var(--transition-fast);
-        }
+        .data-table tbody tr:hover { background-color: rgba(67, 97, 238, 0.05); }
 
-        .data-table tbody tr:hover {
-            background-color: rgba(67, 97, 238, 0.05);
-        }
-
-        .data-table tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        .data-table tbody tr:last-child td:first-child {
-            border-bottom-left-radius: var(--border-radius);
-        }
-
-        .data-table tbody tr:last-child td:last-child {
-            border-bottom-right-radius: var(--border-radius);
-        }
-
-        /* Modern Checkboxes - Mobile Optimized */
-        .checkbox-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 2px;
-        }
+        /* Checkboxes */
+        .checkbox-container { display: flex; justify-content: center; align-items: center; padding: 2px; }
 
         input[type="checkbox"] {
-            width: 16px; /* Lebih kecil untuk mobile */
-            height: 16px; /* Lebih kecil untuk mobile */
+            width: 16px; 
+            height: 16px; 
             cursor: pointer;
             border: 1.5px solid var(--gray-400);
             border-radius: 3px;
@@ -533,21 +484,18 @@
             content: '✓';
             position: absolute;
             color: white;
-            font-size: 10px; /* Lebih kecil untuk mobile */
+            font-size: 10px; 
             font-weight: bold;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
         }
 
-        input[type="checkbox"]:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+        input[type="checkbox"]:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        /* Modern Buttons - Mobile Optimized */
+        /* Buttons */
         .btn {
-            padding: 6px 10px; /* Lebih kecil untuk mobile */
+            padding: 6px 10px; 
             border: none;
             border-radius: var(--border-radius);
             font-weight: 600;
@@ -557,7 +505,7 @@
             align-items: center;
             justify-content: center;
             gap: 5px;
-            font-size: 0.8rem; /* Font lebih kecil */
+            font-size: 0.8rem; 
             letter-spacing: 0.2px;
             position: relative;
             overflow: hidden;
@@ -576,60 +524,25 @@
             transition: width 0.4s, height 0.4s;
         }
 
-        .btn:hover::before {
-            width: 200px;
-            height: 200px;
-        }
+        .btn:hover::before { width: 200px; height: 200px; }
 
-        .btn-primary {
-            background: var(--gradient-primary);
-            color: white;
-        }
+        .btn-primary { background: var(--gradient-primary); color: white; }
+        .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(67, 97, 238, 0.25); }
 
-        .btn-primary:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.25);
-        }
+        .btn-outline { background: transparent; border: 1.5px solid var(--primary-color); color: var(--primary-color); }
+        .btn-outline:hover { background: var(--primary-color); color: white; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(67, 97, 238, 0.2); }
 
-        .btn-outline {
-            background: transparent;
-            border: 1.5px solid var(--primary-color);
-            color: var(--primary-color);
-        }
+        .btn-danger { background: var(--gradient-danger); color: white; }
+        .btn-danger:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(239, 71, 111, 0.25); }
 
-        .btn-outline:hover {
-            background: var(--primary-color);
-            color: white;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.2);
-        }
+        .btn-small { padding: 4px 8px; font-size: 0.7rem; border-radius: var(--border-radius-sm); }
 
-        .btn-danger {
-            background: var(--gradient-danger);
-            color: white;
-        }
+        .btn-group { display: flex; gap: var(--spacing-sm); flex-wrap: wrap; }
 
-        .btn-danger:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(239, 71, 111, 0.25);
-        }
-
-        .btn-small {
-            padding: 4px 8px;
-            font-size: 0.7rem;
-            border-radius: var(--border-radius-sm);
-        }
-
-        .btn-group {
-            display: flex;
-            gap: var(--spacing-sm);
-            flex-wrap: wrap;
-        }
-
-        /* Modern Stats Grid - Mobile Optimized */
+        /* Stats Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* Lebih kecil untuk mobile */
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
             gap: var(--spacing-md);
             margin-bottom: var(--spacing-lg);
         }
@@ -658,71 +571,30 @@
             background: var(--gradient-primary);
         }
 
-        .stat-card.total::before {
-            background: var(--gradient-primary);
-        }
-
-        .stat-card.income::before {
-            background: var(--gradient-success);
-        }
-
-        .stat-card.expense::before {
-            background: var(--gradient-danger);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--box-shadow);
-        }
+        .stat-card.total::before { background: var(--gradient-primary); }
+        .stat-card.income::before { background: var(--gradient-success); }
+        .stat-card.expense::before { background: var(--gradient-danger); }
 
         .stat-icon {
-            width: 40px; /* Lebih kecil untuk mobile */
-            height: 40px; /* Lebih kecil untuk mobile */
+            width: 40px; 
+            height: 40px; 
             border-radius: var(--border-radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.1rem; /* Lebih kecil untuk mobile */
+            font-size: 1.1rem; 
             flex-shrink: 0;
         }
 
-        .total .stat-icon {
-            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(58, 12, 163, 0.1) 100%);
-            color: var(--primary-color);
-        }
+        .total .stat-icon { background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(58, 12, 163, 0.1) 100%); color: var(--primary-color); }
+        .income .stat-icon { background: linear-gradient(135deg, rgba(6, 214, 160, 0.1) 0%, rgba(4, 167, 119, 0.1) 100%); color: var(--success-color); }
+        .expense .stat-icon { background: linear-gradient(135deg, rgba(239, 71, 111, 0.1) 0%, rgba(217, 4, 41, 0.1) 100%); color: var(--danger-color); }
 
-        .income .stat-icon {
-            background: linear-gradient(135deg, rgba(6, 214, 160, 0.1) 0%, rgba(4, 167, 119, 0.1) 100%);
-            color: var(--success-color);
-        }
+        .stat-info { flex: 1; min-width: 0; }
+        .stat-info span { font-size: 0.7rem; color: var(--gray-600); display: block; margin-bottom: 2px; font-weight: 500; }
+        .stat-info h3 { font-size: 0.95rem; font-weight: 700; margin: 0; color: var(--dark-color); line-height: 1.2; }
 
-        .expense .stat-icon {
-            background: linear-gradient(135deg, rgba(239, 71, 111, 0.1) 0%, rgba(217, 4, 41, 0.1) 100%);
-            color: var(--danger-color);
-        }
-
-        .stat-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .stat-info span {
-            font-size: 0.7rem; /* Lebih kecil untuk mobile */
-            color: var(--gray-600);
-            display: block;
-            margin-bottom: 2px;
-            font-weight: 500;
-        }
-
-        .stat-info h3 {
-            font-size: 0.95rem; /* Lebih kecil untuk mobile */
-            font-weight: 700;
-            margin: 0;
-            color: var(--dark-color);
-            line-height: 1.2;
-        }
-
-        /* Modern Accordion - Mobile Optimized */
+        /* Accordion */
         .month-accordion {
             background: white;
             border-radius: var(--border-radius);
@@ -731,10 +603,6 @@
             box-shadow: var(--box-shadow);
             border: 1px solid var(--gray-200);
             transition: all var(--transition);
-        }
-
-        .month-accordion:hover {
-            box-shadow: var(--box-shadow);
         }
 
         .accordion-header {
@@ -747,99 +615,27 @@
             font-weight: 600;
             border-bottom: 1px solid transparent;
             transition: all var(--transition);
-            flex-wrap: wrap; /* Jika konten panjang, bisa wrap */
+            flex-wrap: wrap; 
         }
 
-        .month-accordion.active .accordion-header {
-            border-bottom-color: var(--gray-200);
-            background: rgba(67, 97, 238, 0.02);
-        }
+        .month-accordion.active .accordion-header { border-bottom-color: var(--gray-200); background: rgba(67, 97, 238, 0.02); }
 
-        .accordion-content {
-            padding: 0;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height var(--transition-slow) ease-out;
-        }
+        .accordion-content { padding: 0; max-height: 0; overflow: hidden; transition: max-height var(--transition-slow) ease-out; }
+        .month-accordion.active .accordion-content { max-height: 2000px; padding: var(--spacing-md); }
 
-        .month-accordion.active .accordion-content {
-            max-height: 2000px;
-            padding: var(--spacing-md);
-        }
+        .acc-left { display: flex; align-items: center; gap: var(--spacing-sm); font-weight: 600; color: var(--dark-color); font-size: 0.9rem; flex: 1; min-width: 0; }
+        .acc-left i { color: var(--primary-color); font-size: 0.9rem; }
+        .acc-right { display: flex; align-items: center; text-align: right; gap: var(--spacing-xs); flex-shrink: 0; }
+        .value-saldo-header { font-size: 0.9rem; color: var(--primary-color); font-weight: 700; }
+        .fa-chevron-down { transition: transform var(--transition); color: var(--gray-500); font-size: 0.8rem; }
+        .month-accordion.active .fa-chevron-down { transform: rotate(180deg); color: var(--primary-color); }
 
-        .acc-left {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            font-weight: 600;
-            color: var(--dark-color);
-            font-size: 0.9rem; /* Lebih kecil untuk mobile */
-            flex: 1;
-            min-width: 0;
-        }
+        /* Badges */
+        .badge { padding: 2px 6px; border-radius: 12px; font-size: 0.65rem; font-weight: 600; display: inline-block; letter-spacing: 0.2px; }
+        .badge-in { background: linear-gradient(135deg, rgba(6, 214, 160, 0.1) 0%, rgba(4, 167, 119, 0.1) 100%); color: var(--success-color); border: 1px solid rgba(6, 214, 160, 0.2); }
+        .badge-out { background: linear-gradient(135deg, rgba(239, 71, 111, 0.1) 0%, rgba(217, 4, 41, 0.1) 100%); color: var(--danger-color); border: 1px solid rgba(239, 71, 111, 0.2); }
 
-        .acc-left i {
-            color: var(--primary-color);
-            font-size: 0.9rem; /* Lebih kecil untuk mobile */
-        }
-
-        .acc-right {
-            display: flex;
-            align-items: center;
-            text-align: right;
-            gap: var(--spacing-xs);
-            flex-shrink: 0;
-        }
-
-        .label-saldo-header {
-            font-size: 0.7rem; /* Lebih kecil untuk mobile */
-            color: var(--gray-600);
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-            font-weight: 600;
-            display: none; /* Sembunyikan di mobile untuk menghemat ruang */
-        }
-
-        .value-saldo-header {
-            font-size: 0.9rem; /* Lebih kecil untuk mobile */
-            color: var(--primary-color);
-            font-weight: 700;
-        }
-
-        .fa-chevron-down {
-            transition: transform var(--transition);
-            color: var(--gray-500);
-            font-size: 0.8rem; /* Lebih kecil untuk mobile */
-        }
-
-        .month-accordion.active .fa-chevron-down {
-            transform: rotate(180deg);
-            color: var(--primary-color);
-        }
-
-        /* Modern Badges - Mobile Optimized */
-        .badge {
-            padding: 2px 6px; /* Lebih kecil untuk mobile */
-            border-radius: 12px;
-            font-size: 0.65rem; /* Lebih kecil untuk mobile */
-            font-weight: 600;
-            display: inline-block;
-            letter-spacing: 0.2px;
-        }
-
-        .badge-in {
-            background: linear-gradient(135deg, rgba(6, 214, 160, 0.1) 0%, rgba(4, 167, 119, 0.1) 100%);
-            color: var(--success-color);
-            border: 1px solid rgba(6, 214, 160, 0.2);
-        }
-
-        .badge-out {
-            background: linear-gradient(135deg, rgba(239, 71, 111, 0.1) 0%, rgba(217, 4, 41, 0.1) 100%);
-            color: var(--danger-color);
-            border: 1px solid rgba(239, 71, 111, 0.2);
-        }
-
-        /* Modern Ronda Visualization - Mobile Optimized dengan Avatar */
+        /* --- UPDATED RONDA VISUALIZATION (AVATAR DI KIRI BAR) --- */
         .ronda-visual-container {
             display: flex;
             flex-direction: column;
@@ -854,69 +650,71 @@
             box-shadow: var(--box-shadow);
             border: 1px solid var(--gray-200);
             transition: all var(--transition);
-        }
-
-        .ronda-item:hover {
-            transform: translateY(-1px);
-            box-shadow: var(--box-shadow);
-        }
-
-        .ronda-item.status-ronda {
-            border-left: 3px solid var(--success-color);
-            background: linear-gradient(90deg, rgba(6, 214, 160, 0.05) 0%, white 100%);
-        }
-
-        /* Styling Baru untuk Ronda Info dengan Avatar */
-        .ronda-info {
+            
+            /* PERUBAHAN UTAMA: Flex Row & Align Center */
             display: flex;
+            flex-direction: row;
             align-items: center;
-            gap: 12px; /* Jarak antara foto dan teks */
-            margin-bottom: var(--spacing-sm);
-            width: 100%;
+            gap: 12px;
         }
 
+        .ronda-item:hover { transform: translateY(-1px); box-shadow: var(--box-shadow); }
+        .ronda-item.status-ronda { border-left: 3px solid var(--success-color); background: linear-gradient(90deg, rgba(6, 214, 160, 0.05) 0%, white 100%); }
+
+        /* Avatar Styling */
         .ronda-avatar {
             width: 42px;
             height: 42px;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid var(--gray-200);
-            flex-shrink: 0; /* Mencegah foto mengecil */
+            flex-shrink: 0; /* Mencegah avatar mengecil */
             background-color: #e2e8f0;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
-        .ronda-text-wrapper {
+        /* Wrapper untuk Konten di kanan Avatar (Nama + Bar) */
+        .ronda-content-wrapper {
             flex: 1;
-            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px; /* Jarak antara teks dan bar */
+            min-width: 0; /* Mencegah overflow text */
+        }
+
+        /* Wrapper khusus untuk Text (Nama & Hari) */
+        .ronda-text-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
         }
 
         .ronda-name {
             font-weight: 700;
             color: var(--dark-color);
-            font-size: 0.9rem; /* Lebih kecil untuk mobile */
-            display: block;
+            font-size: 0.9rem; 
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            margin-right: 8px;
         }
 
         .ronda-days {
-            font-size: 0.75rem; /* Lebih kecil untuk mobile */
+            font-size: 0.7rem; 
             color: var(--gray-600);
             background: var(--gray-100);
             padding: 2px 8px;
             border-radius: 12px;
             font-weight: 600;
-            display: inline-block;
-            margin-top: 2px;
+            white-space: nowrap;
         }
 
         .ronda-bar-bg {
             width: 100%;
-            height: 28px; /* Lebih pendek untuk mobile */
+            height: 24px; /* Sedikit lebih pendek agar compact */
             background: linear-gradient(90deg, var(--gray-100) 0%, var(--gray-200) 100%);
-            border-radius: 14px;
+            border-radius: 12px;
             position: relative;
             overflow: hidden;
             border: 1px solid var(--gray-300);
@@ -925,7 +723,7 @@
         .ronda-bar-fill {
             height: 100%;
             background: linear-gradient(90deg, var(--primary-color) 0%, var(--primary-light) 100%);
-            border-radius: 14px;
+            border-radius: 12px;
             transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
         }
@@ -941,14 +739,9 @@
             animation: shine 2s infinite;
         }
 
-        @keyframes shine {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
+        @keyframes shine { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
 
-        .status-ronda .ronda-bar-fill {
-            background: linear-gradient(90deg, var(--success-color) 0%, #07c697 100%);
-        }
+        .status-ronda .ronda-bar-fill { background: linear-gradient(90deg, var(--success-color) 0%, #07c697 100%); }
 
         .ronda-bar-text {
             position: absolute;
@@ -959,7 +752,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.7rem; /* Lebih kecil untuk mobile */
+            font-size: 0.7rem; 
             font-weight: 600;
             color: white;
             text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
@@ -971,7 +764,7 @@
             line-height: 1.2;
         }
 
-        /* Modern Loading Indicator */
+        /* Loading Indicator */
         .loading-indicator {
             position: fixed;
             top: 0;
@@ -995,344 +788,77 @@
             animation: spin 1s linear infinite;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Utility Classes */
-        .hidden {
-            display: none !important;
-        }
-
-        .text-center {
-            text-align: center !important;
-        }
-
-        .text-right {
-            text-align: right !important;
-        }
-
-        .text-left {
-            text-align: left !important;
-        }
-
-        .text-primary {
-            color: var(--primary-color) !important;
-        }
-
-        .text-success {
-            color: var(--success-color) !important;
-        }
-
-        .text-danger {
-            color: var(--danger-color) !important;
-        }
-
-        .text-warning {
-            color: var(--warning-color) !important;
-        }
-
-        /* Total Row Styling */
-        .total-row {
-            background-color: rgba(6, 214, 160, 0.15) !important;
-            font-weight: 700 !important;
-            border-top: 2px solid var(--success-color) !important;
-        }
-
-        .total-row td {
-            padding: 10px 6px !important;
-            font-weight: 700 !important;
-        }
-
-        .total-row .text-success {
-            color: var(--success-color) !important;
-            font-weight: 700 !important;
-        }
-
-        .total-row .text-danger {
-            color: var(--danger-color) !important;
-            font-weight: 700 !important;
-        }
-
-        .total-row .saldo-kumulatif {
-            background-color: rgba(6, 214, 160, 0.3) !important;
-            border-radius: 4px;
-            padding: 4px 8px !important;
-        }
-
-        /* Additional Checkbox Styling */
-        .data-table input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-        }
-
-        .data-table input[type="checkbox"]:not(:checked) {
-            background-color: white;
-            border-color: var(--gray-400);
-        }
-
-        .data-table input[type="checkbox"]:checked {
-            background: linear-gradient(135deg, var(--success-color) 0%, #04a777 100%);
-            border-color: var(--success-color);
-            transform: scale(1.1);
-        }
-
-        .data-table input[type="checkbox"]:hover:not(:disabled) {
-            border-color: var(--success-color);
-            box-shadow: 0 0 0 2px rgba(6, 214, 160, 0.2);
-        }
+        /* Utilities */
+        .hidden { display: none !important; }
+        .text-center { text-align: center !important; }
+        .text-right { text-align: right !important; }
+        .text-left { text-align: left !important; }
+        .text-primary { color: var(--primary-color) !important; }
+        .text-success { color: var(--success-color) !important; }
+        .text-danger { color: var(--danger-color) !important; }
 
         /* Pengumuman Styling */
-        .pengumuman-card {
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+        .pengumuman-card { cursor: pointer; transition: all 0.3s ease; }
+        .pengumuman-card:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); }
+        .pengumuman-header { display: flex; justify-content: space-between; align-items: center; padding: 15px; cursor: pointer; border-bottom: 1px solid transparent; transition: all 0.3s ease; }
+        .pengumuman-header:hover { background-color: rgba(67, 97, 238, 0.05); }
+        .pengumuman-header-content { flex: 1; display: flex; flex-direction: column; gap: 5px; }
+        .pengumuman-toggle { color: var(--gray-500); transition: transform 0.3s ease; font-size: 0.9rem; }
+        .pengumuman-content { padding: 15px; border-top: 1px solid var(--gray-200); background-color: rgba(67, 97, 238, 0.02); }
+        .pengumuman-isi { line-height: 1.6; color: var(--gray-700); }
+        .pengumuman-isi br { margin-bottom: 8px; display: block; content: ""; }
 
-        .pengumuman-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .pengumuman-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            cursor: pointer;
-            border-bottom: 1px solid transparent;
-            transition: all 0.3s ease;
-        }
-
-        .pengumuman-header:hover {
-            background-color: rgba(67, 97, 238, 0.05);
-        }
-
-        .pengumuman-header-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .pengumuman-toggle {
-            color: var(--gray-500);
-            transition: transform 0.3s ease;
-            font-size: 0.9rem;
-        }
-
-        .pengumuman-content {
-            padding: 15px;
-            border-top: 1px solid var(--gray-200);
-            background-color: rgba(67, 97, 238, 0.02);
-        }
-
-        .pengumuman-isi {
-            line-height: 1.6;
-            color: var(--gray-700);
-        }
-
-        .pengumuman-isi br {
-            margin-bottom: 8px;
-            display: block;
-            content: "";
-        }
+        .logo-section { display: flex; flex-direction: column; }
+        .app-subtitle { font-size: 0.7rem; opacity: 0.9; margin-top: -3px; font-weight: 400; }
 
         @media (max-width: 768px) {
-            .pengumuman-header {
-                padding: 12px;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-            
-            .pengumuman-toggle {
-                align-self: flex-end;
-            }
-        }
-
-        .logo-section {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .app-subtitle {
-            font-size: 0.7rem;
-            opacity: 0.9;
-            margin-top: -3px;
-            font-weight: 400;
+            .pengumuman-header { padding: 12px; flex-direction: column; align-items: flex-start; gap: 10px; }
+            .pengumuman-toggle { align-self: flex-end; }
         }
 
         /* Responsive Design - Tablet */
         @media (min-width: 768px) {
-            body {
-                font-size: 15px;
-            }
-            
-            .app-header {
-                padding: var(--spacing-lg) var(--spacing-xl);
-                min-height: 70px;
-            }
-            
-            .header-content h1 {
-                font-size: 1.4rem;
-                max-width: none;
-            }
-            
-            .refresh-info {
-                font-size: 0.85rem;
-                padding: 6px 12px;
-            }
-            
-            .refresh-info #lastUpdate {
-                display: inline; /* Tampilkan di tablet */
-            }
-            
-            .content {
-                padding: var(--spacing-xl);
-                padding-bottom: 90px;
-            }
-            
-            .bottom-nav {
-                max-width: 500px;
-                left: 50%;
-                transform: translateX(-50%);
-                border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0;
-                padding: var(--spacing-sm) var(--spacing-xl);
-            }
-            
-            .nav-item {
-                min-width: 70px;
-                padding: 8px 12px;
-                font-size: 0.75rem;
-            }
-            
-            .nav-item i {
-                font-size: 1.2rem;
-            }
-            
-            .nav-item span {
-                font-size: 0.7rem;
-            }
-            
-            .page-header {
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-                margin-bottom: var(--spacing-xl);
-                padding-bottom: var(--spacing-md);
-            }
-            
-            .page-header h2 {
-                font-size: 1.5rem;
-            }
-            
-            .page-header h2::after {
-                width: 40px;
-                height: 3px;
-                bottom: -8px;
-            }
-            
-            .card-container {
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-                gap: var(--spacing-lg);
-            }
-            
-            .card {
-                padding: var(--spacing-lg);
-            }
-            
-            .card-header {
-                flex-direction: row;
-                align-items: center;
-                margin-bottom: var(--spacing-md);
-            }
-            
-            .card-title {
-                font-size: 1.05rem;
-                margin-right: var(--spacing-md);
-            }
-            
-            .card-date {
-                font-size: 0.85rem;
-                align-self: center;
-            }
-            
-            .card-content {
-                font-size: 0.9rem;
-            }
-            
-            .data-table {
-                font-size: 0.9rem;
-            }
-            
-            .data-table th {
-                font-size: 0.85rem;
-                padding: 10px 8px;
-            }
-            
-            .data-table td {
-                font-size: 0.85rem;
-                padding: 8px 6px;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                gap: var(--spacing-lg);
-                margin-bottom: var(--spacing-xl);
-            }
-            
-            .stat-card {
-                padding: var(--spacing-lg);
-            }
-            
-            .stat-icon {
-                width: 48px;
-                height: 48px;
-                font-size: 1.3rem;
-            }
-            
-            .stat-info span {
-                font-size: 0.8rem;
-            }
-            
-            .stat-info h3 {
-                font-size: 1.1rem;
-            }
-            
-            .label-saldo-header {
-                display: inline; /* Tampilkan di tablet */
-            }
+            body { font-size: 15px; }
+            .app-header { padding: var(--spacing-lg) var(--spacing-xl); min-height: 70px; }
+            .header-content h1 { font-size: 1.4rem; max-width: none; }
+            .refresh-info { font-size: 0.85rem; padding: 6px 12px; }
+            .refresh-info #lastUpdate { display: inline; }
+            .content { padding: var(--spacing-xl); padding-bottom: 90px; }
+            .bottom-nav { max-width: 500px; left: 50%; transform: translateX(-50%); border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0; padding: var(--spacing-sm) var(--spacing-xl); }
+            .nav-item { min-width: 70px; padding: 8px 12px; font-size: 0.75rem; }
+            .nav-item i { font-size: 1.2rem; }
+            .nav-item span { font-size: 0.7rem; }
+            .page-header { flex-direction: row; align-items: center; justify-content: space-between; margin-bottom: var(--spacing-xl); padding-bottom: var(--spacing-md); }
+            .page-header h2 { font-size: 1.5rem; }
+            .page-header h2::after { width: 40px; height: 3px; bottom: -8px; }
+            .card-container { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--spacing-lg); }
+            .card { padding: var(--spacing-lg); }
+            .card-header { flex-direction: row; align-items: center; margin-bottom: var(--spacing-md); }
+            .card-title { font-size: 1.05rem; margin-right: var(--spacing-md); }
+            .card-date { font-size: 0.85rem; align-self: center; }
+            .card-content { font-size: 0.9rem; }
+            .data-table { font-size: 0.9rem; }
+            .data-table th { font-size: 0.85rem; padding: 10px 8px; }
+            .data-table td { font-size: 0.85rem; padding: 8px 6px; }
+            .stats-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--spacing-lg); margin-bottom: var(--spacing-xl); }
+            .stat-card { padding: var(--spacing-lg); }
+            .stat-icon { width: 48px; height: 48px; font-size: 1.3rem; }
+            .stat-info span { font-size: 0.8rem; }
+            .stat-info h3 { font-size: 1.1rem; }
         }
 
-        /* Responsive Design - Desktop */
+        /* Desktop */
         @media (min-width: 992px) {
-            body {
-                font-size: 16px;
-            }
-            
-            .app-container {
-                max-width: 1200px;
-                margin: 0 auto;
-                box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-                border-radius: 0;
-                height: 100vh;
-                overflow: hidden;
-            }
-            
-            .header-content h1 {
-                font-size: 1.5rem;
-            }
-            
-            .bottom-nav {
-                max-width: 600px;
-            }
-            
-            .nav-item {
-                min-width: 80px;
-            }
+            body { font-size: 16px; }
+            .app-container { max-width: 1200px; margin: 0 auto; box-shadow: 0 0 30px rgba(0, 0, 0, 0.1); border-radius: 0; height: 100vh; overflow: hidden; }
+            .header-content h1 { font-size: 1.5rem; }
+            .bottom-nav { max-width: 600px; }
+            .nav-item { min-width: 80px; }
         }
 
-        /* Dark Mode Support */
+        /* Dark Mode */
         @media (prefers-color-scheme: dark) {
             :root {
                 --light-color: #1a1a2e;
@@ -1347,68 +873,20 @@
                 --gray-800: #f7fafc;
                 --gray-900: #ffffff;
             }
-            
-            body {
-                background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
-            }
-            
-            .content {
-                background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
-            }
-            
-            .card,
-            .stat-card,
-            .month-accordion,
-            .ronda-item,
-            .table-container {
-                background: #2d3748;
-                border-color: #4a5568;
-                color: var(--gray-600);
-            }
-            
-            .card-title,
-            .stat-info h3,
-            .acc-left,
-            .ronda-name {
-                color: var(--gray-800);
-            }
-            
-            .data-table th {
-                background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
-                color: var(--gray-800);
-            }
-            
-            .data-table td {
-                color: var(--gray-700);
-                border-color: #4a5568;
-            }
+            body { background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%); }
+            .content { background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%); }
+            .card, .stat-card, .month-accordion, .ronda-item, .table-container { background: #2d3748; border-color: #4a5568; color: var(--gray-600); }
+            .card-title, .stat-info h3, .acc-left, .ronda-name { color: var(--gray-800); }
+            .data-table th { background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%); color: var(--gray-800); }
+            .data-table td { color: var(--gray-700); border-color: #4a5568; }
         }
 
-        /* Print Styles */
+        /* Print */
         @media print {
-            .bottom-nav,
-            .refresh-info,
-            .btn-group,
-            .loading-indicator {
-                display: none !important;
-            }
-            
-            .content {
-                padding: 0;
-                padding-bottom: 0;
-            }
-            
-            .card,
-            .stat-card,
-            .month-accordion {
-                box-shadow: none;
-                border: 1px solid #ddd;
-                break-inside: avoid;
-            }
-            
-            .month-accordion.active .accordion-content {
-                max-height: none;
-            }
+            .bottom-nav, .refresh-info, .btn-group, .loading-indicator { display: none !important; }
+            .content { padding: 0; padding-bottom: 0; }
+            .card, .stat-card, .month-accordion { box-shadow: none; border: 1px solid #ddd; break-inside: avoid; }
+            .month-accordion.active .accordion-content { max-height: none; }
         }
     </style>
 </head>
@@ -1518,7 +996,7 @@
 
                 <!-- Jadwal Ronda Page -->
                 <div id="rondaPage" class="page">
-                    <div class="page-header-ronda">
+                    <div class="page-header">
                         <h2>Jadwal Ronda</h2>
                         <button onclick="exportRondaPDF()" class="btn btn-danger btn-small">
                             <i class="fas fa-file-pdf"></i>Download PDF
@@ -1550,7 +1028,7 @@
         // Variabel Penampung Data Global
         let rawKasData = []; 
         let rawRondaData = [];
-        let kasDataForChart = []; // Data untuk chart
+        let kasDataForChart = []; 
 
         // DOM elements
         const refreshBtn = document.getElementById('refreshBtn');
@@ -1570,7 +1048,7 @@
                 item.addEventListener('click', () => switchPage(item.getAttribute('data-page')));
             });
             loadInitialData();
-            setInterval(refreshAllData, 5 * 60 * 1000); // Auto refresh tiap 5 menit
+            setInterval(refreshAllData, 5 * 60 * 1000); 
         });
 
         function switchPage(pageName) {
@@ -1626,14 +1104,11 @@
             return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); 
         }
 
-        // Fungsi untuk memformat teks dengan line breaks
         function formatTextWithBreaks(text) {
             if (!text) return '';
-            // Ganti karakter newline dengan <br>
             return text.toString().replace(/\n/g, '<br>');
         }
 
-        // Fungsi untuk memotong teks dengan titik-titik
         function truncateText(text, maxLength = 100) {
             if (!text) return '';
             if (text.length <= maxLength) return text;
@@ -1641,7 +1116,7 @@
         }
 
         // ---------------------------------------------------------
-        // 1. PENGUMUMAN - DENGAN FITUR EXPAND/COLLAPSE
+        // 1. PENGUMUMAN
         // ---------------------------------------------------------
         function loadPengumuman() {
             fetchAndParseCSV(csvUrls.pengumuman)
@@ -1680,13 +1155,11 @@
                 .finally(() => showLoading(false));
         }
 
-        // Fungsi untuk toggle pengumuman
         function togglePengumuman(headerElement) {
             const card = headerElement.closest('.pengumuman-card');
             const content = card.querySelector('.pengumuman-content');
             const toggleIcon = headerElement.querySelector('.pengumuman-toggle');
             
-            // Tutup semua pengumuman lainnya
             document.querySelectorAll('.pengumuman-card').forEach(otherCard => {
                 if (otherCard !== card) {
                     const otherContent = otherCard.querySelector('.pengumuman-content');
@@ -1699,7 +1172,6 @@
                 }
             });
             
-            // Toggle pengumuman ini
             if (content.style.display === 'none') {
                 content.style.display = 'block';
                 toggleIcon.classList.remove('fa-chevron-down');
@@ -1745,7 +1217,7 @@
         }
 
         // ---------------------------------------------------------
-        // 3. UANG KAS (DASHBOARD & LAPORAN)
+        // 3. UANG KAS
         // ---------------------------------------------------------
         function loadUangKas() {
             fetchAndParseCSV(csvUrls.kas)
@@ -1868,7 +1340,6 @@
                     </tr>
                 `;
 
-                // --- HEADER ACCORDION (NET BULANAN) ---
                 const netBulan = bulanDataItem.saldoBulan; 
                 const isPlus = netBulan >= 0;
                 const warnaTeks = isPlus ? 'var(--success-color)' : 'var(--danger-color)';
@@ -1935,7 +1406,6 @@
                 const { jsPDF } = window.jspdf;
                 const doc = new jsPDF('p', 'mm', 'a4');
                 
-                // Header
                 doc.setFontSize(20);
                 doc.setFont(undefined, 'bold');
                 doc.setTextColor(0, 0, 0);
@@ -1965,7 +1435,6 @@
                 const totalColumns = 5;
                 const equalColumnWidth = contentWidth / totalColumns - 5;
 
-                // --- BAGIAN 1: PENGUMPULAN DATA UNTUK GRAFIK ---
                 const chartData = {
                     labels: [],
                     pemasukan: [],
@@ -1974,14 +1443,13 @@
                     net: []
                 };
 
-                let tempGlobalBalance = 0; // Variabel sementara untuk kalkulasi chart
+                let tempGlobalBalance = 0;
 
                 for (const bulan of sortedMonths) {
                     const rows = grouped[bulan];
                     let totalMasuk = 0;
                     let totalKeluar = 0;
                     
-                    // Hitung total per bulan (untuk keperluan chart)
                     for (const r of rows) {
                         const vIn = parseInt(r[4]?.toString().replace(/[^0-9]/g, "")) || 0;
                         const vOut = parseInt(r[5]?.toString().replace(/[^0-9]/g, "")) || 0;
@@ -1999,20 +1467,16 @@
                     chartData.net.push(netBulan);
                 }
 
-                // --- BAGIAN 2: HAPUS DATA PERTAMA (JANUARI) AGAR MULAI FEBRUARI ---
                 if (chartData.labels.length > 0) {
-                    chartData.labels.shift();      // Hapus Januari
-                    chartData.pemasukan.shift();   // Hapus data Januari
-                    chartData.pengeluaran.shift(); // Hapus data Januari
-                    chartData.saldo.shift();      // Hapus saldo Januari
-                    chartData.net.shift();        // Hapus net Januari
+                    chartData.labels.shift();
+                    chartData.pemasukan.shift();
+                    chartData.pengeluaran.shift();
+                    chartData.saldo.shift();
+                    chartData.net.shift();
                 }
-
-                // --- BAGIAN 3: RENDER TABEL (DATA LENGKAP DARI JANUARI) ---
-                // Kita memindahkan bagian tabel ke atas agar muncul duluan di PDF
                 
-                let globalBalance = 0; // Reset balance untuk perhitungan tabel
-                let currentY = 40; // Mulai posisi Y untuk tabel setelah header
+                let globalBalance = 0; 
+                let currentY = 40; 
 
                 for (const bulan of sortedMonths) {
                     const rows = grouped[bulan];
@@ -2035,7 +1499,6 @@
                         };
                     });
                     
-                    // Cek page break untuk tabel
                     if (currentY > 220) {
                         doc.addPage();
                         currentY = 20;
@@ -2129,13 +1592,9 @@
                     currentY += 10;
                 }
 
-                // --- BAGIAN 4: RINGKASAN AKHIR ---
-                // Hitung total ulang untuk summary (agar akurat)
                 const totalPemasukan = chartData.pemasukan.reduce((a, b) => a + b, 0);
                 const totalPengeluaran = chartData.pengeluaran.reduce((a, b) => a + b, 0);
-                // Tambahkan data bulan pertama (Januari) yang dihapus di grafik ke total summary
-                // Agar summary totalnya tetap lengkap
-                const firstMonth = sortedMonths[0]; // Misal Januari
+                const firstMonth = sortedMonths[0]; 
                 const firstMonthRows = grouped[firstMonth] || [];
                 let firstMonthIn = 0, firstMonthOut = 0;
                 firstMonthRows.forEach(r => {
@@ -2145,7 +1604,7 @@
                 
                 const grandTotalIn = totalPemasukan + firstMonthIn;
                 const grandTotalOut = totalPengeluaran + firstMonthOut;
-                const grandBalance = globalBalance; // globalBalance sudah menghitung semua bulan di loop tabel
+                const grandBalance = globalBalance; 
 
                 if (currentY > 220) {
                     doc.addPage();
@@ -2189,12 +1648,9 @@
                 doc.text(`Laporan dicetak pada: ${moment().format('DD/MM/YYYY HH:mm')}`, 105, 285, { align: 'center' });
                 doc.text(`© System Management Gang Murai ${new Date().getFullYear()}`, 105, 290, { align: 'center' });
 
-                // --- BAGIAN 5: RENDER GRAFIK DI HALAMAN TERAKHIR ---
-                // Tambah halaman baru agar grafik tidak satu halaman dengan tabel
                 doc.addPage();
-                currentY = 20; // Reset posisi Y ke atas halaman baru
+                currentY = 20; 
 
-                // GRAFIK 1: PEMASUKAN vs PENGELUARAN
                 doc.setFontSize(16);
                 doc.setFont(undefined, 'bold');
                 doc.setTextColor(0, 0, 0);
@@ -2239,11 +1695,7 @@
                             responsive: false,
                             maintainAspectRatio: false,
                             plugins: {
-                                title: {
-                                    display: true,
-                                    text: 'Trend Pemasukan dan Pengeluaran per Bulan (Mulai Februari 2025)',
-                                    font: { size: 14, color: '#000000' }
-                                },
+                                title: { display: true, text: 'Trend Pemasukan dan Pengeluaran per Bulan (Mulai Februari 2025)', font: { size: 14, color: '#000000' } },
                                 legend: { position: 'top', labels: { font: { size: 10 }, color: '#000000' } }
                             },
                             scales: {
@@ -2259,7 +1711,6 @@
                     currentY += 90;
                 }
 
-                // GRAFIK 2: SALDO KUMULATIF
                 doc.setFontSize(16);
                 doc.setFont(undefined, 'bold');
                 doc.setTextColor(0, 0, 0);
@@ -2293,11 +1744,7 @@
                             responsive: false,
                             maintainAspectRatio: false,
                             plugins: {
-                                title: {
-                                    display: true,
-                                    text: 'Perkembangan Saldo Kas (Mulai Februari 2025)',
-                                    font: { size: 14, color: '#000000' }
-                                },
+                                title: { display: true, text: 'Perkembangan Saldo Kas (Mulai Februari 2025)', font: { size: 14, color: '#000000' } },
                                 legend: { position: 'top', labels: { font: { size: 10 }, color: '#000000' } }
                             },
                             scales: {
@@ -2313,8 +1760,6 @@
                     currentY += 90;
                 }
 
-                // GRAFIK 3: HASIL BERSIH BULANAN
-                // Cek apakah halaman masih muat untuk grafik ke-3, jika tidak buat halaman baru lagi
                 if (currentY > 220) {
                     doc.addPage();
                     currentY = 20;
@@ -2354,20 +1799,13 @@
                             responsive: false,
                             maintainAspectRatio: false,
                             plugins: {
-                                title: {
-                                    display: true,
-                                    text: 'Analisis Surplus/Defisit (Mulai Februari 2025)',
-                                    font: { size: 14, color: '#000000' }
-                                },
+                                title: { display: true, text: 'Analisis Surplus/Defisit (Mulai Februari 2025)', font: { size: 14, color: '#000000' } },
                                 legend: { position: 'top', labels: { font: { size: 10 }, color: '#000000' } }
                             },
                             scales: {
                                 x: { ticks: { font: { size: 9 }, color: '#000000' }, grid: { display: false } },
                                 y: {
-                                    grid: {
-                                        color: (context) => context.tick.value === 0 ? '#000000' : 'rgba(0, 0, 0, 0.1)',
-                                        lineWidth: (context) => context.tick.value === 0 ? 2 : 1
-                                    },
+                                    grid: { color: (context) => context.tick.value === 0 ? '#000000' : 'rgba(0, 0, 0, 0.1)', lineWidth: (context) => context.tick.value === 0 ? 2 : 1 },
                                     ticks: { font: { size: 9 }, color: '#000000', callback: function(value) { if (value >= 1000000) return 'Rp ' + (value / 1000000).toFixed(1) + 'jt'; else if (value >= 1000) return 'Rp ' + (value / 1000).toFixed(0) + 'k'; return 'Rp ' + value; } }
                                 }
                             }
@@ -2380,7 +1818,6 @@
                     currentY += 90;
                 }
                 
-                // Cleanup Canvases
                 if (canvas1.parentNode) document.body.removeChild(canvas1);
                 if (canvas2.parentNode) document.body.removeChild(canvas2);
                 if (canvas3.parentNode) document.body.removeChild(canvas3);
@@ -2405,7 +1842,7 @@
         }
 
         // ---------------------------------------------------------
-        // 4. JADWAL RONDA (SUPPORT FOTO GITHUB PAGES)
+        // 4. JADWAL RONDA (UPDATED LAYOUT)
         // ---------------------------------------------------------
         function loadJadwalRonda() {
             fetchAndParseCSV(csvUrls.ronda)
@@ -2424,8 +1861,6 @@
         
                     let rondaList = [];
                     for (let i = 1; i < data.length; i++) {
-                        // Index 0: Nama
-                        // Index 1: Foto (Pastikan kolom ini ada di Google Sheet)
                         const namaWarga = data[i][0];
                         const pathFoto = data[i][1] ? data[i][1].trim() : ''; 
                         const hariTerakhir = parseInt(data[i][lastRondaIdx]) || 0;
@@ -2458,35 +1893,33 @@
                             statusClass = "";
                         }
         
-                        // LOGIKA GAMBAR
                         let avatarUrl;
                         if (item.foto && item.foto !== '') {
-                            // Jika ada data di kolom foto, gunakan path tersebut (misal: images/budi.jpg)
                             avatarUrl = item.foto;
                         } else {
-                            // Jika kosong, pakai avatar generator
                             avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.nama)}&background=random&color=fff&size=128&bold=true`;
                         }
         
+                        // --- MODIFIED HTML STRUCTURE ---
+                        // Avatar sekarang berada di luar wrapper teks, sejajar dengan bar
                         const itemHtml = `
                             <div class="ronda-item ${statusClass}">
-                                <div class="ronda-info">
-                                    <!-- src mengambil dari avatarUrl -->
-                                    <!-- onerror: jika file foto tidak ditemukan di GitHub, otomatis ganti ke avatar generator -->
-                                    <img src="${avatarUrl}" alt="${item.nama}" class="ronda-avatar" 
-                                         onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(item.nama)}&background=random&color=fff&size=128';">
-                                    
-                                    <div class="ronda-text-wrapper">
+                                <!-- Avatar Kiri -->
+                                <img src="${avatarUrl}" alt="${item.nama}" class="ronda-avatar" 
+                                     onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(item.nama)}&background=random&color=fff&size=128';">
+                                
+                                <!-- Konten Kanan (Teks + Bar) -->
+                                <div class="ronda-content-wrapper">
+                                    <div class="ronda-text-info">
                                         <span class="ronda-name">${item.nama}</span>
                                         <span class="ronda-days">${item.hariTerakhir === 0 ? 'Aktif Malam Ini' : item.hariTerakhir + ' Hari'}</span>
                                     </div>
+                                    <div class="ronda-bar-bg">
+                                        <div class="ronda-bar-fill" style="width: ${persentase}%"></div>
+                                        <div class="ronda-bar-text">${labelTeks}</div>
+                                    </div>
                                 </div>
-                                <div class="ronda-bar-bg">
-                                    <div class="ronda-bar-fill" style="width: ${persentase}%"></div>
-                                    <div class="ronda-bar-text">${labelTeks}</div>
-                                </div>
-                            </div>
-                        `;
+                            </div>`;
                         listContainer.insertAdjacentHTML('beforeend', itemHtml);
                     });
                     updateLastUpdateTime();
@@ -2501,16 +1934,15 @@
             try {
                 const { jsPDF } = window.jspdf;
                 const doc = new jsPDF('p', 'mm', 'a4');
-                const pageWidth = doc.internal.pageSize.width; // Lebar kertas A4 = 210mm
+                const pageWidth = doc.internal.pageSize.width;
                 
-                // Header
                 doc.setFontSize(20);
                 doc.setFont(undefined, 'bold');
-                doc.text("REKAP RONDA 2026", pageWidth / 2, 15, { align: 'center' }); // Judul di Tengah
+                doc.text("REKAP RONDA 2026", pageWidth / 2, 15, { align: 'center' });
                 
                 doc.setFontSize(12);
                 doc.setFont(undefined, 'normal');
-                doc.text(`System Management Gang Murai - Dicetak: ${moment().format('DD MMMM YYYY HH:mm')}`, pageWidth / 2, 22, { align: 'center' }); // Subjudul di Tengah
+                doc.text(`System Management Gang Murai - Dicetak: ${moment().format('DD MMMM YYYY HH:mm')}`, pageWidth / 2, 22, { align: 'center' });
                 
                 const headers = rawRondaData[0];
                 const dataRows = rawRondaData.slice(1);
@@ -2641,10 +2073,8 @@
                         grandTotal += row[row.length - 1];
                     });
                     
-                    // --- MODIFIKASI: PENGATURAN TABLE CENTER ---
-                    // Mengatur lebar tabel tetap agar mudah dihitung posisi tengahnya
-                    const tableWidth = 170; // mm (Kurang dari lebar kertas 210mm, memberi margin kiri-kanan 20mm)
-                    const startX = (pageWidth - tableWidth) / 2; // Rumus centering: (LebarHalaman - LebarTabel) / 2
+                    const tableWidth = 170; 
+                    const startX = (pageWidth - tableWidth) / 2; 
                     
                     const noColWidth = 8;
                     const namaColWidth = 35;
@@ -2680,7 +2110,6 @@
                             }, {}),
                             [tableHeaders.length - 1]: { cellWidth: totalColWidth, halign: 'center', valign: 'middle', fontStyle: 'bold' }
                         },
-                        // --- MODIFIKASI: MENGAPLIKASIKAN MARGIN START UNTUK CENTERING ---
                         tableWidth: tableWidth, 
                         margin: { left: startX, top: 35, bottom: 20 },
                         styles: { overflow: 'linebreak', cellWidth: 'wrap' },
@@ -2695,7 +2124,6 @@
                             }
                         },
                         didDrawPage: function(data) {
-                            // Total di pojok kanan atas
                             doc.setFontSize(8);
                             doc.setFont(undefined, 'bold');
                             doc.text(`Total: ${grandTotal} kali`, pageWidth - 20, 15, { align: 'right' });
@@ -2710,7 +2138,7 @@
                     
                     doc.setFontSize(18);
                     doc.setFont(undefined, 'bold');
-                    doc.text("JADWAL RONDA PER TANGGAL", pageWidth / 2, currentY, { align: 'center' }); // Judul Center
+                    doc.text("JADWAL RONDA PER TANGGAL", pageWidth / 2, currentY, { align: 'center' }); 
                     currentY += 10;
                     
                     doc.setFontSize(11);
@@ -2797,8 +2225,8 @@
                     doc.setFontSize(7);
                     doc.setFont(undefined, 'italic');
                     doc.setTextColor(150, 150, 150);
-                    doc.text(`Halaman ${i} dari ${totalPages}`, pageWidth / 2, 285, { align: 'center' }); // Footer Center
-                    doc.text(`© System Management Gang Murai ${new Date().getFullYear()}`, pageWidth / 2, 290, { align: 'center' }); // Copyright Center
+                    doc.text(`Halaman ${i} dari ${totalPages}`, pageWidth / 2, 285, { align: 'center' }); 
+                    doc.text(`© System Management Gang Murai ${new Date().getFullYear()}`, pageWidth / 2, 290, { align: 'center' }); 
                 }
                 
                 doc.save(`Rekap_Ronda_EMurai_${moment().format('YYYYMMDD_HHmm')}.pdf`);
