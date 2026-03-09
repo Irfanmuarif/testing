@@ -839,7 +839,7 @@
             border: 1px solid rgba(239, 71, 111, 0.2);
         }
 
-        /* Modern Ronda Visualization - Mobile Optimized */
+        /* Modern Ronda Visualization - Mobile Optimized dengan Avatar */
         .ronda-visual-container {
             display: flex;
             flex-direction: column;
@@ -866,42 +866,50 @@
             background: linear-gradient(90deg, rgba(6, 214, 160, 0.05) 0%, white 100%);
         }
 
+        /* Styling Baru untuk Ronda Info dengan Avatar */
         .ronda-info {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 12px; /* Jarak antara foto dan teks */
             margin-bottom: var(--spacing-sm);
-            flex-wrap: wrap;
-            gap: var(--spacing-xs);
+            width: 100%;
+        }
+
+        .ronda-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--gray-200);
+            flex-shrink: 0; /* Mencegah foto mengecil */
+            background-color: #e2e8f0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .ronda-text-wrapper {
+            flex: 1;
+            min-width: 0;
         }
 
         .ronda-name {
             font-weight: 700;
             color: var(--dark-color);
-            font-size: 0.85rem; /* Lebih kecil untuk mobile */
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-xs);
-            flex: 1;
-            min-width: 0;
+            font-size: 0.9rem; /* Lebih kecil untuk mobile */
+            display: block;
+            white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .ronda-name::before {
-            content: '👤';
-            font-size: 0.8em;
         }
 
         .ronda-days {
             font-size: 0.75rem; /* Lebih kecil untuk mobile */
             color: var(--gray-600);
             background: var(--gray-100);
-            padding: 2px 6px;
+            padding: 2px 8px;
             border-radius: 12px;
             font-weight: 600;
-            flex-shrink: 0;
+            display: inline-block;
+            margin-top: 2px;
         }
 
         .ronda-bar-bg {
@@ -2397,42 +2405,49 @@
         }
 
         // ---------------------------------------------------------
-        // 4. JADWAL RONDA
+        // 4. JADWAL RONDA (SUPPORT FOTO GITHUB PAGES)
         // ---------------------------------------------------------
         function loadJadwalRonda() {
             fetchAndParseCSV(csvUrls.ronda)
                 .then(data => {
                     if (data.length <= 1) return;
                     rawRondaData = data;
-
+        
                     const rondaPage = document.getElementById('rondaPage');
                     const tableContainer = rondaPage.querySelector('.table-container');
                     tableContainer.style.overflowX = "hidden";
                     tableContainer.innerHTML = '<div id="rondaVisualList" class="ronda-visual-container"></div>';
                     const listContainer = document.getElementById('rondaVisualList');
-
+        
                     const headers = data[0];
                     const lastRondaIdx = headers.length - 1;
-
+        
                     let rondaList = [];
                     for (let i = 1; i < data.length; i++) {
+                        // Index 0: Nama
+                        // Index 1: Foto (Pastikan kolom ini ada di Google Sheet)
+                        const namaWarga = data[i][0];
+                        const pathFoto = data[i][1] ? data[i][1].trim() : ''; 
+                        const hariTerakhir = parseInt(data[i][lastRondaIdx]) || 0;
+        
                         rondaList.push({
-                            nama: data[i][0],
-                            hariTerakhir: parseInt(data[i][lastRondaIdx]) || 0
+                            nama: namaWarga,
+                            foto: pathFoto,
+                            hariTerakhir: hariTerakhir
                         });
                     }
-
+        
                     rondaList.sort((a, b) => {
                         if (a.hariTerakhir === 0) return -1;
                         if (b.hariTerakhir === 0) return 1;
                         return b.hariTerakhir - a.hariTerakhir;
                     });
-
+        
                     const maxHari = Math.max(...rondaList.map(item => item.hariTerakhir));
-
+        
                     rondaList.forEach(item => {
                         let persentase, labelTeks, statusClass;
-
+        
                         if (item.hariTerakhir === 0) {
                             persentase = 100;
                             labelTeks = "DIPILIH RONDA";
@@ -2442,12 +2457,29 @@
                             labelTeks = `Sudah ${item.hariTerakhir} hari tidak ronda`;
                             statusClass = "";
                         }
-
+        
+                        // LOGIKA GAMBAR
+                        let avatarUrl;
+                        if (item.foto && item.foto !== '') {
+                            // Jika ada data di kolom foto, gunakan path tersebut (misal: images/budi.jpg)
+                            avatarUrl = item.foto;
+                        } else {
+                            // Jika kosong, pakai avatar generator
+                            avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.nama)}&background=random&color=fff&size=128&bold=true`;
+                        }
+        
                         const itemHtml = `
                             <div class="ronda-item ${statusClass}">
                                 <div class="ronda-info">
-                                    <span class="ronda-name">${item.nama}</span>
-                                    <span class="ronda-days">${item.hariTerakhir === 0 ? 'Aktif Malam Ini' : item.hariTerakhir + ' Hari'}</span>
+                                    <!-- src mengambil dari avatarUrl -->
+                                    <!-- onerror: jika file foto tidak ditemukan di GitHub, otomatis ganti ke avatar generator -->
+                                    <img src="${avatarUrl}" alt="${item.nama}" class="ronda-avatar" 
+                                         onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(item.nama)}&background=random&color=fff&size=128';">
+                                    
+                                    <div class="ronda-text-wrapper">
+                                        <span class="ronda-name">${item.nama}</span>
+                                        <span class="ronda-days">${item.hariTerakhir === 0 ? 'Aktif Malam Ini' : item.hariTerakhir + ' Hari'}</span>
+                                    </div>
                                 </div>
                                 <div class="ronda-bar-bg">
                                     <div class="ronda-bar-fill" style="width: ${persentase}%"></div>
@@ -2469,14 +2501,16 @@
             try {
                 const { jsPDF } = window.jspdf;
                 const doc = new jsPDF('p', 'mm', 'a4');
+                const pageWidth = doc.internal.pageSize.width; // Lebar kertas A4 = 210mm
                 
+                // Header
                 doc.setFontSize(20);
                 doc.setFont(undefined, 'bold');
-                doc.text("REKAP RONDA 2026", 105, 15, { align: 'center' });
+                doc.text("REKAP RONDA 2026", pageWidth / 2, 15, { align: 'center' }); // Judul di Tengah
                 
                 doc.setFontSize(12);
                 doc.setFont(undefined, 'normal');
-                doc.text(`System Management Gang Murai - Dicetak: ${moment().format('DD MMMM YYYY HH:mm')}`, 105, 22, { align: 'center' });
+                doc.text(`System Management Gang Murai - Dicetak: ${moment().format('DD MMMM YYYY HH:mm')}`, pageWidth / 2, 22, { align: 'center' }); // Subjudul di Tengah
                 
                 const headers = rawRondaData[0];
                 const dataRows = rawRondaData.slice(1);
@@ -2607,8 +2641,11 @@
                         grandTotal += row[row.length - 1];
                     });
                     
-                    const margin = 6;
-                    const pageWidth = doc.internal.pageSize.width;
+                    // --- MODIFIKASI: PENGATURAN TABLE CENTER ---
+                    // Mengatur lebar tabel tetap agar mudah dihitung posisi tengahnya
+                    const tableWidth = 170; // mm (Kurang dari lebar kertas 210mm, memberi margin kiri-kanan 20mm)
+                    const startX = (pageWidth - tableWidth) / 2; // Rumus centering: (LebarHalaman - LebarTabel) / 2
+                    
                     const noColWidth = 8;
                     const namaColWidth = 35;
                     const bulanColWidth = 7;
@@ -2643,8 +2680,9 @@
                             }, {}),
                             [tableHeaders.length - 1]: { cellWidth: totalColWidth, halign: 'center', valign: 'middle', fontStyle: 'bold' }
                         },
-                        margin: { left: margin, right: margin },
-                        tableWidth: 'auto',
+                        // --- MODIFIKASI: MENGAPLIKASIKAN MARGIN START UNTUK CENTERING ---
+                        tableWidth: tableWidth, 
+                        margin: { left: startX, top: 35, bottom: 20 },
                         styles: { overflow: 'linebreak', cellWidth: 'wrap' },
                         didParseCell: function(data) {
                             if (data.row.index >= 0 && data.column.index >= 0) {
@@ -2657,9 +2695,10 @@
                             }
                         },
                         didDrawPage: function(data) {
+                            // Total di pojok kanan atas
                             doc.setFontSize(8);
                             doc.setFont(undefined, 'bold');
-                            doc.text(`Total: ${grandTotal} kali`, pageWidth - 25, 15);
+                            doc.text(`Total: ${grandTotal} kali`, pageWidth - 20, 15, { align: 'right' });
                         }
                     });
                 }
@@ -2671,7 +2710,7 @@
                     
                     doc.setFontSize(18);
                     doc.setFont(undefined, 'bold');
-                    doc.text("JADWAL RONDA PER TANGGAL", 105, currentY, { align: 'center' });
+                    doc.text("JADWAL RONDA PER TANGGAL", pageWidth / 2, currentY, { align: 'center' }); // Judul Center
                     currentY += 10;
                     
                     doc.setFontSize(11);
@@ -2688,7 +2727,7 @@
                             currentY = 20;
                             doc.setFontSize(16);
                             doc.setFont(undefined, 'bold');
-                            doc.text(`JADWAL RONDA PER TANGGAL (lanjutan)`, 105, currentY, { align: 'center' });
+                            doc.text(`JADWAL RONDA PER TANGGAL (lanjutan)`, pageWidth / 2, currentY, { align: 'center' });
                             currentY += 10;
                         }
                         
@@ -2758,8 +2797,8 @@
                     doc.setFontSize(7);
                     doc.setFont(undefined, 'italic');
                     doc.setTextColor(150, 150, 150);
-                    doc.text(`Halaman ${i} dari ${totalPages}`, 105, 285, { align: 'center' });
-                    doc.text(`© System Management Gang Murai ${new Date().getFullYear()}`, 105, 290, { align: 'center' });
+                    doc.text(`Halaman ${i} dari ${totalPages}`, pageWidth / 2, 285, { align: 'center' }); // Footer Center
+                    doc.text(`© System Management Gang Murai ${new Date().getFullYear()}`, pageWidth / 2, 290, { align: 'center' }); // Copyright Center
                 }
                 
                 doc.save(`Rekap_Ronda_EMurai_${moment().format('YYYYMMDD_HHmm')}.pdf`);
