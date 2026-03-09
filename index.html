@@ -1894,8 +1894,18 @@
                         }
         
                         let avatarUrl;
+                        const baseImageURL = "https://raw.githubusercontent.com/Irfanmuarif/E-murai-database/main/";
+                        
                         if (item.foto && item.foto !== '') {
-                            avatarUrl = item.foto;
+                        
+                            if (item.foto.startsWith("http")) {
+                                // jika sudah URL penuh
+                                avatarUrl = item.foto;
+                            } else {
+                                // jika hanya nama file dari spreadsheet
+                                avatarUrl = baseImageURL + item.foto;
+                            }
+                        
                         } else {
                             avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.nama)}&background=random&color=fff&size=128&bold=true`;
                         }
