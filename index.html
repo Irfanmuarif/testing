@@ -1275,29 +1275,39 @@
         }
 
         // ---------------------------------------------------------
-        // 3. UANG KAS
+        // 3. UANG KAS (FIXED VERSION)
         // ---------------------------------------------------------
         async function loadUangKas() {
-            // Pastikan data iuran tersedia sebelum render, jika belum, fetch dulu
+            showLoading(true);
+        
+            // 1. Pastikan data iuran tersedia terlebih dahulu (MENUNGGU proses fetch selesai)
             if (!rawIuranData || rawIuranData.length === 0) {
                 try {
+                    console.log("Mengambil data Iuran terlebih dahulu...");
                     const iuranData = await fetchAndParseCSV(csvUrls.iuran);
                     rawIuranData = iuranData;
                 } catch (e) {
                     console.error("Gagal mengambil data iuran untuk pengecekan marking", e);
+                    // Tetap lanjut biar tabel kas tetap muncul, meski tanpa marking
                 }
             }
-
-            fetchAndParseCSV(csvUrls.kas)
-                .then(data => {
-                    rawKasData = data; 
-                    renderUangKas(data);
-                    updateLastUpdateTime();
-                })
-                .finally(() => showLoading(false));
+        
+            // 2. Ambil data Kas dan TUNGGU (await) sampai selesai
+            try {
+                console.log("Mengambil data Kas...");
+                const data = await fetchAndParseCSV(csvUrls.kas); // TAMBAHKAN AWAIT DISINI
+                renderUangKas(data);
+                updateLastUpdateTime();
+            } catch (e) {
+                console.error("Gagal mengambil data kas", e);
+                const kasContainer = document.getElementById('kasContainer');
+                kasContainer.innerHTML = '<p class="text-center text-danger">Gagal memuat data Kas.</p>';
+            } finally {
+                showLoading(false);
+            }
         }
-
-        // Helper Function: Cek apakah ada warga yang belum bayar di bulan tertentu
+        
+        // Helper Function yang diperkuat (Opsional, untuk debugging)
         function cekStatusIuranBulan(namaBulan) {
             if (!rawIuranData || rawIuranData.length <= 1) return false;
             
@@ -1307,13 +1317,17 @@
             
             const colIndex = headers.indexOf(bulanTarget);
             
-            // Jika kolom bulan tidak ditemukan di data iuran, return false
-            if (colIndex === -1) return false;
-
+            // DEBUG: Cek ke console jika nama bulan tidak ketemu
+            if (colIndex === -1) {
+                console.warn(`Kolom bulan "${bulanTarget}" tidak ditemukan di Data Iuran. Header yang tersedia:`, headers);
+                return false;
+            }
+        
             // Loop setiap baris warga (mulai index 1 karena index 0 adalah header)
             for (let i = 1; i < rawIuranData.length; i++) {
                 const status = (rawIuranData[i][colIndex] || "").toString().trim().toUpperCase();
                 // Jika ada SATU saja yang FALSE, return true (Marking Aktif)
+                // Pastikan pengecekan string ini sesuai dengan isi CSV Anda (TRUE/FALSE)
                 if (status === 'FALSE') return true;
             }
             return false; // Semua sudah TRUE/Lunas
