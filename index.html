@@ -888,6 +888,33 @@
             .card, .stat-card, .month-accordion { box-shadow: none; border: 1px solid #ddd; break-inside: avoid; }
             .month-accordion.active .accordion-content { max-height: none; }
         }
+
+        /* Styling Alert Melayang untuk Iuran Belum Input */
+        .alert-floating-header {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            color: #d90429;
+            padding: 8px 12px;
+            border-radius: var(--border-radius-sm);
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            border-left: 4px solid #ef476f;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: pulseAlert 2s infinite;
+            box-shadow: var(--box-shadow-sm);
+        }
+        
+        @keyframes pulseAlert {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        
+        .alert-floating-header i {
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
@@ -1235,9 +1262,10 @@
                 kasContainer.innerHTML = '<p class="text-center">Data kas tidak ditemukan.</p>';
                 return;
             }
-
+        
             const bulanData = {};
             
+            // Looping data dari sheet
             for (let i = 1; i < data.length; i++) {
                 const row = data[i];
                 if (!row[1]) continue;
@@ -1249,7 +1277,7 @@
                 const transaksi = {
                     bulan: row[1],
                     tgl: row[2],
-                    ket: row[3],
+                    ket: row[3] || '',
                     masuk,
                     keluar,
                     saldoTransaksi
@@ -1315,9 +1343,26 @@
                 saldoSebelum += bulanData[bulanKey].saldoBulan;
             }
             
+            // Render HTML (Reverse agar bulan terbaru di atas)
             bulanDenganSaldoKumulatif.reverse().forEach((bulanDataItem, idx) => {
                 let saldoBerjalan = saldoSebelumBulan[bulanDataItem.namaBulan];
                 
+                // --- LOGIC BARU: Cek Pemasukan Iuran ---
+                const isIuranInputted = bulanDataItem.transaksi.some(t => 
+                    t.masuk > 0 && t.ket.toLowerCase().includes('iuran bulanan blok')
+                );
+        
+                let alertHtml = '';
+                if (!isIuranInputted) {
+                    alertHtml = `
+                        <div class="alert-iuran-warning" style="background: #fff3f3; color: #d9534f; padding: 10px; border-radius: 8px; border-left: 5px solid #d9534f; margin-bottom: 15px; font-size: 0.85rem; display: flex; align-items: center; gap: 10px; animation: pulse 2s infinite;">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span>iuran bulan <strong>${bulanDataItem.namaBulan}</strong> belum diinput, masih ada yang belum melakukan pembayaran, cek di menu iuran bulanan</span>
+                        </div>
+                    `;
+                }
+                // -------------------------------------
+        
                 const rowsHtml = bulanDataItem.transaksi.map(item => {
                     saldoBerjalan += (item.masuk - item.keluar);
                     
@@ -1339,12 +1384,12 @@
                         <td class="font-weight-bold text-right saldo-kumulatif">Rp ${formatNumber(bulanDataItem.saldoKumulatif)}</td>
                     </tr>
                 `;
-
+        
                 const netBulan = bulanDataItem.saldoBulan; 
                 const isPlus = netBulan >= 0;
                 const warnaTeks = isPlus ? 'var(--success-color)' : 'var(--danger-color)';
                 const tanda = isPlus ? '+' : '-';
-
+        
                 const accDiv = document.createElement('div');
                 accDiv.className = `month-accordion ${idx === 0 ? 'active' : ''}`;
                 
@@ -1362,6 +1407,7 @@
                         </div>
                     </div>
                     <div class="accordion-content">
+                        ${alertHtml}
                         <div class="table-container">
                             <table class="data-table">
                                 <thead>
@@ -1380,7 +1426,7 @@
                             </table>
                         </div>
                     </div>`;
-
+        
                 kasContainer.appendChild(accDiv);
             });
         }
