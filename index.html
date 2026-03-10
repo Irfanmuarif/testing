@@ -635,60 +635,6 @@
         .badge-in { background: linear-gradient(135deg, rgba(6, 214, 160, 0.1) 0%, rgba(4, 167, 119, 0.1) 100%); color: var(--success-color); border: 1px solid rgba(6, 214, 160, 0.2); }
         .badge-out { background: linear-gradient(135deg, rgba(239, 71, 111, 0.1) 0%, rgba(217, 4, 41, 0.1) 100%); color: var(--danger-color); border: 1px solid rgba(239, 71, 111, 0.2); }
 
-        /* --- NEW: Iuran Warning Styling --- */
-        .alert-iuran-warning {
-            background: linear-gradient(90deg, #fff8e1 0%, #ffffff 100%);
-            border-left: 4px solid #ffca28;
-            padding: 12px 16px;
-            margin-bottom: 16px;
-            border-radius: 6px;
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            box-shadow: 0 2px 4px rgba(255, 193, 7, 0.15);
-            animation: slideDown 0.4s ease-out;
-            border: 1px solid #ffe082;
-        }
-        
-        .alert-icon-box {
-            background: #ffca28;
-            color: #fff;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            font-size: 0.8rem;
-            margin-top: 1px;
-        }
-
-        .alert-content {
-            flex: 1;
-            font-size: 0.8rem;
-            color: #795548;
-            line-height: 1.4;
-        }
-        
-        .alert-content strong {
-            color: #e65100;
-        }
-
-        .th-warning-icon {
-            color: #fffbeb;
-            margin-left: 4px;
-            font-size: 0.9em;
-            filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- END NEW STYLES --- */
-
         /* --- UPDATED RONDA VISUALIZATION (AVATAR DI KIRI BAR) --- */
         .ronda-visual-container {
             display: flex;
@@ -933,8 +879,6 @@
             .card-title, .stat-info h3, .acc-left, .ronda-name { color: var(--gray-800); }
             .data-table th { background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%); color: var(--gray-800); }
             .data-table td { color: var(--gray-700); border-color: #4a5568; }
-            .alert-iuran-warning { background: #4a3b1a; border-color: #ffca28; }
-            .alert-content { color: #ffe082; }
         }
 
         /* Print */
@@ -1084,7 +1028,6 @@
         // Variabel Penampung Data Global
         let rawKasData = []; 
         let rawRondaData = [];
-        let rawIuranData = []; // Added global Iuran Data variable
         let kasDataForChart = []; 
 
         // DOM elements
@@ -1246,7 +1189,6 @@
         function loadIuranBulanan() {
             fetchAndParseCSV(csvUrls.iuran)
                 .then(data => {
-                    rawIuranData = data; // SIMPAN DATA KE GLOBAL
                     if (data.length === 0) return;
                     const headers = data[0];
                     let html = `<thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>`;
@@ -1275,62 +1217,16 @@
         }
 
         // ---------------------------------------------------------
-        // 3. UANG KAS (FIXED VERSION)
+        // 3. UANG KAS
         // ---------------------------------------------------------
-        async function loadUangKas() {
-            showLoading(true);
-        
-            // 1. Pastikan data iuran tersedia terlebih dahulu (MENUNGGU proses fetch selesai)
-            if (!rawIuranData || rawIuranData.length === 0) {
-                try {
-                    console.log("Mengambil data Iuran terlebih dahulu...");
-                    const iuranData = await fetchAndParseCSV(csvUrls.iuran);
-                    rawIuranData = iuranData;
-                } catch (e) {
-                    console.error("Gagal mengambil data iuran untuk pengecekan marking", e);
-                    // Tetap lanjut biar tabel kas tetap muncul, meski tanpa marking
-                }
-            }
-        
-            // 2. Ambil data Kas dan TUNGGU (await) sampai selesai
-            try {
-                console.log("Mengambil data Kas...");
-                const data = await fetchAndParseCSV(csvUrls.kas); // TAMBAHKAN AWAIT DISINI
-                renderUangKas(data);
-                updateLastUpdateTime();
-            } catch (e) {
-                console.error("Gagal mengambil data kas", e);
-                const kasContainer = document.getElementById('kasContainer');
-                kasContainer.innerHTML = '<p class="text-center text-danger">Gagal memuat data Kas.</p>';
-            } finally {
-                showLoading(false);
-            }
-        }
-        
-        // Helper Function yang diperkuat (Opsional, untuk debugging)
-        function cekStatusIuranBulan(namaBulan) {
-            if (!rawIuranData || rawIuranData.length <= 1) return false;
-            
-            // Normalisasi header Iuran (lowercase & trim) untuk pencarian index
-            const headers = rawIuranData[0].map(h => h.toString().toLowerCase().trim());
-            const bulanTarget = namaBulan.toLowerCase().trim();
-            
-            const colIndex = headers.indexOf(bulanTarget);
-            
-            // DEBUG: Cek ke console jika nama bulan tidak ketemu
-            if (colIndex === -1) {
-                console.warn(`Kolom bulan "${bulanTarget}" tidak ditemukan di Data Iuran. Header yang tersedia:`, headers);
-                return false;
-            }
-        
-            // Loop setiap baris warga (mulai index 1 karena index 0 adalah header)
-            for (let i = 1; i < rawIuranData.length; i++) {
-                const status = (rawIuranData[i][colIndex] || "").toString().trim().toUpperCase();
-                // Jika ada SATU saja yang FALSE, return true (Marking Aktif)
-                // Pastikan pengecekan string ini sesuai dengan isi CSV Anda (TRUE/FALSE)
-                if (status === 'FALSE') return true;
-            }
-            return false; // Semua sudah TRUE/Lunas
+        function loadUangKas() {
+            fetchAndParseCSV(csvUrls.kas)
+                .then(data => {
+                    rawKasData = data; 
+                    renderUangKas(data);
+                    updateLastUpdateTime();
+                })
+                .finally(() => showLoading(false));
         }
 
         function renderUangKas(data) {
@@ -1422,11 +1318,6 @@
             bulanDenganSaldoKumulatif.reverse().forEach((bulanDataItem, idx) => {
                 let saldoBerjalan = saldoSebelumBulan[bulanDataItem.namaBulan];
                 
-                // --- LOGIKA MARKING BARU ---
-                const isIuranIncomplete = cekStatusIuranBulan(bulanDataItem.namaBulan);
-                const warningIcon = isIuranIncomplete ? '<i class="fas fa-exclamation-circle th-warning-icon" title="Ada iuran belum lunas"></i>' : '';
-                // -------------------------
-
                 const rowsHtml = bulanDataItem.transaksi.map(item => {
                     saldoBerjalan += (item.masuk - item.keluar);
                     
@@ -1457,18 +1348,6 @@
                 const accDiv = document.createElement('div');
                 accDiv.className = `month-accordion ${idx === 0 ? 'active' : ''}`;
                 
-                // HTML untuk Alert Box Iuran
-                const iuranAlertHtml = isIuranIncomplete ? `
-                    <div class="alert-iuran-warning">
-                        <div class="alert-icon-box">
-                            <i class="fas fa-exclamation"></i>
-                        </div>
-                        <div class="alert-content">
-                            <strong>Peringatan Iuran:</strong> iuran masuk uang kas bulan <strong>${bulanDataItem.namaBulan}</strong> belum diinput dikarenakan, iuran masih ada yang belum bayar, untuk info lebih lanjut cek di menu iuran bulanan.
-                        </div>
-                    </div>
-                ` : '';
-
                 accDiv.innerHTML = `
                     <div class="accordion-header" onclick="toggleKasAccordion(this)">
                         <div class="acc-left">
@@ -1483,14 +1362,13 @@
                         </div>
                     </div>
                     <div class="accordion-content">
-                        ${iuranAlertHtml}
                         <div class="table-container">
                             <table class="data-table">
                                 <thead>
                                     <tr>
                                         <th>Tgl</th>
                                         <th>Keterangan</th>
-                                        <th>Masuk ${warningIcon}</th> <!-- Icon di header sini -->
+                                        <th>Masuk</th>
                                         <th>Keluar</th>
                                         <th>Saldo Kumulatif</th>
                                     </tr>
