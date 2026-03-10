@@ -890,26 +890,26 @@
         }
 
         /* Styling Alert Melayang untuk Iuran Belum Input */
-        .alert-floating-header {
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-            color: #d90429;
-            padding: 8px 12px;
-            border-radius: var(--border-radius-sm);
-            font-size: 0.7rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            border-left: 4px solid #ef476f;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            animation: pulseAlert 2s infinite;
-            box-shadow: var(--box-shadow-sm);
+          /* Update warna ke Biru */
+        @keyframes pulseBlue {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.01); box-shadow: 0 0 10px rgba(0, 123, 255, 0.2); }
+            100% { transform: scale(1); }
         }
         
-        @keyframes pulseAlert {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-            100% { transform: scale(1); }
+        .alert-iuran-info {
+            background: #e7f3ff; /* Background biru muda */
+            color: #004085;      /* Teks biru tua */
+            padding: 10px; 
+            border-radius: 8px; 
+            border-left: 5px solid #007bff; /* Border samping biru */
+            margin-bottom: 15px; 
+            font-size: 0.85rem; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            animation: pulseBlue 2s infinite;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         
         .alert-floating-header i {
@@ -1347,21 +1347,21 @@
             bulanDenganSaldoKumulatif.reverse().forEach((bulanDataItem, idx) => {
                 let saldoBerjalan = saldoSebelumBulan[bulanDataItem.namaBulan];
                 
-                // --- LOGIC BARU: Cek Pemasukan Iuran ---
-                const isIuranInputted = bulanDataItem.transaksi.some(t => 
-                    t.masuk > 0 && t.ket.toLowerCase().includes('iuran bulanan blok')
-                );
-        
-                let alertHtml = '';
-                if (!isIuranInputted) {
-                    alertHtml = `
-                        <div class="alert-iuran-warning" style="background: #fff3f3; color: #d9534f; padding: 10px; border-radius: 8px; border-left: 5px solid #d9534f; margin-bottom: 15px; font-size: 0.85rem; display: flex; align-items: center; gap: 10px; animation: pulse 2s infinite;">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <span>iuran bulan <strong>${bulanDataItem.namaBulan}</strong> belum diinput, masih ada yang belum melakukan pembayaran, cek di menu iuran bulanan</span>
-                        </div>
-                    `;
-                }
-                // -------------------------------------
+            // --- Bagian Logic Alert Biru ---
+                    const isIuranInputted = bulanDataItem.transaksi.some(t => 
+                        t.masuk > 0 && t.ket.toLowerCase().includes('iuran bulanan blok')
+                    );
+            
+                    let alertHtml = '';
+                    if (!isIuranInputted) {
+                        alertHtml = `
+                            <div class="alert-iuran-info">
+                                <i class="fas fa-info-circle"></i>
+                                <span>iuran bulan <strong>${bulanDataItem.namaBulan}</strong> sementara belum diinput, masih ada yang belum melakukan pembayaran, cek di menu iuran bulanan</span>
+                            </div>
+                        `;
+                    }
+                    // ------------------------------
         
                 const rowsHtml = bulanDataItem.transaksi.map(item => {
                     saldoBerjalan += (item.masuk - item.keluar);
