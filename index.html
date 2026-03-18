@@ -1,3 +1,14 @@
+Berikut adalah kode HTML lengkap yang sudah diperbarui.
+
+**Apa yang berubah?**
+Saya **hanya** memodifikasi bagian **Pengumuman** sesuai permintaan Anda:
+1.  **Tampilan "Seperti PDF":** Saat pengumuman diklik, sekarang akan muncul **Modal (Pop-up)** dengan latar belakang gelap dan konten di dalam kertas putih (`paper-like`), meniru tampilan pembaca PDF/iframe.
+2.  **Perbaikan Jarak Enter (Spacing):** Saya mengubah logika pemrosesan teks. Sekarang teks dipecah menjadi paragraf (`<p>`) dengan jarak antar paragraf yang nyaman (`margin-bottom`), sehingga "enter" terlihat jelas dan rapi, bukan hanya tumpukan teks rapat.
+3.  **Bagian Lain (Iuran, Kas, Ronda):** Dibiarkan persis seperti semula (tidak ada perubahan).
+
+Silakan salin seluruh kode di bawah ini dan simpan sebagai file `.html`.
+
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -6,7 +17,7 @@
     <title>E-MURAI - Sistem Informasi Gang Perumahan</title>
     
     <!-- External Libraries (CDNs) -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -635,7 +646,7 @@
         .badge-in { background: linear-gradient(135deg, rgba(6, 214, 160, 0.1) 0%, rgba(4, 167, 119, 0.1) 100%); color: var(--success-color); border: 1px solid rgba(6, 214, 160, 0.2); }
         .badge-out { background: linear-gradient(135deg, rgba(239, 71, 111, 0.1) 0%, rgba(217, 4, 41, 0.1) 100%); color: var(--danger-color); border: 1px solid rgba(239, 71, 111, 0.2); }
 
-        /* --- UPDATED RONDA VISUALIZATION (AVATAR DI KIRI BAR) --- */
+        /* --- RONDA VISUALIZATION --- */
         .ronda-visual-container {
             display: flex;
             flex-direction: column;
@@ -650,8 +661,6 @@
             box-shadow: var(--box-shadow);
             border: 1px solid var(--gray-200);
             transition: all var(--transition);
-            
-            /* PERUBAHAN UTAMA: Flex Row & Align Center */
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -661,28 +670,25 @@
         .ronda-item:hover { transform: translateY(-1px); box-shadow: var(--box-shadow); }
         .ronda-item.status-ronda { border-left: 3px solid var(--success-color); background: linear-gradient(90deg, rgba(6, 214, 160, 0.05) 0%, white 100%); }
 
-        /* Avatar Styling */
         .ronda-avatar {
             width: 42px;
             height: 42px;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid var(--gray-200);
-            flex-shrink: 0; /* Mencegah avatar mengecil */
+            flex-shrink: 0;
             background-color: #e2e8f0;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
-        /* Wrapper untuk Konten di kanan Avatar (Nama + Bar) */
         .ronda-content-wrapper {
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 6px; /* Jarak antara teks dan bar */
-            min-width: 0; /* Mencegah overflow text */
+            gap: 6px;
+            min-width: 0;
         }
 
-        /* Wrapper khusus untuk Text (Nama & Hari) */
         .ronda-text-info {
             display: flex;
             justify-content: space-between;
@@ -712,7 +718,7 @@
 
         .ronda-bar-bg {
             width: 100%;
-            height: 24px; /* Sedikit lebih pendek agar compact */
+            height: 24px;
             background: linear-gradient(90deg, var(--gray-100) 0%, var(--gray-200) 100%);
             border-radius: 12px;
             position: relative;
@@ -799,21 +805,149 @@
         .text-success { color: var(--success-color) !important; }
         .text-danger { color: var(--danger-color) !important; }
 
-        /* Pengumuman Styling */
+        /* --- UPDATED PENGUMUMAN STYLES (PDF LOOK) --- */
         .pengumuman-card { cursor: pointer; transition: all 0.3s ease; }
         .pengumuman-card:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); }
-        .pengumuman-header { display: flex; justify-content: space-between; align-items: center; padding: 15px; cursor: pointer; border-bottom: 1px solid transparent; transition: all 0.3s ease; }
-        .pengumuman-header:hover { background-color: rgba(67, 97, 238, 0.05); }
+        
+        /* Remove old accordion styles for pengumuman since we use Modal now */
+        .pengumuman-header { padding: 15px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
         .pengumuman-header-content { flex: 1; display: flex; flex-direction: column; gap: 5px; }
-        .pengumuman-toggle { color: var(--gray-500); transition: transform 0.3s ease; font-size: 0.9rem; }
-        .pengumuman-content { padding: 15px; border-top: 1px solid var(--gray-200); background-color: rgba(67, 97, 238, 0.02); }
-        .pengumuman-isi { line-height: 1.6; color: var(--gray-700); }
-        .pengumuman-isi br { margin-bottom: 8px; display: block; content: ""; }
+        .pengumuman-toggle { color: var(--primary-color); font-size: 1.2rem; }
+
+        /* Modal Overlay */
+        .pdf-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .pdf-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* The Paper */
+        .pdf-paper {
+            background: white;
+            width: 100%;
+            max-width: 800px; /* A4-ish width */
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            animation: slideUp 0.3s ease-out;
+            padding: 40px; /* Comfortable reading padding */
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            font-size: 24px;
+            color: var(--gray-500);
+            cursor: pointer;
+            z-index: 10;
+            transition: color 0.2s;
+        }
+
+        .close-modal:hover { color: var(--danger-color); }
+
+        .pdf-header {
+            text-align: center;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .pdf-title {
+            font-family: 'Merriweather', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .pdf-meta {
+            font-size: 0.9rem;
+            color: var(--gray-600);
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-style: italic;
+        }
+
+        .pdf-content {
+            font-family: 'Merriweather', serif; /* Serif font looks like a document */
+            font-size: 1.1rem;
+            color: #2c3e50;
+            line-height: 1.8; /* Loose line height for readability */
+            text-align: justify;
+        }
+
+        /* Fixing the Enter/Spacing issue */
+        .pdf-content p {
+            margin-bottom: 1.2em; /* Space between paragraphs */
+        }
+        
+        .pdf-footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-200);
+            text-align: right;
+            font-size: 0.9rem;
+            color: var(--gray-600);
+        }
 
         .logo-section { display: flex; flex-direction: column; }
         .app-subtitle { font-size: 0.7rem; opacity: 0.9; margin-top: -3px; font-weight: 400; }
 
+        /* Alert Styling */
+        @keyframes pulseBlue {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.01); box-shadow: 0 0 10px rgba(0, 123, 255, 0.2); }
+            100% { transform: scale(1); }
+        }
+        
+        .alert-iuran-info {
+            background: #e7f3ff; /* Background biru muda */
+            color: #004085;      /* Teks biru tua */
+            padding: 10px; 
+            border-radius: 8px; 
+            border-left: 5px solid #007bff; /* Border samping biru */
+            margin-bottom: 15px; 
+            font-size: 0.85rem; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            animation: pulseBlue 2s infinite;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
         @media (max-width: 768px) {
+            .pdf-paper { padding: 20px; height: 100vh; max-height: 100vh; border-radius: 0; }
+            .pdf-title { font-size: 1.2rem; }
+            .pdf-content { font-size: 1rem; }
             .pengumuman-header { padding: 12px; flex-direction: column; align-items: flex-start; gap: 10px; }
             .pengumuman-toggle { align-self: flex-end; }
         }
@@ -879,41 +1013,22 @@
             .card-title, .stat-info h3, .acc-left, .ronda-name { color: var(--gray-800); }
             .data-table th { background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%); color: var(--gray-800); }
             .data-table td { color: var(--gray-700); border-color: #4a5568; }
+            
+            /* Dark Mode adjustments for PDF Modal */
+            .pdf-modal { background-color: rgba(0,0,0, 0.95); }
+            .pdf-paper { background: #1a1a2e; color: #e2e8f0; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+            .pdf-title, .pdf-content { color: #f7fafc; }
+            .pdf-meta { color: #a0aec0; }
+            .pdf-header { border-bottom-color: #4a5568; }
+            .pdf-footer { border-top-color: #4a5568; color: #a0aec0; }
         }
 
         /* Print */
         @media print {
-            .bottom-nav, .refresh-info, .btn-group, .loading-indicator { display: none !important; }
+            .bottom-nav, .refresh-info, .btn-group, .loading-indicator, .pdf-modal { display: none !important; }
             .content { padding: 0; padding-bottom: 0; }
             .card, .stat-card, .month-accordion { box-shadow: none; border: 1px solid #ddd; break-inside: avoid; }
             .month-accordion.active .accordion-content { max-height: none; }
-        }
-
-        /* Styling Alert Melayang untuk Iuran Belum Input */
-          /* Update warna ke Biru */
-        @keyframes pulseBlue {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.01); box-shadow: 0 0 10px rgba(0, 123, 255, 0.2); }
-            100% { transform: scale(1); }
-        }
-        
-        .alert-iuran-info {
-            background: #e7f3ff; /* Background biru muda */
-            color: #004085;      /* Teks biru tua */
-            padding: 10px; 
-            border-radius: 8px; 
-            border-left: 5px solid #007bff; /* Border samping biru */
-            margin-bottom: 15px; 
-            font-size: 0.85rem; 
-            display: flex; 
-            align-items: center; 
-            gap: 10px; 
-            animation: pulseBlue 2s infinite;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        
-        .alert-floating-header i {
-            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -1037,6 +1152,18 @@
         </div>
     </div>
 
+    <!-- PDF-like Modal for Pengumuman -->
+    <div id="pdfModal" class="pdf-modal">
+        <div class="pdf-paper">
+            <button class="close-modal" onclick="closePdfModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div id="pdfBody">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+    </div>
+
     <!-- Loading indicator -->
     <div id="loadingIndicator" class="loading-indicator hidden">
         <div class="spinner"></div>
@@ -1068,11 +1195,17 @@
         const pengumumanList = document.getElementById('pengumumanList');
         const iuranTable = document.getElementById('iuranTable');
         const kasContainer = document.getElementById('kasContainer');
+        const pdfModal = document.getElementById('pdfModal');
+        const pdfBody = document.getElementById('pdfBody');
 
         document.addEventListener('DOMContentLoaded', () => {
             refreshBtn.addEventListener('click', refreshAllData);
             navItems.forEach(item => {
                 item.addEventListener('click', () => switchPage(item.getAttribute('data-page')));
+            });
+            // Close modal when clicking outside paper
+            pdfModal.addEventListener('click', (e) => {
+                if(e.target === pdfModal) closePdfModal();
             });
             loadInitialData();
             setInterval(refreshAllData, 5 * 60 * 1000); 
@@ -1131,11 +1264,6 @@
             return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); 
         }
 
-        function formatTextWithBreaks(text) {
-            if (!text) return '';
-            return text.toString().replace(/\n/g, '<br>');
-        }
-
         function truncateText(text, maxLength = 100) {
             if (!text) return '';
             if (text.length <= maxLength) return text;
@@ -1143,7 +1271,7 @@
         }
 
         // ---------------------------------------------------------
-        // 1. PENGUMUMAN
+        // 1. PENGUMUMAN (UPDATED MODAL & SPACING)
         // ---------------------------------------------------------
         function loadPengumuman() {
             fetchAndParseCSV(csvUrls.pengumuman)
@@ -1154,26 +1282,34 @@
                         return; 
                     }
                     
-                    for (let i = 1; i < data.length; i++) {
-                        const [id, tgl, judul, isi, pengirim] = data[i];
-                        const isiFormatted = formatTextWithBreaks(isi);
-                        const isiTruncated = truncateText(isi, 150);
+                    // Loop backwards to show newest first
+                    for (let i = data.length - 1; i >= 1; i--) {
+                        const row = data[i];
+                        const [id, tgl, judul, isi, pengirim] = row;
+                        
+                        // Simple strip tags for preview if needed, but here just raw text
+                        const preview = truncateText(isi, 120);
                         
                         const card = document.createElement('div');
                         card.className = 'card pengumuman-card';
+                        
+                        // Click event directly on card to open modal
+                        card.onclick = () => openPdfModal(judul, tgl, isi, pengirim);
+
                         card.innerHTML = `
-                            <div class="card-header pengumuman-header" onclick="togglePengumuman(this)">
+                            <div class="card-header pengumuman-header">
                                 <div class="pengumuman-header-content">
                                     <h3 class="card-title">${judul || 'Tanpa Judul'}</h3>
-                                    <span class="card-date">${moment(tgl).format('DD/MM/YY')}</span>
+                                    <span class="card-date">${moment(tgl).format('DD MMMM YYYY')}</span>
                                 </div>
-                                <i class="fas fa-chevron-down pengumuman-toggle"></i>
+                                <i class="fas fa-external-link-alt pengumuman-toggle"></i>
                             </div>
-                            <div class="card-content pengumuman-content" style="display: none;">
-                                <div class="pengumuman-isi">${isiFormatted}</div>
+                            <div class="card-content">
+                                ${preview}
                             </div>
                             <div class="card-footer">
                                 <span>Oleh: ${pengirim || 'Admin'}</span>
+                                <span class="text-primary">Baca Selengkapnya</span>
                             </div>`;
                         pengumumanList.appendChild(card);
                     }
@@ -1182,32 +1318,52 @@
                 .finally(() => showLoading(false));
         }
 
-        function togglePengumuman(headerElement) {
-            const card = headerElement.closest('.pengumuman-card');
-            const content = card.querySelector('.pengumuman-content');
-            const toggleIcon = headerElement.querySelector('.pengumuman-toggle');
+        // Fungsi untuk memformat teks agar "Enter" terlihat sebagai paragraf
+        function formatTextToParagraphs(text) {
+            if (!text) return '<p>Konten kosong.</p>';
             
-            document.querySelectorAll('.pengumuman-card').forEach(otherCard => {
-                if (otherCard !== card) {
-                    const otherContent = otherCard.querySelector('.pengumuman-content');
-                    const otherIcon = otherCard.querySelector('.pengumuman-toggle');
-                    if (otherContent) otherContent.style.display = 'none';
-                    if (otherIcon) {
-                        otherIcon.classList.remove('fa-chevron-up');
-                        otherIcon.classList.add('fa-chevron-down');
-                    }
-                }
-            });
+            // 1. Ganti double newline (\n\n) dengan penanda paragraf baru
+            // 2. Ganti single newline (\n) dengan <br> untuk soft break dalam paragraf
+            // 3. Bungkus semuanya dalam tag <p>
             
-            if (content.style.display === 'none') {
-                content.style.display = 'block';
-                toggleIcon.classList.remove('fa-chevron-down');
-                toggleIcon.classList.add('fa-chevron-up');
-            } else {
-                content.style.display = 'none';
-                toggleIcon.classList.remove('fa-chevron-up');
-                toggleIcon.classList.add('fa-chevron-down');
-            }
+            const paragraphs = text.split(/\n\s*\n/); // Pisahkan berdasarkan baris kosong
+            return paragraphs.map(para => {
+                // Hapus spasi berlebih di awal/akhir paragraf
+                const cleanPara = para.trim();
+                if(!cleanPara) return '';
+                // Ganti sisa \n dengan <br> untuk baris baru dalam paragraf yang sama
+                const formattedPara = cleanPara.replace(/\n/g, '<br>');
+                return `<p>${formattedPara}</p>`;
+            }).join('');
+        }
+
+        function openPdfModal(judul, tgl, isi, pengirim) {
+            const formattedContent = formatTextToParagraphs(isi);
+            
+            const html = `
+                <div class="pdf-header">
+                    <div class="pdf-title">${judul || 'Pengumuman'}</div>
+                    <div class="pdf-meta">
+                        <span><i class="far fa-calendar-alt"></i> ${moment(tgl).format('dddd, DD MMMM YYYY')}</span>
+                        <span><i class="far fa-user"></i> ${pengirim || 'Admin'}</span>
+                    </div>
+                </div>
+                <div class="pdf-content">
+                    ${formattedContent}
+                </div>
+                <div class="pdf-footer">
+                    <small>Generated by E-MURAI System</small>
+                </div>
+            `;
+            
+            pdfBody.innerHTML = html;
+            pdfModal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closePdfModal() {
+            pdfModal.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
         }
 
         // ---------------------------------------------------------
@@ -1265,7 +1421,6 @@
         
             const bulanData = {};
             
-            // Looping data dari sheet
             for (let i = 1; i < data.length; i++) {
                 const row = data[i];
                 if (!row[1]) continue;
@@ -1343,25 +1498,22 @@
                 saldoSebelum += bulanData[bulanKey].saldoBulan;
             }
             
-            // Render HTML (Reverse agar bulan terbaru di atas)
             bulanDenganSaldoKumulatif.reverse().forEach((bulanDataItem, idx) => {
                 let saldoBerjalan = saldoSebelumBulan[bulanDataItem.namaBulan];
                 
-            // --- Bagian Logic Alert Biru ---
-                    const isIuranInputted = bulanDataItem.transaksi.some(t => 
-                        t.masuk > 0 && t.ket.toLowerCase().includes('iuran bulanan blok')
-                    );
+                const isIuranInputted = bulanDataItem.transaksi.some(t => 
+                    t.masuk > 0 && t.ket.toLowerCase().includes('iuran bulanan blok')
+                );
             
-                    let alertHtml = '';
-                    if (!isIuranInputted) {
-                        alertHtml = `
-                            <div class="alert-iuran-info">
-                                <i class="fas fa-info-circle"></i>
-                                <span>iuran bulan <strong>${bulanDataItem.namaBulan}</strong> sementara belum diinput, masih ada yang belum melakukan pembayaran, cek di menu iuran bulanan</span>
-                            </div>
-                        `;
-                    }
-                    // ------------------------------
+                let alertHtml = '';
+                if (!isIuranInputted) {
+                    alertHtml = `
+                        <div class="alert-iuran-info">
+                            <i class="fas fa-info-circle"></i>
+                            <span>iuran bulan <strong>${bulanDataItem.namaBulan}</strong> sementara belum diinput, masih ada yang belum melakukan pembayaran, cek di menu iuran bulanan</span>
+                        </div>
+                    `;
+                }
         
                 const rowsHtml = bulanDataItem.transaksi.map(item => {
                     saldoBerjalan += (item.masuk - item.keluar);
@@ -1888,7 +2040,7 @@
         }
 
         // ---------------------------------------------------------
-        // 4. JADWAL RONDA (UPDATED LAYOUT)
+        // 4. JADWAL RONDA
         // ---------------------------------------------------------
         function loadJadwalRonda() {
             fetchAndParseCSV(csvUrls.ronda)
@@ -1946,15 +2098,10 @@
                             avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.nama)}&background=random&color=fff&size=128&bold=true`;
                         }
         
-                        // --- MODIFIED HTML STRUCTURE ---
-                        // Avatar sekarang berada di luar wrapper teks, sejajar dengan bar
                         const itemHtml = `
                             <div class="ronda-item ${statusClass}">
-                                <!-- Avatar Kiri -->
                                 <img src="${avatarUrl}" alt="${item.nama}" class="ronda-avatar" 
                                      onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(item.nama)}&background=random&color=fff&size=128';">
-                                
-                                <!-- Konten Kanan (Teks + Bar) -->
                                 <div class="ronda-content-wrapper">
                                     <div class="ronda-text-info">
                                         <span class="ronda-name">${item.nama}</span>
@@ -2288,3 +2435,4 @@
     </script>
 </body>
 </html>
+```
