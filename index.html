@@ -1010,6 +1010,51 @@
             .pdf-meta { color: #a0aec0; }
             .pdf-header { border-bottom-color: #4a5568; }
             .pdf-footer { border-top-color: #4a5568; color: #a0aec0; }
+                    /* --- PERBAIKAN TAMPILAN MALAM (DARK MODE) --- */
+
+            /* 1. Perbaiki Menu Bar (Bottom Navigation) */
+            .bottom-nav {
+                background: #1a1a2e !important; /* Ubah background jadi gelap sesuai body */
+                border-top: 1px solid #2d3748; /* Border tetap terlihat halus */
+            }
+    
+            /* Warna icon saat tidak aktif (biarkan sedikit abu-abu tapi kontras di gelap) */
+            .nav-item {
+                color: #a0aec0 !important; 
+            }
+    
+            /* Warna icon saat aktif */
+            .nav-item.active {
+                color: #4cc9f0 !important; /* Gunakan warna accent yang lebih terang/cyan */
+                background: rgba(76, 201, 240, 0.1);
+            }
+    
+            /* 2. Perbaiki Menu Uang Kas (Accordion) */
+            /* Paksa background header accordion jadi gelap */
+            .accordion-header {
+                background: #2d3748 !important;
+                border-bottom: 1px solid transparent;
+            }
+    
+            /* Saat accordion terbuka/aktif */
+            .month-accordion.active .accordion-header {
+                background: rgba(67, 97, 238, 0.1) !important; /* Biru sangat transparan */
+                border-bottom-color: #4a5568;
+            }
+    
+            /* Pastikan teks di dalam accordion terbaca (Putih) */
+            .acc-left {
+                color: #f7fafc !important;
+            }
+            
+            /* Pastikan saldo di header juga terbaca */
+            .value-saldo-header {
+                color: #4cc9f0 !important; /* Warna terang */
+            }
+            
+            .fa-chevron-down {
+                color: #a0aec0 !important;
+            }
         }
 
         /* Print */
