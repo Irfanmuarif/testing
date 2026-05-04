@@ -1311,16 +1311,10 @@
         function formatTextToParagraphs(text) {
             if (!text) return '<p>Konten kosong.</p>';
             
-            // 1. Ganti double newline (\n\n) dengan penanda paragraf baru
-            // 2. Ganti single newline (\n) dengan <br> untuk soft break dalam paragraf
-            // 3. Bungkus semuanya dalam tag <p>
-            
-            const paragraphs = text.split(/\n\s*\n/); // Pisahkan berdasarkan baris kosong
+            const paragraphs = text.split(/\n\s*\n/); 
             return paragraphs.map(para => {
-                // Hapus spasi berlebih di awal/akhir paragraf
                 const cleanPara = para.trim();
                 if(!cleanPara) return '';
-                // Ganti sisa \n dengan <br> untuk baris baru dalam paragraf yang sama
                 const formattedPara = cleanPara.replace(/\n/g, '<br>');
                 return `<p>${formattedPara}</p>`;
             }).join('');
@@ -2029,7 +2023,7 @@
         }
 
         // ---------------------------------------------------------
-        // 4. JADWAL RONDA
+        // 4. JADWAL RONDA (LOGIC UPDATED FOR REAL-TIME & 4 PEOPLE)
         // ---------------------------------------------------------
         function loadJadwalRonda() {
             fetchAndParseCSV(csvUrls.ronda)
@@ -2044,61 +2038,157 @@
                     const listContainer = document.getElementById('rondaVisualList');
         
                     const headers = data[0];
-                    const lastRondaIdx = headers.length - 1;
-        
+                    
+                    // --- LOGIC FIX START: SMART DATE COLUMN DETECTION ---
+                    // Kita akan mencari kolom yang merupakan Tanggal, bukan asumsi kolom terakhir.
+                    let dateColumns = []; // Array of { index: number, date: Moment }
+                    const now = moment();
+                    
+                    // Loop header untuk cari format tanggal
+                    for (let j = 2; j < headers.length; j++) { // Skip col 0 (Nama) & 1 (Foto)
+                        const headerText = headers[j];
+                        if (!headerText) continue;
+                        
+                        // Coba parsing tanggal dengan berbagai format umum
+                        const m = moment(headerText, ['DD/MM/YYYY', 'DD-MM-YYYY', 'YYYY-MM-DD', 'D/M/YY', 'D-M-YY'], true);
+                        
+                        if (m.isValid()) {
+                            dateColumns.push({
+                                index: j,
+                                dateObj: m,
+                                diff: m.diff(now, 'days') // Selisih hari dengan hari ini
+                            });
+                        }
+                    }
+
+                    // Urutkan dateColumns berdasarkan selisih waktu (yang paling mendekati hari ini)
+                    // Kita prioritaskan tanggal yang <= hari ini (Hari ini atau masa lalu terdekat)
+                    // Jika tidak ada yang masa lalu, ambil yang masa depan terdekat.
+                    
+                    dateColumns.sort((a, b) => {
+                        // Prioritaskan tanggal yang sudah lewat atau hari ini
+                        const aIsPast = a.diff <= 0;
+                        const bIsPast = b.diff <= 0;
+                        
+                        if (aIsPast && !bIsPast) return -1;
+                        if (!aIsPast && bIsPast) return 1;
+                        
+                        // Jika sama-sama masa lalu, ambil yang terbesar (paling dekat hari ini)
+                        if (aIsPast && bIsPast) return b.diff - a.diff;
+                        
+                        // Jika sama-sama masa depan, ambil yang terkecil (paling dekat hari ini)
+                        return a.diff - b.diff;
+                    });
+
+                    // Tentukan kolom target (Active Column)
+                    // Default ke kolom terakhir jika tidak ada tanggal ditemukan
+                    let targetColIndex = (headers.length > 2) ? headers.length - 1 : 2;
+                    let targetDateMoment = moment();
+
+                    if (dateColumns.length > 0) {
+                        targetColIndex = dateColumns[0].index;
+                        targetDateMoment = dateColumns[0].dateObj;
+                    }
+                    // --- LOGIC FIX END ---
+
                     let rondaList = [];
                     for (let i = 1; i < data.length; i++) {
                         const namaWarga = data[i][0];
+                        if (!namaWarga) continue; // Skip baris kosong
+
                         const pathFoto = data[i][1] ? data[i][1].trim() : ''; 
-                        const hariTerakhir = parseInt(data[i][lastRondaIdx]) || 0;
-        
+                        
+                        // Cek nilai di kolom target
+                        const statusRaw = data[i][targetColIndex];
+                        const statusStr = (statusRaw || "").toString().toUpperCase().trim();
+                        
+                        // Logika: Jika TRUE, berarti aktif di tanggal tersebut.
+                        // Kita cek apakah tanggal tersebut adalah Hari Ini atau Tanggal Terjadwal.
+                        const isRondaActive = (statusStr === 'TRUE');
+                        
+                        let hariTerakhir = 0;
+                        let labelTeks = "";
+                        let statusClass = "";
+
+                        if (isRondaActive) {
+                            hariTerakhir = 0;
+                            statusClass = "status-ronda";
+                            
+                            // Cek apakah target tanggal adalah hari ini
+                            if (targetDateMoment.isSame(now, 'day')) {
+                                labelTeks = "DIPILIH RONDA (HARI INI)";
+                            } else if (targetDateMoment.isAfter(now, 'day')) {
+                                labelTeks = "AKAN RONDA (" + targetDateMoment.format('DD/MM') + ")";
+                            } else {
+                                labelTeks = "RONDA TANGGAL " + targetDateMoment.format('DD/MM');
+                            }
+                        } else {
+                            // Jika tidak aktif di kolom target
+                            // Hitung selisih hari sebagai 'Hari Terakhir'
+                            const daysDiff = Math.abs(now.diff(targetDateMoment, 'days'));
+                            
+                            if (targetDateMoment.isAfter(now, 'day')) {
+                                // Jika target tanggal di masa depan dan dia tidak ronda
+                                hariTerakhir = 0; 
+                                labelTeks = "JADWAL MENDATANG";
+                            } else {
+                                // Jika target tanggal adalah hari ini atau masa lalu, dan dia tidak ronda
+                                // Berarti dia 'bolos' atau belum terjadwal
+                                hariTerakhir = daysDiff > 0 ? daysDiff : 1; 
+                                labelTeks = `Sudah ${hariTerakhir} hari tidak ronda`;
+                            }
+                        }
+
                         rondaList.push({
                             nama: namaWarga,
                             foto: pathFoto,
-                            hariTerakhir: hariTerakhir
+                            hariTerakhir: hariTerakhir,
+                            label: labelTeks,
+                            active: isRondaActive
                         });
                     }
-        
+
+                    // Sort: Yang aktif (hariTerakhir = 0) di atas, kemudian berdasarkan jumlah hari
                     rondaList.sort((a, b) => {
-                        if (a.hariTerakhir === 0) return -1;
-                        if (b.hariTerakhir === 0) return 1;
-                        return b.hariTerakhir - a.hariTerakhir;
+                        if (a.active && !b.active) return -1;
+                        if (!a.active && b.active) return 1;
+                        // Jika sama-sama aktif atau sama-sama tidak aktif, sort berdasarkan hari terakhir (kecil ke besar)
+                        return a.hariTerakhir - b.hariTerakhir;
                     });
-        
-                    const maxHari = Math.max(...rondaList.map(item => item.hariTerakhir));
-        
+
+                    // Hitung max hari untuk progress bar visual (agar bar-nya proporsional)
+                    // Kita abaikan yang 0 (active) untuk max calculation agar bar tidak full semua
+                    const nonActiveDays = rondaList.filter(x => !x.active).map(x => x.hariTerakhir);
+                    const maxHari = nonActiveDays.length > 0 ? Math.max(...nonActiveDays) : 10;
+
                     rondaList.forEach(item => {
-                        let persentase, labelTeks, statusClass;
-        
-                        if (item.hariTerakhir === 0) {
-                            persentase = 100;
-                            labelTeks = "DIPILIH RONDA";
-                            statusClass = "status-ronda";
-                        } else {
-                            persentase = maxHari > 0 ? (item.hariTerakhir / maxHari) * 100 : 0;
-                            labelTeks = `Sudah ${item.hariTerakhir} hari tidak ronda`;
-                            statusClass = "";
-                        }
-        
                         let avatarUrl;
                         if (item.foto && item.foto !== '') {
                             avatarUrl = item.foto;
                         } else {
                             avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.nama)}&background=random&color=fff&size=128&bold=true`;
                         }
-        
+
+                        // Hitung persentase bar. Jika active, bar full (100%).
+                        let persentase = item.active ? 100 : 0;
+                        if (!item.active && maxHari > 0) {
+                            persentase = (item.hariTerakhir / maxHari) * 100;
+                        }
+                        // Beri minimum width agar terlihat sedikit
+                        if (!item.active && persentase < 10) persentase = 10; 
+
                         const itemHtml = `
-                            <div class="ronda-item ${statusClass}">
+                            <div class="ronda-item ${item.active ? 'status-ronda' : ''}">
                                 <img src="${avatarUrl}" alt="${item.nama}" class="ronda-avatar" 
                                      onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(item.nama)}&background=random&color=fff&size=128';">
                                 <div class="ronda-content-wrapper">
                                     <div class="ronda-text-info">
                                         <span class="ronda-name">${item.nama}</span>
-                                        <span class="ronda-days">${item.hariTerakhir === 0 ? 'Aktif Malam Ini' : item.hariTerakhir + ' Hari'}</span>
+                                        <span class="ronda-days">${item.active ? 'AKTIF' : item.hariTerakhir + ' Hari'}</span>
                                     </div>
                                     <div class="ronda-bar-bg">
                                         <div class="ronda-bar-fill" style="width: ${persentase}%"></div>
-                                        <div class="ronda-bar-text">${labelTeks}</div>
+                                        <div class="ronda-bar-text">${item.label}</div>
                                     </div>
                                 </div>
                             </div>`;
@@ -2424,4 +2514,3 @@
     </script>
 </body>
 </html>
-```
