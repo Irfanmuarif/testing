@@ -2,7 +2,7 @@
 <html lang="id" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>E-MURAI - Sistem Informasi Gang Perumahan</title>
     
     <!-- External Libraries (CDNs) -->
@@ -28,7 +28,7 @@
     <!-- CSS Styles (Optimized Glassmorphism + Neon Nav) -->
     <style>
         /* ==========================================================================
-           OPTIMIZED LIQUID GLASS + NEON NAV
+           OPTIMIZED LIQUID GLASS + NEON NAV (FIXED POSITION FIX)
            ========================================================================== */
         
         :root {
@@ -80,18 +80,21 @@
             line-height: 1.5;
             min-height: 100vh;
             overflow-x: hidden;
-            transform: translateZ(0); /* Hardware Acceleration */
+            /* Transform dihapus dari body untuk mencegah bug position:fixed di iOS */
+            /* Hardware acceleration dipindahkan ke .scene */
         }
 
         /* --- ANIMATED BACKGROUND (Optimized) --- */
         .scene {
             position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;
+            /* Hardware acceleration diterapkan di sini saja */
+            transform: translateZ(0); 
         }
         .scene__blob {
             position: absolute; border-radius: 50%; 
             filter: blur(60px); /* Dikurangi dari 80px */
             opacity: 0.4;
-            will-change: transform; /* Hint browser untuk optimasi */
+            will-change: transform; /* Hint browser untuk optimasi gerakan */
             animation: blob-drift 25s ease-in-out infinite alternate;
         }
         .scene__blob--1 { width: 400px; height: 400px; background: radial-gradient(circle, var(--accent-aqua), transparent); top: -100px; left: -100px; }
@@ -111,11 +114,12 @@
             border: 1px solid var(--glass-border);
             box-shadow: var(--shadow-glass);
             position: relative;
-            contain: layout style paint; /* Optimasi Rendering Isolation */
+            /* Optimasi Rendering Isolation */
+            contain: layout style paint; 
         }
 
         /* --- LAYOUT --- */
-        .app-container { max-width: 100%; min-height: 100vh; position: relative; display: flex; flex-direction: column; z-index: 1; }
+        .app-container { max-width: 100%; min-height: 100vh; position: relative; display: flex; flex-direction: column; z-index: 1; padding-bottom: 100px; /* Space for nav */ }
         .screen { flex: 1; display: flex; flex-direction: column; }
 
         /* --- HEADER --- */
@@ -152,13 +156,14 @@
         .glass-btn--icon { width: 36px; height: 36px; padding: 0; border-radius: 50%; }
         .glass-btn--sm { padding: 4px 12px; font-size: 0.75rem; }
 
-        /* --- NAVIGATION CONTAINER (Fixed Position) --- */
+        /* --- NAVIGATION CONTAINER (Fixed Position & Structure Fix) --- */
         .bottom-nav {
             display: flex; justify-content: center; align-items: center; gap: 15px; padding: 15px;
             
-            /* Fix Posisi: Agar tidak hilang saat scroll */
+            /* Fix Posisi: Fixed agar tidak ikut scroll */
             position: fixed;
-            bottom: 30px; 
+            /* Safe Area untuk iPhone Home Bar */
+            bottom: calc(env(safe-area-inset-bottom) + 20px); 
             left: 50%;
             transform: translateX(-50%);
             z-index: 9999; /* Paling atas */
@@ -234,7 +239,8 @@
 
         /* --- CONTENT AREA --- */
         .content {
-            flex: 1; padding: 20px; padding-bottom: 100px;
+            flex: 1; padding: 20px;
+            /* Bottom padding dihapus karena handle oleh container atau fixed nav posisi */
             overflow-y: auto; -webkit-overflow-scrolling: touch;
             max-width: 1000px; margin: 0 auto; width: 100%;
         }
@@ -427,32 +433,6 @@
                 </div>
             </header>
 
-            <nav class="bottom-nav">
-                <!-- 1. PENGUMUMAN: WARNA PUTIH NEON -->
-                <button class="nav-item active" data-page="pengumuman" style="--neon-color: hsl(0, 0%, 100%);">
-                    <i class="fas fa-bullhorn"></i>
-                    <span>Pengumuman</span>
-                </button>
-
-                <!-- 2. IURAN: WARNA BIRU TOSCA -->
-                <button class="nav-item" data-page="iuran" style="--neon-color: hsl(195, 100%, 50%);">
-                    <i class="fas fa-money-bill-wave"></i>
-                    <span>Iuran</span>
-                </button>
-
-                <!-- 3. UANG KAS: WARNA HIJAU TOSCA -->
-                <button class="nav-item" data-page="kas" style="--neon-color: hsl(165, 100%, 50%);">
-                    <i class="fas fa-wallet"></i>
-                    <span>Keuangan</span>
-                </button>
-
-                <!-- 4. RONDA: WARNA PINK -->
-                <button class="nav-item" data-page="ronda" style="--neon-color: hsl(317 100% 54%);">
-                    <i class="fas fa-shield-alt"></i>
-                    <span>Ronda</span>
-                </button>
-            </nav>
-
             <main class="content">
                 <!-- Pengumuman Page -->
                 <div id="pengumumanPage" class="page active">
@@ -534,6 +514,33 @@
             </main>
         </div>
     </div>
+
+    <!-- NAVIGATION DI PINDAHKAN KE SINI (LANGSUNG ANAK BODY) -->
+    <nav class="bottom-nav">
+        <!-- 1. PENGUMUMAN: WARNA PUTIH NEON -->
+        <button class="nav-item active" data-page="pengumuman" style="--neon-color: hsl(0, 0%, 100%);">
+            <i class="fas fa-bullhorn"></i>
+            <span>Pengumuman</span>
+        </button>
+
+        <!-- 2. IURAN: WARNA BIRU TOSCA -->
+        <button class="nav-item" data-page="iuran" style="--neon-color: hsl(195, 100%, 50%);">
+            <i class="fas fa-money-bill-wave"></i>
+            <span>Iuran</span>
+        </button>
+
+        <!-- 3. UANG KAS: WARNA HIJAU TOSCA -->
+        <button class="nav-item" data-page="kas" style="--neon-color: hsl(165, 100%, 50%);">
+            <i class="fas fa-wallet"></i>
+            <span>Keuangan</span>
+        </button>
+
+        <!-- 4. RONDA: WARNA PINK -->
+        <button class="nav-item" data-page="ronda" style="--neon-color: hsl(317 100% 54%);">
+            <i class="fas fa-shield-alt"></i>
+            <span>Ronda</span>
+        </button>
+    </nav>
 
     <!-- PDF-like Modal for Pengumuman -->
     <div id="pdfModal" class="pdf-modal">
