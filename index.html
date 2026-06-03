@@ -4,14 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>E-MURAI - Sistem Informasi Gang Perumahan</title>
-
-    <!-- Tambahkan ini di dalam <head> -->
+    
+    <!-- External Libraries (CDNs) -->
+    <!-- Font untuk Glassmorphism (Italiana, DM Sans) -->
+    <link href="https://fonts.googleapis.com/css2?family=Italiana&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Font untuk Neon (Balsamiq Sans) -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@700&display=swap" rel="stylesheet">
-    <!-- External Libraries (CDNs) -->
-    <!-- Memasukkan font dari Liquid Glass Kit (Italiana & DM Sans) + Font asli (Poppins) untuk fallback -->
-    <link href="https://fonts.googleapis.com/css2?family=Italiana&family=DM+Sans:wght@400;500;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Fallback (Poppins) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- JS Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
@@ -19,47 +25,44 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 
-    <!-- CSS Styles (Merged E-MURAI Specifics with Liquid Glass Kit) -->
-<style>
+    <!-- CSS Styles (Optimized Glassmorphism + Neon Nav) -->
+    <style>
         /* ==========================================================================
-           LIQUID GLASS UI KIT - OPTIMIZED VERSION
-           (Ringan, tetap Estetik)
+           OPTIMIZED LIQUID GLASS + NEON NAV
            ========================================================================== */
         
         :root {
-            /* --- Liquid Glass Variables (Optimized) --- */
+            /* --- Glass Variables (Optimized) --- */
             --glass-white: rgba(255, 255, 255, 0.08);
             --glass-white-md: rgba(255, 255, 255, 0.12);
             --glass-white-lg: rgba(255, 255, 255, 0.18);
             
             --glass-border: rgba(255, 255, 255, 0.1);
             --glass-border-subtle: rgba(255, 255, 255, 0.05);
-    
-            /* Mengurangi Blur dari 16px menjadi 8px agar GPU tidak kebebanan */
+
+            /* Blur values: Dikurangi agar tidak lemot (16px -> 8px) */
             --blur-sm: blur(4px);
             --blur-md: blur(8px); 
             --blur-lg: blur(16px);
-    
-            --shadow-glass: 0 4px 16px rgba(0, 0, 0, 0.2); /* Shadow lebih sederhana */
+
+            --shadow-glass: 0 4px 16px rgba(0, 0, 0, 0.2);
             --shadow-float: 0 10px 30px rgba(0, 0, 0, 0.3);
-    
+
+            /* Accent Colors for general UI */
             --accent-aqua: #5ee7df;
             --accent-violet: #b490f5;
             --accent-rose: #f7a8c4;
             --accent-lime: #a8f08a;
-    
+
+            /* Base Theme */
             --color-bg: #0b0e1a;
             --color-text: #ffffff;
             --color-text-muted: rgba(255, 255, 255, 0.6);
             
             --border-radius-lg: 24px;
             --border-radius-full: 9999px;
-
-            /* Mengambil warna Pink Neon dari contoh kamu */
-            --neon-color: hsl(317 100% 54%); 
-            --neon-dark: hsl(323 21% 16%); /* Warna latar saat hover (Hitam Gelap) */
         }
-    
+
         /* Mencegah lag di HP dengan performa rendah */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
@@ -67,9 +70,9 @@
                 transition-duration: 0.01ms !important;
             }
         }
-    
+
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    
+
         body {
             font-family: 'DM Sans', sans-serif;
             color: var(--color-text);
@@ -77,210 +80,158 @@
             line-height: 1.5;
             min-height: 100vh;
             overflow-x: hidden;
-            /* Hardware Acceleration for body */
-            transform: translateZ(0); 
+            transform: translateZ(0); /* Hardware Acceleration */
         }
-    
+
         /* --- ANIMATED BACKGROUND (Optimized) --- */
         .scene {
             position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;
         }
         .scene__blob {
             position: absolute; border-radius: 50%; 
-            /* Blur dikurangi sedikit agar tidak terlalu berat saat bergerak */
-            filter: blur(60px); 
+            filter: blur(60px); /* Dikurangi dari 80px */
             opacity: 0.4;
-            will-change: transform; /* Hint browser untuk optimasi gerakan */
+            will-change: transform; /* Hint browser untuk optimasi */
             animation: blob-drift 25s ease-in-out infinite alternate;
         }
         .scene__blob--1 { width: 400px; height: 400px; background: radial-gradient(circle, var(--accent-aqua), transparent); top: -100px; left: -100px; }
         .scene__blob--2 { width: 500px; height: 500px; background: radial-gradient(circle, var(--accent-violet), transparent); bottom: -100px; right: -100px; animation-delay: -5s; }
         .scene__blob--3 { width: 300px; height: 300px; background: radial-gradient(circle, var(--accent-rose), transparent); top: 40%; left: 40%; animation-delay: -10s; }
-    
+
         @keyframes blob-drift {
             0% { transform: translate3d(0, 0, 0) scale(1); }
             100% { transform: translate3d(30px, -30px, 0) scale(1.1); }
         }
-    
+
         /* --- GLASS UTILITIES --- */
         .glass {
-            backdrop-filter: var(--blur-md); /* 8px Blur */
+            backdrop-filter: var(--blur-md); 
             -webkit-backdrop-filter: var(--blur-md);
             background: var(--glass-white);
             border: 1px solid var(--glass-border);
             box-shadow: var(--shadow-glass);
             position: relative;
-            /* Optimasi Rendering Isolation */
-            contain: layout style paint; 
+            contain: layout style paint; /* Optimasi Rendering Isolation */
         }
-    
+
         /* --- LAYOUT --- */
         .app-container { max-width: 100%; min-height: 100vh; position: relative; display: flex; flex-direction: column; z-index: 1; }
         .screen { flex: 1; display: flex; flex-direction: column; }
-    
+
         /* --- HEADER --- */
         .app-header {
             padding: 1rem 1.5rem; position: relative; z-index: 10;
             background: rgba(11, 14, 26, 0.8);
-            backdrop-filter: blur(10px); /* Solid blur header */
+            backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--glass-border-subtle);
         }
-    
+
         .header-content { display: flex; justify-content: space-between; align-items: center; }
         .logo-section h1 {
             font-family: 'Italiana', serif; font-size: 1.4rem; font-weight: 400;
             background: linear-gradient(135deg, #fff, var(--accent-aqua)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
         .app-subtitle { font-size: 0.7rem; opacity: 0.6; letter-spacing: 0.05em; margin-top: -4px; }
-    
+
         /* --- BUTTONS --- */
         .glass-btn {
             display: inline-flex; align-items: center; justify-content: center; gap: 8px;
             padding: 8px 20px; border-radius: var(--border-radius-full); border: 1px solid var(--glass-border);
             background: var(--glass-white); color: var(--color-text); cursor: pointer;
             font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500;
-            backdrop-filter: blur(4px); /* Light blur only */
-            transition: transform 0.2s, background 0.2s; /* Simplified transition */
+            backdrop-filter: blur(4px);
+            transition: transform 0.2s, background 0.2s;
         }
         .glass-btn:hover { transform: translateY(-2px); background: var(--glass-white-md); }
         .glass-btn:active { transform: scale(0.95); }
         
         .glass-btn--primary { border-color: var(--accent-aqua); color: var(--accent-aqua); background: rgba(94, 231, 223, 0.1); }
         .glass-btn--primary:hover { background: rgba(94, 231, 223, 0.2); box-shadow: 0 0 15px rgba(94, 231, 223, 0.2); }
-        
         .glass-btn--danger { border-color: var(--accent-rose); color: var(--accent-rose); background: rgba(247, 168, 196, 0.1); }
-    
         .glass-btn--icon { width: 36px; height: 36px; padding: 0; border-radius: 50%; }
         .glass-btn--sm { padding: 4px 12px; font-size: 0.75rem; }
-    
-        /* --- NAVIGATION --- */
-        /* --- SETUP WARNA NEON --- */    
-        /* --- NAVIGATION CONTAINER (Perbaikan Posisi) --- */
+
+        /* --- NAVIGATION CONTAINER (Fixed Position) --- */
         .bottom-nav {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px; /* Jarak antar tombol diperlebar */
-            padding: 15px;
+            display: flex; justify-content: center; align-items: center; gap: 15px; padding: 15px;
             
-            /* PENTING: Agar tidak hilang saat scroll */
+            /* Fix Posisi: Agar tidak hilang saat scroll */
             position: fixed;
-            bottom: 30px; /* Naikkan sedikit memberi ruang untuk glow */
+            bottom: 30px; 
             left: 50%;
             transform: translateX(-50%);
-            z-index: 9999; /* Dipastikan berada di atas segalanya (Modal, Loading, dll) */
+            z-index: 9999; /* Paling atas */
             
-            width: auto;
-            min-width: 320px;
-            max-width: 90vw;
+            width: auto; min-width: 320px; max-width: 90vw;
             
-            /* Background container tetap Gelap agar Neon terlihat jelas */
+            /* Background Container Gelap agar Neon terlihat */
             background: rgba(10, 10, 20, 0.9); 
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50px; /* Bentuk kapsul */
+            border-radius: 50px; /* Bentuk Kapsul */
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-    
-        /* --- NAV ITEMS (Gaya Neon Button) --- */
+
+        /* --- NAV ITEMS (Multi-Color Neon) --- */
         .nav-item {
-            /* Font Balsamiq Sans sesuai permintaan */
             font-family: 'Balsamiq Sans', cursive;
-            font-size: 1.1rem; /* Ukuran font disesuaikan agar muat di menu */
+            font-size: 1.1rem;
             font-weight: 700;
             
-            display: inline-flex;
-            flex-direction: column; /* Icon di atas teks */
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
+            display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+            cursor: pointer; text-decoration: none;
             
-            cursor: pointer;
-            text-decoration: none;
+            /* Warna Neon diambil dari atribut HTML style="..." */
+            --current-neon: var(--neon-color, hsl(317 100% 54%)); 
             
-            /* --- CORE NEON STYLES --- */
-            color: var(--neon-color);
-            border: 0.15em solid var(--neon-color);
-            padding: 0.4em 1em; /* Padding tombol */
+            color: var(--current-neon);
+            border: 0.15em solid var(--current-neon);
+            padding: 0.4em 1em;
             border-radius: 0.25em;
             
             text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3), 0 0 0.45em currentColor;
-            
-            box-shadow: 
-                inset 0 0 0.5em 0 var(--neon-color), 
-                0 0 0.5em 0 var(--neon-color);
+            box-shadow: inset 0 0 0.5em 0 var(--current-neon), 0 0 0.5em 0 var(--current-neon);
             
             position: relative;
-            
-            /* Hapus background default agar transparan */
             background: transparent !important;
-            backdrop-filter: none;
-            -webkit-backdrop-filter: none;
-            
-            /* Transisi halus */
+            backdrop-filter: none; -webkit-backdrop-filter: none;
             transition: all 0.2s ease-in-out;
             min-width: 70px;
         }
-    
-        /* Efek Cahaya di Bawah Tombol (Reflection) */
+
+        /* Efek Cahaya Neon (Reflection) */
         .nav-item::before {
-            pointer-events: none;
-            content: "";
-            position: absolute;
-            background: var(--neon-color);
-            top: 120%;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            
+            pointer-events: none; content: ""; position: absolute;
+            background: var(--current-neon);
+            top: 120%; left: 0; width: 100%; height: 100%;
             transform: perspective(1em) rotateX(40deg) scale(1, 0.35);
-            filter: blur(1em);
-            opacity: 0.7;
-            z-index: -1;
+            filter: blur(1em); opacity: 0.7; z-index: -1;
         }
-    
+
         /* Efek Isi Warna saat Hover/Active */
         .nav-item::after {
-            content: "";
-            position: absolute;
+            content: ""; position: absolute;
             top: 0; bottom: 0; left: 0; right: 0;
-            box-shadow: 0 0 2em 0.5em var(--neon-color);
+            box-shadow: 0 0 2em 0.5em var(--current-neon);
             opacity: 0;
-            background-color: var(--neon-color);
-            z-index: -1;
-            transition: opacity 100ms linear;
+            background-color: var(--current-neon);
+            z-index: -1; transition: opacity 100ms linear;
             border-radius: inherit;
         }
-    
-        /* --- STATE: HOVER & ACTIVE --- */
-        .nav-item:hover,
-        .nav-item:focus,
-        .nav-item.active {
-            color: var(--neon-dark); /* Teks jadi hitam saat menyala */
+
+        /* Hover & Active States */
+        .nav-item:hover, .nav-item:focus, .nav-item.active {
+            color: #050505; /* Teks hitam saat neon menyala */
             text-shadow: none;
-            transform: translateY(-3px); /* Sedikit naik saat aktif */
+            transform: translateY(-3px);
         }
-    
-        .nav-item:hover::before,
-        .nav-item:focus::before,
-        .nav-item.active::before {
-            opacity: 1;
-        }
-    
-        .nav-item:hover::after,
-        .nav-item:focus::after,
-        .nav-item.active::after {
-            opacity: 1; /* Tombol terisi penuh warna neon */
-        }
-    
-        /* Icon styling adjustment for Neon */
-        .nav-item i {
-            font-size: 1.4rem;
-            margin-bottom: 2px;
-        }
-    
+        .nav-item:hover::before, .nav-item:focus::before, .nav-item.active::before { opacity: 1; }
+        .nav-item:hover::after, .nav-item:focus::after, .nav-item.active::after { opacity: 1; }
+        
+        .nav-item i { font-size: 1.4rem; margin-bottom: 2px; }
+
         /* --- CONTENT AREA --- */
         .content {
             flex: 1; padding: 20px; padding-bottom: 100px;
@@ -290,73 +241,62 @@
         .page { display: none; animation: fadeIn 0.3s ease-out; }
         .page.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    
+
         /* --- CARDS --- */
         .card-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
-    
+
         .card {
-            /* Card glass effect dioptimasi */
-            background: rgba(255, 255, 255, 0.03); /* Lebih transparan, kurangi blur */
+            background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(8px); 
             -webkit-backdrop-filter: blur(8px);
             border: 1px solid var(--glass-border); border-radius: var(--border-radius-lg);
             padding: 20px; position: relative; overflow: hidden;
             transition: transform 0.2s ease, border-color 0.2s ease;
-            /* Isolation mencegah lag saat hover kartu */
-            will-change: transform; 
-            contain: layout style;
+            will-change: transform; contain: layout style;
         }
-    
+
         .card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.2); }
-        
         .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; gap: 10px; }
         .card-title { font-family: 'Italiana', serif; font-size: 1.2rem; font-weight: 700; color: #fff; }
         .card-date { font-size: 0.7rem; padding: 4px 10px; border-radius: 12px; background: rgba(255,255,255,0.1); color: var(--color-text-muted); }
         .card-content { font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.5; margin-bottom: 16px; }
         .card-footer { display: flex; justify-content: space-between; padding-top: 12px; border-top: 1px solid var(--glass-border-subtle); font-size: 0.8rem; color: var(--color-text-muted); }
-    
-        /* --- TABLES (HEAVILY OPTIMIZED) --- */
+
+        /* --- TABLES (Optimized - No Blur on Rows) --- */
         .table-container {
             width: 100%; overflow-x: auto; border-radius: 16px;
             border: 1px solid var(--glass-border);
-            background: rgba(0,0,0,0.3); /* Solid dark background */
+            background: rgba(0,0,0,0.3);
             margin-top: 10px;
         }
-    
+
         .data-table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 600px; }
-        
         .data-table thead { position: sticky; top: 0; z-index: 5; }
-        
         .data-table th {
-            background: rgba(11, 14, 26, 0.95); /* Solid header */
-            color: var(--accent-aqua); font-weight: 600; padding: 12px 16px;
+            background: rgba(11, 14, 26, 0.95); color: var(--accent-aqua); font-weight: 600; padding: 12px 16px;
             text-align: left; border-bottom: 2px solid var(--accent-aqua);
             font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;
             backdrop-filter: blur(10px);
         }
-    
-        /* OPTIMISASI PENTING: Matikan backdrop-filter di baris tabel */
         .data-table td {
             padding: 12px 16px; border-bottom: 1px solid var(--glass-border-subtle);
             color: #eee; font-size: 0.9rem;
-            background: rgba(255, 255, 255, 0.01); /* Hanya transparan solid */
+            background: rgba(255, 255, 255, 0.01); /* Solid Transparent */
             transition: background 0.2s;
         }
-    
-        .data-table tr:hover td { background: rgba(255, 255, 255, 0.05); } /* Hover ringan */
+        .data-table tr:hover td { background: rgba(255, 255, 255, 0.05); }
         .data-table tbody tr:last-child td { border-bottom: none; }
-    
+
         /* --- STATS GRID --- */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px; }
-    
+
         .stat-card {
             background: var(--glass-white); backdrop-filter: blur(10px);
             border: 1px solid var(--glass-border); border-radius: 16px; padding: 16px;
-            display: flex; align-items: center; gap: 12px;
-            transition: transform 0.2s;
+            display: flex; align-items: center; gap: 12px; transition: transform 0.2s;
         }
         .stat-card:hover { transform: scale(1.02); }
-    
+
         .stat-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; background: rgba(255,255,255,0.1); }
         .total .stat-icon { color: var(--accent-aqua); background: rgba(94, 231, 223, 0.15); }
         .income .stat-icon { color: var(--accent-lime); background: rgba(168, 240, 138, 0.15); }
@@ -364,29 +304,24 @@
         .stat-info { display: flex; flex-direction: column; }
         .stat-info span { font-size: 0.7rem; color: var(--color-text-muted); text-transform: uppercase; }
         .stat-info h3 { font-size: 1.1rem; font-weight: 700; color: #fff; }
-    
-        
+
         /* --- ACCORDION --- */
         .month-accordion {
             background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border);
             border-radius: 16px; margin-bottom: 12px; overflow: hidden;
         }
-    
+
         .accordion-header { padding: 16px 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
         .accordion-header:hover { background: rgba(255,255,255,0.05); }
         .month-accordion.active .accordion-header { background: rgba(94, 231, 223, 0.05); border-bottom: 1px solid var(--glass-border-subtle); }
-    
         .acc-left { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 1rem; }
         .acc-left i { color: var(--accent-aqua); }
-    
         .accordion-content { padding: 0; max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
         .month-accordion.active .accordion-content { max-height: 2000px; }
-        
         .accordion-content .table-container { margin: 0; border: none; background: transparent; box-shadow: none; }
-    
+
         /* --- RONDA VISUALIZATION --- */
         .ronda-visual-container { display: flex; flex-direction: column; gap: 16px; padding: 4px; }
-    
         .ronda-item {
             background: var(--glass-white); backdrop-filter: blur(10px);
             border: 1px solid var(--glass-border); border-radius: 16px;
@@ -395,9 +330,7 @@
         }
         .ronda-item:hover { transform: translateX(5px); border-color: var(--accent-violet); }
         .ronda-item.status-ronda { border-color: var(--accent-lime); background: rgba(168, 240, 138, 0.05); }
-    
         .ronda-avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2px solid var(--glass-border); }
-    
         .ronda-bar-bg { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; margin-top: 8px; }
         .ronda-bar-fill {
             height: 100%; border-radius: 10px;
@@ -407,17 +340,16 @@
         }
         .status-ronda .ronda-bar-fill { background: linear-gradient(90deg, var(--accent-lime), #86efac); box-shadow: 0 0 10px rgba(168, 240, 138, 0.5); }
         .ronda-bar-text { position: absolute; top: 24px; left: 80px; font-size: 0.7rem; color: var(--color-text-muted); }
-    
+
         /* --- MODAL --- */
         .pdf-modal {
             position: fixed; inset: 0; z-index: 1000;
             background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px); /* Blur ringan di overlay */
+            backdrop-filter: blur(5px);
             display: flex; justify-content: center; align-items: center;
             opacity: 0; visibility: hidden; transition: opacity 0.3s ease; padding: 20px;
         }
         .pdf-modal.active { opacity: 1; visibility: visible; }
-    
         .pdf-paper {
             background: #fff; color: #1e293b; width: 100%; max-width: 800px;
             max-height: 90vh; overflow-y: auto; border-radius: 4px;
@@ -425,7 +357,6 @@
             transform: translateY(20px); transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
         }
         .pdf-modal.active .pdf-paper { transform: translateY(0); }
-    
         .close-modal { position: absolute; top: 15px; right: 20px; background: rgba(0,0,0,0.1); border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; }
         
         .pdf-header { text-align: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 20px; margin-bottom: 30px; }
@@ -433,7 +364,7 @@
         .pdf-meta { color: #64748b; font-size: 0.9rem; display: flex; justify-content: center; gap: 20px; font-style: italic; }
         .pdf-content { font-family: 'DM Sans', sans-serif; font-size: 1.1rem; line-height: 1.8; color: #334155; }
         .pdf-content p { margin-bottom: 1.2em; }
-    
+
         /* --- UTILS --- */
         .badge { padding: 4px 8px; border-radius: 12px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; }
         .badge-in { background: rgba(168, 240, 138, 0.2); color: var(--accent-lime); border: 1px solid rgba(168, 240, 138, 0.3); }
@@ -442,13 +373,13 @@
         .text-primary { color: var(--accent-aqua) !important; }
         .text-right { text-align: right; }
         .hidden { display: none !important; }
-    
+
         .alert-iuran-info {
             background: rgba(94, 231, 223, 0.1); border-left: 4px solid var(--accent-aqua);
             color: var(--accent-aqua); padding: 12px; border-radius: 8px;
             margin-bottom: 16px; font-size: 0.85rem; display: flex; align-items: center; gap: 10px;
         }
-    
+
         .loading-indicator {
             position: fixed; inset: 0; background: rgba(11, 14, 26, 0.9);
             backdrop-filter: blur(5px); z-index: 2000; display: flex; justify-content: center; align-items: center;
@@ -458,7 +389,7 @@
             border-radius: 50%; border-top-color: var(--accent-aqua); animation: spin 1s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-    
+
         input[type="checkbox"] {
             width: 18px; height: 18px; appearance: none; background: rgba(255,255,255,0.1);
             border: 1px solid var(--glass-border); border-radius: 4px; cursor: pointer; position: relative;
@@ -468,7 +399,6 @@
             content: '✓'; position: absolute; color: #000; font-size: 12px; font-weight: bold;
             top: 50%; left: 50%; transform: translate(-50%, -50%);
         }
-</style>
     </style>
 </head>
 <body>
@@ -498,19 +428,26 @@
             </header>
 
             <nav class="bottom-nav">
-                <button class="nav-item active" data-page="pengumuman">
+                <!-- 1. PENGUMUMAN: WARNA PUTIH NEON -->
+                <button class="nav-item active" data-page="pengumuman" style="--neon-color: hsl(0, 0%, 100%);">
                     <i class="fas fa-bullhorn"></i>
                     <span>Pengumuman</span>
                 </button>
-                <button class="nav-item" data-page="iuran">
+
+                <!-- 2. IURAN: WARNA BIRU TOSCA -->
+                <button class="nav-item" data-page="iuran" style="--neon-color: hsl(195, 100%, 50%);">
                     <i class="fas fa-money-bill-wave"></i>
                     <span>Iuran</span>
                 </button>
-                <button class="nav-item" data-page="kas">
+
+                <!-- 3. UANG KAS: WARNA HIJAU TOSCA -->
+                <button class="nav-item" data-page="kas" style="--neon-color: hsl(165, 100%, 50%);">
                     <i class="fas fa-wallet"></i>
                     <span>Keuangan</span>
                 </button>
-                <button class="nav-item" data-page="ronda">
+
+                <!-- 4. RONDA: WARNA PINK -->
+                <button class="nav-item" data-page="ronda" style="--neon-color: hsl(317 100% 54%);">
                     <i class="fas fa-shield-alt"></i>
                     <span>Ronda</span>
                 </button>
@@ -615,7 +552,7 @@
         <div class="spinner"></div>
     </div>
 
-    <!-- JavaScript Logic (UNCHANGED FROM USER REQUEST) -->
+    <!-- JavaScript Logic (ORIGINAL - TIDAK DIUBAH) -->
     <script>
         // Global variables
         const csvUrls = {
