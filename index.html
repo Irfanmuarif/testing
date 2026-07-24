@@ -474,16 +474,18 @@
             background-color: white;
         }
 
+        /* PERUBAHAN WARNA CEKBOX DI SINI */
         input[type="checkbox"]:checked {
-            background-color: var(--success-color);
-            border-color: var(--success-color);
+            background-color: #00e676; /* Hijau neon yang menyala */
+            border-color: #00e676;
             transform: scale(1.05);
+            box-shadow: 0 0 8px rgba(0, 230, 118, 0.6); /* Efek glow agar terlihat menyala */
         }
 
         input[type="checkbox"]:checked::before {
             content: '✓';
             position: absolute;
-            color: white;
+            color: #003300; /* Warna centang menjadi hijau gelap agar kontras dengan hijau neon */
             font-size: 10px; 
             font-weight: bold;
             top: 50%;
