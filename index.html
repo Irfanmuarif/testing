@@ -949,8 +949,8 @@
             .refresh-info { font-size: 0.85rem; padding: 6px 12px; }
             .refresh-info #lastUpdate { display: inline; }
             .content { padding: var(--spacing-xl); padding-bottom: 90px; }
-            .bottom-nav { max-width: 500px; left: 50%; transform: translateX(-50%); border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0; padding: var(--spacing-sm) var(--spacing-xl); }
-            .nav-item { min-width: 70px; padding: 8px 12px; font-size: 0.75rem; }
+            .bottom-nav { max-width: 600px; left: 50%; transform: translateX(-50%); border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0; padding: var(--spacing-sm) var(--spacing-xl); }
+            .nav-item { min-width: 75px; padding: 8px 12px; font-size: 0.75rem; }
             .nav-item i { font-size: 1.2rem; }
             .nav-item span { font-size: 0.7rem; }
             .page-header { flex-direction: row; align-items: center; justify-content: space-between; margin-bottom: var(--spacing-xl); padding-bottom: var(--spacing-md); }
@@ -977,7 +977,7 @@
             body { font-size: 16px; }
             .app-container { max-width: 1200px; margin: 0 auto; box-shadow: 0 0 30px rgba(0, 0, 0, 0.1); border-radius: 0; height: 100vh; overflow: hidden; }
             .header-content h1 { font-size: 1.5rem; }
-            .bottom-nav { max-width: 600px; }
+            .bottom-nav { max-width: 700px; }
             .nav-item { min-width: 80px; }
         }
 
@@ -1102,6 +1102,10 @@
                     <i class="fas fa-shield-alt"></i>
                     <span>Jadwal Ronda</span>
                 </button>
+                <button class="nav-item" data-page="lainnya">
+                    <i class="fas fa-ellipsis-h"></i>
+                    <span>Lainnya</span>
+                </button>
             </nav>
 
             <main class="content">
@@ -1182,6 +1186,18 @@
                         <!-- Ronda data will be loaded here -->
                     </div>
                 </div>
+
+                <!-- Lainnya Page -->
+                <div id="lainnyaPage" class="page">
+                    <div class="page-header">
+                        <h2 id="lainnyaTitle">Data Lainnya</h2>
+                    </div>
+                    <div class="table-container">
+                        <table id="lainnyaTable" class="data-table">
+                            <!-- Lainnya table will be loaded here -->
+                        </table>
+                    </div>
+                </div>
             </main>
         </div>
     </div>
@@ -1210,7 +1226,8 @@
             pengumuman: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhtHQT_YmSq-tiQt-6Kqj5Ms9oeUdTdiNIChEdQPgEQryYxTMf2M5RTgpVa1oi30rvvXrJK3XY4nyd/pub?gid=0&single=true&output=csv',
             iuran: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhtHQT_YmSq-tiQt-6Kqj5Ms9oeUdTdiNIChEdQPgEQryYxTMf2M5RTgpVa1oi30rvvXrJK3XY4nyd/pub?gid=1650144415&single=true&output=csv',
             kas: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhtHQT_YmSq-tiQt-6Kqj5Ms9oeUdTdiNIChEdQPgEQryYxTMf2M5RTgpVa1oi30rvvXrJK3XY4nyd/pub?gid=2139823991&single=true&output=csv',
-            ronda: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhtHQT_YmSq-tiQt-6Kqj5Ms9oeUdTdiNIChEdQPgEQryYxTMf2M5RTgpVa1oi30rvvXrJK3XY4nyd/pub?gid=2068778061&single=true&output=csv'
+            ronda: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhtHQT_YmSq-tiQt-6Kqj5Ms9oeUdTdiNIChEdQPgEQryYxTMf2M5RTgpVa1oi30rvvXrJK3XY4nyd/pub?gid=2068778061&single=true&output=csv',
+            lainnya: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhtHQT_YmSq-tiQt-6Kqj5Ms9oeUdTdiNIChEdQPgEQryYxTMf2M5RTgpVa1oi30rvvXrJK3XY4nyd/pub?gid=769255665&single=true&output=csv'
         };
 
         // Variabel Penampung Data Global
@@ -1231,6 +1248,8 @@
         const kasContainer = document.getElementById('kasContainer');
         const pdfModal = document.getElementById('pdfModal');
         const pdfBody = document.getElementById('pdfBody');
+        const lainnyaTable = document.getElementById('lainnyaTable');
+        const lainnyaTitle = document.getElementById('lainnyaTitle');
 
         document.addEventListener('DOMContentLoaded', () => {
             refreshBtn.addEventListener('click', refreshAllData);
@@ -1270,6 +1289,7 @@
                 case 'iuran': loadIuranBulanan(); break;
                 case 'kas': loadUangKas(); break;
                 case 'ronda': loadJadwalRonda(); break;
+                case 'lainnya': loadLainnya(); break;
             }
         }
 
@@ -2466,7 +2486,64 @@
                 showLoading(false); 
             }
         }
+
+        // ---------------------------------------------------------
+        // 5. LAINNYA (Menu Baru)
+        // ---------------------------------------------------------
+        function loadLainnya() {
+            fetchAndParseCSV(csvUrls.lainnya)
+                .then(data => {
+                    if (data.length === 0) {
+                        lainnyaTitle.innerText = "Data Tidak Ditemukan";
+                        lainnyaTable.innerHTML = '';
+                        return;
+                    }
+
+                    // Baris pertama adalah Judul
+                    const title = data[0][0] || "Data Lainnya";
+                    lainnyaTitle.innerText = title;
+
+                    // Jika tidak ada header atau data
+                    if (data.length < 2) {
+                        lainnyaTable.innerHTML = '<tbody><tr><td class="text-center">Tidak ada data tabel.</td></tr></tbody>';
+                        return;
+                    }
+
+                    // Baris kedua adalah Header Tabel
+                    const headers = data[1];
+                    let html = `<thead><tr>`;
+                    
+                    // Kita hanya ambil 2 kolom sesuai permintaan (Nama Warga dan Checkbox)
+                    html += `<th>${headers[0] || 'Nama Warga'}</th>`;
+                    html += `<th class="text-center">${headers[1] || 'Status'}</th>`;
+                    html += `</tr></thead><tbody>`;
+                    
+                    // Baris ketiga dan seterusnya adalah Isi Data
+                    for (let i = 2; i < data.length; i++) {
+                        if (!data[i] || !data[i][0]) continue; // Skip baris kosong
+                        
+                        html += '<tr>';
+                        // Kolom 1: Nama Warga
+                        html += `<td>${data[i][0] || '-'}</td>`;
+                        
+                        // Kolom 2: Checkbox (Ceklis)
+                        const val = (data[i][1] || "").toString().trim().toUpperCase();
+                        const isChecked = val === 'TRUE' || val === 'YA' || val === '1' || val === 'V' || val === 'X' || val === '✓';
+                        
+                        html += `<td class="text-center">
+                            <div class="checkbox-container">
+                                <input type="checkbox" ${isChecked ? 'checked' : ''} disabled>
+                            </div>
+                        </td>`;
+                        
+                        html += '</tr>';
+                    }
+                    
+                    lainnyaTable.innerHTML = html + '</tbody>';
+                    updateLastUpdateTime();
+                })
+                .finally(() => showLoading(false));
+        }
     </script>
 </body>
 </html>
-```
