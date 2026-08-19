@@ -1792,7 +1792,7 @@
                             textColor: [0, 0, 0]       // 4. UBAH FONT ISI JADI HITAM
                         },
                         headStyles: { 
-                            fillColor: [30, 30, 30], // 3. UBAH FILL HEADER JADI HITAM PEKIT / BISA DIGANTI RGB
+                            fillColor: [67, 97, 238], // 3. UBAH FILL HEADER JADI HITAM PEKIT / BISA DIGANTI RGB
                             fontSize: 9,
                             textColor: [255, 255, 255], // 4. FONT HEADER JADI PUTIH
                             halign: 'center',
@@ -1802,18 +1802,17 @@
                             fillColor: [255, 255, 255] // 3. FILL ISI TABEL JADI PUTIH
                         },
                         columnStyles: {
-                            // 2. UBAH LEBAR KOLOM JADI SERAGAM (equalColumnWidth dipakai semua)
-                            0: { cellWidth: equalColumnWidth, halign: 'center' },
-                            1: { cellWidth: equalColumnWidth, halign: 'left' },
-                            2: { cellWidth: equalColumnWidth, halign: 'right' },
-                            3: { cellWidth: equalColumnWidth, halign: 'right' },
-                            4: { cellWidth: equalColumnWidth, halign: 'right' }
+                            0: { cellWidth: equalColumnWidth, halign: 'center', minCellWidth: equalColumnWidth - 2, textColor: [0, 0, 0] },
+                            1: { cellWidth: equalColumnWidth + 10, minCellWidth: equalColumnWidth, textColor: [0, 0, 0] },
+                            2: { cellWidth: equalColumnWidth, halign: 'right', minCellWidth: equalColumnWidth - 2, textColor: [0, 0, 0] },
+                            3: { cellWidth: equalColumnWidth, halign: 'right', minCellWidth: equalColumnWidth - 2, textColor: [0, 0, 0] },
+                            4: { cellWidth: equalColumnWidth, halign: 'right', minCellWidth: equalColumnWidth - 2, textColor: [0, 0, 0] }
                         },
                         margin: { left: margin, right: margin },
                         willDrawCell: function(data) {
                             // 3. UBAH FILL WARNA BARIS TOTAL (PALING BAWAH)
                             if (data.row.index === tableData.length - 1) {
-                                doc.setFillColor(230, 230, 230); // Warna abu-abu terang
+                                doc.setFillColor(230, 255, 247); // Warna Hijau transparan
                                 doc.rect(data.cell.x, data.cell.y, data.cell.width, data.cell.height, 'F');
                             }
                         },
