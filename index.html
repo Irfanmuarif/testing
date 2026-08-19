@@ -1682,7 +1682,7 @@
                 const sortedMonths = Object.keys(grouped).sort((a, b) => urutanBulan[a] - urutanBulan[b]);
 
                 const pageWidth = doc.internal.pageSize.width;
-                const margin = 20;
+                const margin = 10;
                 const contentWidth = pageWidth - (2 * margin);
                 const totalColumns = 5;
                 const equalColumnWidth = contentWidth / totalColumns - 5;
@@ -1735,56 +1735,51 @@
                     let totalMasuk = 0;
                     let totalKeluar = 0;
                     
-                    const rowData = rows.map(r => {
+                    // 1. SORTING: Pemasukan di atas, Pengeluaran di bawah
+                    const sortedRows = rows.slice().sort((a, b) => {
+                        const vInA = parseInt(a[4]?.toString().replace(/[^0-9]/g, "")) || 0;
+                        const vOutA = parseInt(a[5]?.toString().replace(/[^0-9]/g, "")) || 0;
+                        const vInB = parseInt(b[4]?.toString().replace(/[^0-9]/g, "")) || 0;
+                        const vOutB = parseInt(b[5]?.toString().replace(/[^0-9]/g, "")) || 0;
+                        
+                        if (vInA > 0 && vOutB > 0) return -1; // A Pemasukan, B Pengeluaran -> A duluan
+                        if (vInB > 0 && vOutA > 0) return 1;  // B Pemasukan, A Pengeluaran -> B duluan
+                        return 0; // Jika sama, biarkan urutan aslinya
+                    });
+
+                    // 2. MEMBUAT DATA TABEL sekaligus menghitung Saldo Kumulatif
+                    const tableData = sortedRows.map(r => {
                         const vIn = parseInt(r[4]?.toString().replace(/[^0-9]/g, "")) || 0;
                         const vOut = parseInt(r[5]?.toString().replace(/[^0-9]/g, "")) || 0;
                         totalMasuk += vIn;
                         totalKeluar += vOut;
                         const saldoSebelum = globalBalance;
                         globalBalance += (vIn - vOut);
-                        return {
-                            tgl: r[2],
-                            ket: r[3],
-                            masuk: vIn,
-                            keluar: vOut,
-                            saldo: saldoSebelum + (vIn - vOut)
-                        };
+                        
+                        return [
+                            r[2], // Tanggal
+                            r[3], // Keterangan
+                            vIn > 0 ? formatNumber(vIn) : '-',
+                            vOut > 0 ? formatNumber(vOut) : '-',
+                            formatNumber(saldoSebelum + (vIn - vOut))
+                        ];
                     });
-                    
-                    if (currentY > 220) {
-                        doc.addPage();
-                        currentY = 20;
-                    }
-                    
-                    doc.setFontSize(14);
-                    doc.setFont(undefined, 'bold');
-                    doc.setTextColor(0, 0, 0);
-                    doc.text(`Rincian Bulan: ${bulan}`, margin, currentY);
-                    currentY += 8;
-                    
-                    const tableData = rowData.map(r => [
-                        r.tgl,
-                        r.ket,
-                        r.masuk > 0 ? formatNumber(r.masuk) : '-',   // Jika 0, tampilkan "-"
-                        r.keluar > 0 ? formatNumber(r.keluar) : '-', // Jika 0, tampilkan "-"
-                        formatNumber(r.saldo)
-                    ]);
                     
                     tableData.push([
                         '',
                         `TOTAL ${bulan.toUpperCase()}:`,
-                        totalMasuk > 0 ? formatNumber(totalMasuk) : '-',   // Total juga diberi logika yang sama
-                        totalKeluar > 0 ? formatNumber(totalKeluar) : '-', // Total juga diberi logika yang sama
+                        totalMasuk > 0 ? formatNumber(totalMasuk) : '-',
+                        totalKeluar > 0 ? formatNumber(totalKeluar) : '-',
                         formatNumber(globalBalance)
                     ]);
                     
                     doc.autoTable({
-                        startY: currentY,
+                        startY: currentY - 2, // <--- UBAH MENJADI currentY - 2 (agar table naik ke atas & nempel)
                         head: [['Tanggal', 'Keterangan', 'Masuk', 'Keluar', 'SALDO']],
                         body: tableData,
                         theme: 'grid',
                         styles: { 
-                            fontSize: 8,
+                            fontSize: 10,
                             cellPadding: 3,
                             overflow: 'linebreak',
                             lineColor: [0, 0, 0],     // 1. UBAH GARIS TABEL JADI HITAM PEKIT
@@ -1793,7 +1788,7 @@
                         },
                         headStyles: { 
                             fillColor: [67, 97, 238], // 3. UBAH FILL HEADER JADI HITAM PEKIT / BISA DIGANTI RGB
-                            fontSize: 9,
+                            fontSize: 12,
                             textColor: [255, 255, 255], // 4. FONT HEADER JADI PUTIH
                             halign: 'center',
                             fontStyle: 'bold'
@@ -1802,11 +1797,13 @@
                             fillColor: [255, 255, 255] // 3. FILL ISI TABEL JADI PUTIH
                         },
                         columnStyles: {
-                            0: { cellWidth: equalColumnWidth, halign: 'center', minCellWidth: equalColumnWidth - 2, textColor: [0, 0, 0] },
-                            1: { cellWidth: equalColumnWidth + 10, minCellWidth: equalColumnWidth, textColor: [0, 0, 0] },
-                            2: { cellWidth: equalColumnWidth, halign: 'right', minCellWidth: equalColumnWidth - 2, textColor: [0, 0, 0] },
-                            3: { cellWidth: equalColumnWidth, halign: 'right', minCellWidth: equalColumnWidth - 2, textColor: [0, 0, 0] },
-                            4: { cellWidth: equalColumnWidth, halign: 'right', minCellWidth: equalColumnWidth - 2, textColor: [0, 0, 0] }
+                            // 0 = Tanggal, 1 = Keterangan, 2 = Masuk, 3 = Keluar, 4 = Saldo
+                            0: { cellWidth: 20, halign: 'center' }, // Kolom Tanggal (20mm)
+                            1: { cellWidth: 60, halign: 'left' },   // Kolom Keterangan (60mm - dibuat lebih lebar)
+                            2: { cellWidth: 35, halign: 'right' },  // Kolom Masuk (35mm)
+                            3: { cellWidth: 35, halign: 'right' },  // Kolom Keluar (35mm)
+                            4: { cellWidth: 40, halign: 'right' }   // Kolom Saldo (40mm)
+                            // Total = 190mm (Pas dengan lebar kertas)
                         },
                         margin: { left: margin, right: margin },
                         willDrawCell: function(data) {
