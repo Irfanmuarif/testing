@@ -1811,25 +1811,25 @@
                         },
                         columnStyles: {
                             // 0 = Tanggal, 1 = Keterangan, 2 = Masuk, 3 = Keluar, 4 = Saldo
-                            0: { cellWidth: 25, halign: 'center' }, // Kolom Tanggal (20mm)
-                            1: { cellWidth: 65, halign: 'left' },   // Kolom Keterangan (60mm - dibuat lebih lebar)
-                            2: { cellWidth: 30, halign: 'right' },  // Kolom Masuk (35mm)
-                            3: { cellWidth: 30, halign: 'right' },  // Kolom Keluar (35mm)
-                            4: { cellWidth: 40, halign: 'right' }   // Kolom Saldo (40mm)
+                            0: { cellWidth: 27, halign: 'center' }, // Kolom Tanggal (20mm)
+                            1: { cellWidth: 70, halign: 'left' },   // Kolom Keterangan (60mm - dibuat lebih lebar)
+                            2: { cellWidth: 29, halign: 'right' },  // Kolom Masuk (35mm)
+                            3: { cellWidth: 29, halign: 'right' },  // Kolom Keluar (35mm)
+                            4: { cellWidth: 35, halign: 'right' }   // Kolom Saldo (40mm)
                             // Total = 190mm (Pas dengan lebar kertas)
                         },
                         margin: { left: margin, right: margin },
                         willDrawCell: function(data) {
                             // 3. UBAH FILL WARNA BARIS TOTAL (PALING BAWAH)
                             if (data.row.index === tableData.length - 1) {
-                                doc.setFillColor(230, 255, 247); // Warna Hijau transparan
+                                doc.setFillColor(57, 255, 20); // Warna Hijau transparan
                                 doc.rect(data.cell.x, data.cell.y, data.cell.width, data.cell.height, 'F');
                             }
                         },
                         didParseCell: function(data) {
                             // 4. UBAH FONT BARIS TOTAL JADI HITAM DAN TEBAL
                             if (data.row.index === tableData.length - 1) {
-                                data.cell.styles.textColor = [0, 0, 0];
+                                data.cell.styles.textColor = [255, 255, 255];
                                 data.cell.styles.fontStyle = 'bold';
                                 data.cell.styles.fontSize = 12;      // <--- 5. UKURAN FONT BARIS TOTAL (Bagian Bawah)
                                 data.cell.styles.cellPadding = 2;   // <--- 6. TINGGI BARIS TOTAL (Bagian Bawah)
