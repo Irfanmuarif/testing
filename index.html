@@ -1783,27 +1783,28 @@
                     doc.setFont(undefined, 'bold');
                     doc.setTextColor(0, 0, 0);
                     doc.text(`Rincian Bulan: ${bulan}`, margin, currentY, { baseline: 'top' });
-                    currentY += 5; // Beri jarak 5mm agar tabel nempel tepat di bawah judul
+                    currentY += 10; // Beri jarak 10mm agar tabel nempel tepat di bawah judul
                     
                     doc.autoTable({
                         startY: currentY,
-                        head: [['Tanggal', 'Keterangan', 'Masuk', 'Keluar', 'SALDO']],
+                        head: [['TANGGAL', 'KETERANGAN', 'MASUK', 'KELUAR', 'SALDO AKHIR']],
                         body: tableData,
                         theme: 'grid',
                         styles: { 
-                            fontSize: 10,
-                            cellPadding: 3,
+                            fontSize: 10,    // <--- 1. UKURAN FONT ISI TABEL
+                            cellPadding: 1,    // <--- 2. TINGGI BARIS ISI
                             overflow: 'linebreak',
                             lineColor: [0, 0, 0],     // 1. UBAH GARIS TABEL JADI HITAM PEKIT
                             lineWidth: 0.1,           // Ketebalan garis
                             textColor: [0, 0, 0]       // 4. UBAH FONT ISI JADI HITAM
                         },
                         headStyles: { 
-                            fillColor: [67, 97, 238], // 3. UBAH FILL HEADER JADI HITAM PEKIT / BISA DIGANTI RGB
-                            fontSize: 12,
-                            textColor: [255, 255, 255], // 4. FONT HEADER JADI PUTIH
+                            fillColor: [67, 97, 238], // 3. UBAH FILL HEADER
+                            fontSize: 12,    // <--- 1. UKURAN FONT HEADER TABEL
+                            textColor: [255, 255, 255], // WARNA FONT HEADER JADI PUTIH
                             halign: 'center',
                             fontStyle: 'bold'
+                            cellPadding: 2            // <--- 4. TINGGI BARIS HEADER
                         },
                         bodyStyles: { 
                             fillColor: [255, 255, 255] // 3. FILL ISI TABEL JADI PUTIH
@@ -1830,6 +1831,8 @@
                             if (data.row.index === tableData.length - 1) {
                                 data.cell.styles.textColor = [0, 0, 0];
                                 data.cell.styles.fontStyle = 'bold';
+                                data.cell.styles.fontSize = 12;      // <--- 5. UKURAN FONT BARIS TOTAL (Bagian Bawah)
+                                data.cell.styles.cellPadding = 2;   // <--- 6. TINGGI BARIS TOTAL (Bagian Bawah)
                             }
                             // Potong tanggal jika terlalu panjang
                             if (data.column.index === 0 && data.cell.raw) {
