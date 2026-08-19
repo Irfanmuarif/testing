@@ -1783,7 +1783,7 @@
                     doc.setFont(undefined, 'bold');
                     doc.setTextColor(0, 0, 0);
                     doc.text(`Rincian Bulan: ${bulan}`, margin, currentY, { baseline: 'top' });
-                    currentY += 10; // Beri jarak 10mm agar tabel nempel tepat di bawah judul
+                    currentY += 6; // Beri jarak 10mm agar tabel nempel tepat di bawah judul
                     
                     doc.autoTable({
                         startY: currentY,
@@ -1791,8 +1791,8 @@
                         body: tableData,
                         theme: 'grid',
                         styles: { 
-                            fontSize: 10,    // <--- 1. UKURAN FONT ISI TABEL
-                            cellPadding: 1,    // <--- 2. TINGGI BARIS ISI
+                            fontSize: 12,    // <--- 1. UKURAN FONT ISI TABEL
+                            cellPadding: 2,    // <--- 2. TINGGI BARIS ISI
                             overflow: 'linebreak',
                             lineColor: [0, 0, 0],     // 1. UBAH GARIS TABEL JADI HITAM PEKIT
                             lineWidth: 0.1,           // Ketebalan garis
