@@ -1783,52 +1783,47 @@
                         head: [['Tanggal', 'Keterangan', 'Masuk', 'Keluar', 'Saldo Kumulatif']],
                         body: tableData,
                         theme: 'grid',
+                        styles: { 
+                            fontSize: 8,
+                            cellPadding: 3,
+                            overflow: 'linebreak',
+                            lineColor: [0, 0, 0],     // 1. UBAH GARIS TABEL JADI HITAM PEKIT
+                            lineWidth: 0.1,           // Ketebalan garis
+                            textColor: [0, 0, 0]       // 4. UBAH FONT ISI JADI HITAM
+                        },
                         headStyles: { 
-                            fillColor: [67, 97, 238], 
+                            fillColor: [30, 30, 30], // 3. UBAH FILL HEADER JADI HITAM PEKIT / BISA DIGANTI RGB
                             fontSize: 9,
-                            textColor: [255, 255, 255],
+                            textColor: [255, 255, 255], // 4. FONT HEADER JADI PUTIH
                             halign: 'center',
                             fontStyle: 'bold'
                         },
                         bodyStyles: { 
-                            fontSize: 8,
-                            cellPadding: 3,
-                            overflow: 'linebreak',
-                            textColor: [0, 0, 0],
-                            fontStyle: 'normal'
+                            fillColor: [255, 255, 255] // 3. FILL ISI TABEL JADI PUTIH
                         },
                         columnStyles: {
-                            0: { cellWidth: equalColumnWidth, halign: 'center', minCellWidth: equalColumnWidth - 2, textColor: [0, 0, 0] },
-                            1: { cellWidth: equalColumnWidth + 10, minCellWidth: equalColumnWidth, textColor: [0, 0, 0] },
-                            2: { cellWidth: equalColumnWidth, halign: 'right', minCellWidth: equalColumnWidth - 2, textColor: [0, 0, 0] },
-                            3: { cellWidth: equalColumnWidth, halign: 'right', minCellWidth: equalColumnWidth - 2, textColor: [0, 0, 0] },
-                            4: { cellWidth: equalColumnWidth, halign: 'right', minCellWidth: equalColumnWidth - 2, textColor: [0, 0, 0] }
+                            // 2. UBAH LEBAR KOLOM JADI SERAGAM (equalColumnWidth dipakai semua)
+                            0: { cellWidth: equalColumnWidth, halign: 'center' },
+                            1: { cellWidth: equalColumnWidth, halign: 'left' },
+                            2: { cellWidth: equalColumnWidth, halign: 'right' },
+                            3: { cellWidth: equalColumnWidth, halign: 'right' },
+                            4: { cellWidth: equalColumnWidth, halign: 'right' }
                         },
                         margin: { left: margin, right: margin },
                         willDrawCell: function(data) {
+                            // 3. UBAH FILL WARNA BARIS TOTAL (PALING BAWAH)
                             if (data.row.index === tableData.length - 1) {
-                                doc.setFillColor(230, 255, 247);
+                                doc.setFillColor(230, 230, 230); // Warna abu-abu terang
                                 doc.rect(data.cell.x, data.cell.y, data.cell.width, data.cell.height, 'F');
-                                doc.setDrawColor(6, 214, 160);
-                                doc.setLineWidth(0.5);
-                                doc.line(data.cell.x, data.cell.y, data.cell.x + data.cell.width, data.cell.y);
-                                doc.setFont(undefined, 'bold');
-                                doc.setTextColor(0, 0, 0);
-                                if (data.column.index === 4) {
-                                    doc.setFillColor(200, 250, 237);
-                                    doc.roundedRect(data.cell.x + 1, data.cell.y + 1, data.cell.width - 2, data.cell.height - 2, 2, 2, 'F');
-                                }
-                            } else {
-                                doc.setTextColor(0, 0, 0);
                             }
                         },
                         didParseCell: function(data) {
+                            // 4. UBAH FONT BARIS TOTAL JADI HITAM DAN TEBAL
                             if (data.row.index === tableData.length - 1) {
                                 data.cell.styles.textColor = [0, 0, 0];
                                 data.cell.styles.fontStyle = 'bold';
-                            } else {
-                                data.cell.styles.textColor = [0, 0, 0];
                             }
+                            // Potong tanggal jika terlalu panjang
                             if (data.column.index === 0 && data.cell.raw) {
                                 if (data.cell.raw.length > 10) {
                                     data.cell.text = data.cell.raw.substring(0, 10);
