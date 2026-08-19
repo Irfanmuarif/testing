@@ -1765,22 +1765,22 @@
                     const tableData = rowData.map(r => [
                         r.tgl,
                         r.ket,
-                        formatNumber(r.masuk),
-                        formatNumber(r.keluar),
+                        r.masuk > 0 ? formatNumber(r.masuk) : '-',   // Jika 0, tampilkan "-"
+                        r.keluar > 0 ? formatNumber(r.keluar) : '-', // Jika 0, tampilkan "-"
                         formatNumber(r.saldo)
                     ]);
                     
                     tableData.push([
                         '',
                         `TOTAL ${bulan.toUpperCase()}:`,
-                        formatNumber(totalMasuk),
-                        formatNumber(totalKeluar),
+                        totalMasuk > 0 ? formatNumber(totalMasuk) : '-',   // Total juga diberi logika yang sama
+                        totalKeluar > 0 ? formatNumber(totalKeluar) : '-', // Total juga diberi logika yang sama
                         formatNumber(globalBalance)
                     ]);
                     
                     doc.autoTable({
                         startY: currentY,
-                        head: [['Tanggal', 'Keterangan', 'Masuk', 'Keluar', 'Saldo Kumulatif']],
+                        head: [['Tanggal', 'Keterangan', 'Masuk', 'Keluar', 'SALDO']],
                         body: tableData,
                         theme: 'grid',
                         styles: { 
@@ -1862,7 +1862,7 @@
                 doc.setFont(undefined, 'bold');
                 doc.setTextColor(0, 0, 0);
                 doc.text("RINGKASAN KESELURUHAN", margin, currentY);
-                currentY += 8;
+                currentY += 3;
                 
                 doc.setFont(undefined, 'normal');
                 doc.setFontSize(10);
