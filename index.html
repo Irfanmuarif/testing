@@ -1744,7 +1744,7 @@
                         
                         if (vInA > 0 && vOutB > 0) return -1; // A Pemasukan, B Pengeluaran -> A duluan
                         if (vInB > 0 && vOutA > 0) return 1;  // B Pemasukan, A Pengeluaran -> B duluan
-                        return 0; // Jika sama, biarkan urutan aslinya
+                        return 0; 
                     });
 
                     // 2. MEMBUAT DATA TABEL sekaligus menghitung Saldo Kumulatif
@@ -1772,9 +1772,21 @@
                         totalKeluar > 0 ? formatNumber(totalKeluar) : '-',
                         formatNumber(globalBalance)
                     ]);
+
+                    // 3. PENGATURAN HALAMAN & CETAK JUDUL BULAN (YANG HILANG TADI)
+                    if (currentY > 220) {
+                        doc.addPage();
+                        currentY = 20;
+                    }
+                    
+                    doc.setFontSize(14);
+                    doc.setFont(undefined, 'bold');
+                    doc.setTextColor(0, 0, 0);
+                    doc.text(`Rincian Bulan: ${bulan}`, margin, currentY, { baseline: 'top' });
+                    currentY += 5; // Beri jarak 5mm agar tabel nempel tepat di bawah judul
                     
                     doc.autoTable({
-                        startY: currentY - 2, // <--- UBAH MENJADI currentY - 2 (agar table naik ke atas & nempel)
+                        startY: currentY,
                         head: [['Tanggal', 'Keterangan', 'Masuk', 'Keluar', 'SALDO']],
                         body: tableData,
                         theme: 'grid',
@@ -1798,10 +1810,10 @@
                         },
                         columnStyles: {
                             // 0 = Tanggal, 1 = Keterangan, 2 = Masuk, 3 = Keluar, 4 = Saldo
-                            0: { cellWidth: 20, halign: 'center' }, // Kolom Tanggal (20mm)
-                            1: { cellWidth: 60, halign: 'left' },   // Kolom Keterangan (60mm - dibuat lebih lebar)
-                            2: { cellWidth: 35, halign: 'right' },  // Kolom Masuk (35mm)
-                            3: { cellWidth: 35, halign: 'right' },  // Kolom Keluar (35mm)
+                            0: { cellWidth: 25, halign: 'center' }, // Kolom Tanggal (20mm)
+                            1: { cellWidth: 65, halign: 'left' },   // Kolom Keterangan (60mm - dibuat lebih lebar)
+                            2: { cellWidth: 30, halign: 'right' },  // Kolom Masuk (35mm)
+                            3: { cellWidth: 30, halign: 'right' },  // Kolom Keluar (35mm)
                             4: { cellWidth: 40, halign: 'right' }   // Kolom Saldo (40mm)
                             // Total = 190mm (Pas dengan lebar kertas)
                         },
