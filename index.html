@@ -934,7 +934,7 @@
         }
 
         /* ==========================================
-           NEW: COUNTDOWN POPUP STYLES 
+           COUNTDOWN POPUP STYLES 
         ========================================== */
         .countdown-overlay {
             position: fixed;
@@ -984,16 +984,21 @@
         }
         .countdown-close-btn:hover { color: var(--danger-color); }
         .countdown-icon {
-            width: 60px;
-            height: 60px;
+            width: 90px; /* Diperbesar sedikit untuk gambar */
+            height: 90px;
             background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(114, 9, 183, 0.1) 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 15px;
-            font-size: 1.8rem;
-            color: var(--primary-color);
+            overflow: hidden;
+            border: 3px solid var(--primary-light);
+        }
+        .countdown-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         .countdown-title {
             font-size: 1.2rem;
@@ -1173,19 +1178,17 @@
 </head>
 <body>
 
-    <!-- ==========================================
-         NEW: COUNTDOWN POPUP HTML 
-    ========================================== -->
+    <!-- COUNTDOWN POPUP HTML -->
     <div id="countdownPopup" class="countdown-overlay">
         <div class="countdown-box">
             <button id="closeCountdownBtn" class="countdown-close-btn">
                 <i class="fas fa-times"></i>
             </button>
             <div class="countdown-icon">
-                <i class="fas fa-user-clock"></i>
+                <img src="images/abdul.PNG" alt="Korlap" class="countdown-img">
             </div>
-            <h3 class="countdown-title">Pergantian Korlap</h3>
-            <p class="countdown-subtitle">Menuju Tanggal 1 Oktober 2026</p>
+            <h3 class="countdown-title">MenujuPergantian Korlap bapak ABDUL</h3>
+            <p class="countdown-subtitle">Tanggal 1 Oktober 2026</p>
             <div class="countdown-timer">
                 <div class="time-unit">
                     <span id="cdDays" class="time-num">0</span>
@@ -1392,7 +1395,7 @@
         const lainnyaTitle = document.getElementById('lainnyaTitle');
 
         // ==========================================
-        // NEW: COUNTDOWN POPUP LOGIC
+        // COUNTDOWN POPUP LOGIC
         // ==========================================
         const countdownPopup = document.getElementById('countdownPopup');
         const closeCountdownBtn = document.getElementById('closeCountdownBtn');
