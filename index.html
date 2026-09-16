@@ -2292,11 +2292,18 @@
         // ---------------------------------------------------------
         // 4. JADWAL RONDA
         // ---------------------------------------------------------
+        
+        // DAFTAR NAMA YANG INGIN DI-HIDE DARI TAMPILAN UI
+        // (Pastikan penulisan nama sama persis dengan di Google Spreadsheet)
+        const hiddenRondaUsers = ["YOGA", "NCAK JAI"]; 
+        
         function loadJadwalRonda() {
             fetchAndParseCSV(csvUrls.ronda)
                 .then(data => {
                     if (data.length <= 1) return;
-                    rawRondaData = data;
+                    
+                    // Simpan data mentah untuk keperluan Export PDF (TIDAK difilter)
+                    rawRondaData = data; 
         
                     const rondaPage = document.getElementById('rondaPage');
                     const tableContainer = rondaPage.querySelector('.table-container');
@@ -2309,26 +2316,38 @@
         
                     let rondaList = [];
                     for (let i = 1; i < data.length; i++) {
-                        const namaWarga = data[i][0];
+                        const namaWarga = data[i][0] ? data[i][0].trim() : '';
                         const pathFoto = data[i][1] ? data[i][1].trim() : ''; 
                         const hariTerakhir = parseInt(data[i][lastRondaIdx]) || 0;
+        
+                        // Cek apakah user ini ada di daftar hidden
+                        const isHidden = hiddenRondaUsers.some(
+                            hiddenName => hiddenName.toLowerCase() === namaWarga.toLowerCase()
+                        );
         
                         rondaList.push({
                             nama: namaWarga,
                             foto: pathFoto,
-                            hariTerakhir: hariTerakhir
+                            hariTerakhir: hariTerakhir,
+                            hidden: isHidden // Tandai apakah di-hide atau tidak
                         });
                     }
         
-                    rondaList.sort((a, b) => {
+                    // Filter HANYA user yang TIDAK di-hide untuk ditampilkan di UI
+                    const visibleRondaList = rondaList.filter(item => !item.hidden);
+        
+                    // Sortir berdasarkan hari terakhir (yang 0 dipindah ke atas)
+                    visibleRondaList.sort((a, b) => {
                         if (a.hariTerakhir === 0) return -1;
                         if (b.hariTerakhir === 0) return 1;
                         return b.hariTerakhir - a.hariTerakhir;
                     });
         
-                    const maxHari = Math.max(...rondaList.map(item => item.hariTerakhir));
+                    // Hitung maxHari HANYA dari user yang terlihat (unhide)
+                    const maxHari = Math.max(...visibleRondaList.map(item => item.hariTerakhir));
         
-                    rondaList.forEach(item => {
+                    // Render HANYA user yang terlihat (unhide)
+                    visibleRondaList.forEach(item => {
                         let persentase, labelTeks, statusClass;
         
                         if (item.hariTerakhir === 0) {
