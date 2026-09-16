@@ -456,7 +456,25 @@
         }
 
         .data-table tbody tr:hover { background-color: rgba(67, 97, 238, 0.05); }
+        /* FREEZE FIRST COLUMN - Untuk Iuran Bulanan & Tabel Lainnya */
+        .data-table th:first-child,
+        .data-table td:first-child {
+            position: sticky;
+            left: 0;
+            background-color: white; /* Warna background agar kolom kanan tidak tembus pandang saat di-scroll */
+            z-index: 5;
+            box-shadow: 2px 0 4px rgba(0, 0, 0, 0.05); /* Bayangan halus pemisah */
+        }
 
+        /* Header kolom pertama perlu z-index lebih tinggi agar menutupi header saat scroll bawah */
+        .data-table thead th:first-child {
+            z-index: 15;
+        }
+
+        /* Agar warna hover (saat kursor di atas baris) tetap terlihat di kolom pertama */
+        .data-table tbody tr:hover td:first-child {
+            background-color: #eef2ff; /* Warna hover biru sangat muda */
+        }
         /* Checkboxes */
         .checkbox-container { display: flex; justify-content: center; align-items: center; padding: 2px; }
 
@@ -1165,8 +1183,21 @@
             .countdown-title { color: var(--gray-800); }
             .countdown-subtitle { color: var(--gray-600); }
             .countdown-close-btn { color: var(--gray-500); }
+            
+            /* Freeze First Column Dark Mode */
+            .data-table th:first-child,
+            .data-table td:first-child {
+                background-color: #2d3748 !important; /* Samakan dengan background tabel dark mode */
+                box-shadow: 2px 0 4px rgba(0, 0, 0, 0.3);
+            }
+            .data-table thead th:first-child {
+                background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%) !important;
+            }
+            .data-table tbody tr:hover td:first-child {
+                background-color: #3a4a63 !important;
+            }
         }
-
+        
         /* Print */
         @media print {
             .bottom-nav, .refresh-info, .btn-group, .loading-indicator, .pdf-modal, .countdown-overlay { display: none !important; }
