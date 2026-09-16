@@ -653,6 +653,21 @@
         .badge-in { background: linear-gradient(135deg, rgba(6, 214, 160, 0.1) 0%, rgba(4, 167, 119, 0.1) 100%); color: var(--success-color); border: 1px solid rgba(6, 214, 160, 0.2); }
         .badge-out { background: linear-gradient(135deg, rgba(239, 71, 111, 0.1) 0%, rgba(217, 4, 41, 0.1) 100%); color: var(--danger-color); border: 1px solid rgba(239, 71, 111, 0.2); }
 
+        /* MEMPERPANJANG KOLOM 2 (KETERANGAN) DI MENU UANG KAS */
+        .month-accordion .data-table th:nth-child(2),
+        .month-accordion .data-table td:nth-child(2) {
+            min-width: 250px; /* Ukuran minimum lebar kolom */
+            max-width: 450px; /* Batas maksimal agar tidak terlalu lebar */
+            white-space: normal; /* Biarkan teks turun ke bawah jika kepanjangan (wrap) */
+            word-wrap: break-word;
+        }
+
+        /* OPSIONAL: Agar kolom tanggal (1), masuk (3), keluar (4), dan saldo (5) tidak terlalu mepet */
+        .month-accordion .data-table th,
+        .month-accordion .data-table td {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
         /* --- RONDA VISUALIZATION --- */
         .ronda-visual-container {
             display: flex;
