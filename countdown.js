@@ -7,9 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 <i class="fas fa-times"></i>
             </button>
             <div class="countdown-icon">
-                <img src="images/abdul.PNG" alt="Korlap" class="countdown-img">
+                <img src="images/abdul.jpeg" alt="Korlap" class="countdown-img">
             </div>
-            <h3 class="countdown-title">Menuju Pergantian Korlap bapak ABDUL</h3>
+            <h3 class="countdown-title">Menuju Pergantian Korlap ke bapak ABDUL</h3>
             <p class="countdown-subtitle">Tanggal 1 Oktober 2026</p>
             <div class="countdown-timer">
                 <div class="time-unit">
