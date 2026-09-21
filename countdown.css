@@ -1,0 +1,109 @@
+/* CSS UNTUK COUNTDOWN POPUP */
+.countdown-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 10001; /* Di atas modal lain */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+    backdrop-filter: blur(4px);
+}
+.countdown-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+.countdown-box {
+    background: white;
+    padding: 25px;
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+    width: 90%;
+    max-width: 340px; /* Ukuran kecil */
+    text-align: center;
+    position: relative;
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes popIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+.countdown-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    color: var(--gray-500);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.countdown-close-btn:hover { color: var(--danger-color); }
+.countdown-icon {
+    width: 90px;
+    height: 90px;
+    background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(114, 9, 183, 0.1) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+    overflow: hidden;
+    border: 3px solid var(--primary-light);
+}
+.countdown-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.countdown-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--dark-color);
+    margin-bottom: 5px;
+}
+.countdown-subtitle {
+    font-size: 0.85rem;
+    color: var(--gray-600);
+    margin-bottom: 20px;
+}
+.countdown-timer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+.time-unit {
+    background: var(--gradient-primary);
+    color: white;
+    padding: 10px 8px;
+    border-radius: var(--border-radius);
+    min-width: 60px;
+    box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+}
+.time-num {
+    font-size: 1.4rem;
+    font-weight: 700;
+    display: block;
+    line-height: 1.2;
+}
+.time-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.9;
+}
+
+/* Dark Mode for Countdown Popup */
+@media (prefers-color-scheme: dark) {
+    .countdown-box { background: #2d3748; }
+    .countdown-title { color: var(--gray-800); }
+    .countdown-subtitle { color: var(--gray-600); }
+    .countdown-close-btn { color: var(--gray-500); }
+}
