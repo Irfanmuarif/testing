@@ -15,6 +15,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 
+    <!-- Panggil File CSS Countdown Terpisah -->
+    <link rel="stylesheet" href="countdown.css">
+
     <!-- CSS Styles -->
     <style>
         :root {
@@ -960,110 +963,6 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
-        /* ==========================================
-           COUNTDOWN POPUP STYLES 
-        ========================================== */
-        .countdown-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            z-index: 10001; /* Di atas modal lain */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
-            backdrop-filter: blur(4px);
-        }
-        .countdown-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        .countdown-box {
-            background: white;
-            padding: 25px;
-            border-radius: var(--border-radius-lg);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
-            width: 90%;
-            max-width: 340px; /* Ukuran kecil */
-            text-align: center;
-            position: relative;
-            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        @keyframes popIn {
-            from { transform: scale(0.5); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-        .countdown-close-btn {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            background: transparent;
-            border: none;
-            font-size: 20px;
-            color: var(--gray-500);
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-        .countdown-close-btn:hover { color: var(--danger-color); }
-        .countdown-icon {
-            width: 90px; /* Diperbesar sedikit untuk gambar */
-            height: 90px;
-            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(114, 9, 183, 0.1) 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 15px;
-            overflow: hidden;
-            border: 3px solid var(--primary-light);
-        }
-        .countdown-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .countdown-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--dark-color);
-            margin-bottom: 5px;
-        }
-        .countdown-subtitle {
-            font-size: 0.85rem;
-            color: var(--gray-600);
-            margin-bottom: 20px;
-        }
-        .countdown-timer {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-        .time-unit {
-            background: var(--gradient-primary);
-            color: white;
-            padding: 10px 8px;
-            border-radius: var(--border-radius);
-            min-width: 60px;
-            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
-        }
-        .time-num {
-            font-size: 1.4rem;
-            font-weight: 700;
-            display: block;
-            line-height: 1.2;
-        }
-        .time-label {
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            opacity: 0.9;
-        }
-
         @media (max-width: 768px) {
             .pdf-paper { padding: 20px; height: 100vh; max-height: 100vh; border-radius: 0; }
             .pdf-title { font-size: 1.2rem; }
@@ -1186,12 +1085,6 @@
             .fa-chevron-down {
                 color: #a0aec0 !important;
             }
-
-            /* Dark Mode for Countdown Popup */
-            .countdown-box { background: #2d3748; }
-            .countdown-title { color: var(--gray-800); }
-            .countdown-subtitle { color: var(--gray-600); }
-            .countdown-close-btn { color: var(--gray-500); }
             
             /* Freeze First Column Dark Mode */
             .data-table th:first-child,
@@ -1217,38 +1110,6 @@
     </style>
 </head>
 <body>
-
-    <!-- COUNTDOWN POPUP HTML -->
-    <div id="countdownPopup" class="countdown-overlay">
-        <div class="countdown-box">
-            <button id="closeCountdownBtn" class="countdown-close-btn">
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="countdown-icon">
-                <img src="images/abdul.PNG" alt="Korlap" class="countdown-img">
-            </div>
-            <h3 class="countdown-title">MenujuPergantian Korlap bapak ABDUL</h3>
-            <p class="countdown-subtitle">Tanggal 1 Oktober 2026</p>
-            <div class="countdown-timer">
-                <div class="time-unit">
-                    <span id="cdDays" class="time-num">0</span>
-                    <span class="time-label">Hari</span>
-                </div>
-                <div class="time-unit">
-                    <span id="cdHours" class="time-num">0</span>
-                    <span class="time-label">Jam</span>
-                </div>
-                <div class="time-unit">
-                    <span id="cdMins" class="time-num">0</span>
-                    <span class="time-label">Menit</span>
-                </div>
-                <div class="time-unit">
-                    <span id="cdSecs" class="time-num">0</span>
-                    <span class="time-label">Detik</span>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="app-container">
         <!-- Main App Screen -->
@@ -1433,53 +1294,6 @@
         const pdfBody = document.getElementById('pdfBody');
         const lainnyaTable = document.getElementById('lainnyaTable');
         const lainnyaTitle = document.getElementById('lainnyaTitle');
-
-        // ==========================================
-        // COUNTDOWN POPUP LOGIC
-        // ==========================================
-        const countdownPopup = document.getElementById('countdownPopup');
-        const closeCountdownBtn = document.getElementById('closeCountdownBtn');
-
-        // Show popup when app opens (with slight delay)
-        setTimeout(() => {
-            countdownPopup.classList.add('active');
-        }, 800);
-
-        // Close popup event
-        closeCountdownBtn.addEventListener('click', () => {
-            countdownPopup.classList.remove('active');
-        });
-
-        // Countdown Target: 1 Oktober 2026, 00:00:00
-        const targetDate = new Date("2026-10-01T00:00:00").getTime();
-
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const distance = targetDate - now;
-
-            if (distance < 0) {
-                document.getElementById('cdDays').innerText = "0";
-                document.getElementById('cdHours').innerText = "0";
-                document.getElementById('cdMins').innerText = "0";
-                document.getElementById('cdSecs').innerText = "0";
-                return;
-            }
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById('cdDays').innerText = days;
-            document.getElementById('cdHours').innerText = hours;
-            document.getElementById('cdMins').innerText = minutes;
-            document.getElementById('cdSecs').innerText = seconds;
-        }
-
-        // Run countdown every 1 second
-        setInterval(updateCountdown, 1000);
-        updateCountdown(); // initial call
-        // ==========================================
 
         document.addEventListener('DOMContentLoaded', () => {
             refreshBtn.addEventListener('click', refreshAllData);
@@ -2800,5 +2614,8 @@
                 .finally(() => showLoading(false));
         }
     </script>
+    
+    <!-- Panggil File JS Countdown Terpisah -->
+    <script src="countdown.js"></script>
 </body>
 </html>
