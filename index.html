@@ -2559,7 +2559,7 @@
         // ---------------------------------------------------------
         // 5. LAINNYA (Menu Baru)
         // ---------------------------------------------------------
-countdown {
+function loadLainnya() {
     fetchAndParseCSV(csvUrls.lainnya)
         .then(data => {
             if (data.length === 0) {
