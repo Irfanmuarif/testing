@@ -16,7 +16,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 
     <!-- Panggil File CSS Countdown Terpisah -->
-    <link rel="stylesheet" href="countdown.css">
+    <!--<link rel="stylesheet" href="countdown.css"> -->
 
     <!-- CSS Styles -->
     <style>
@@ -2559,63 +2559,79 @@
         // ---------------------------------------------------------
         // 5. LAINNYA (Menu Baru)
         // ---------------------------------------------------------
-        function loadLainnya() {
-            fetchAndParseCSV(csvUrls.lainnya)
-                .then(data => {
-                    if (data.length === 0) {
-                        lainnyaTitle.innerText = "Data Tidak Ditemukan";
-                        lainnyaTable.innerHTML = '';
-                        return;
-                    }
+countdown {
+    fetchAndParseCSV(csvUrls.lainnya)
+        .then(data => {
+            if (data.length === 0) {
+                lainnyaTitle.innerText = "Data Tidak Ditemukan";
+                lainnyaTable.innerHTML = '';
+                return;
+            }
 
-                    // Baris pertama adalah Judul
-                    const title = data[0][0] || "Data Lainnya";
-                    lainnyaTitle.innerText = title;
+            // Baris pertama adalah Judul
+            const title = data[0][0] || "Data Lainnya";
+            lainnyaTitle.innerText = title;
 
-                    // Jika tidak ada header atau data
-                    if (data.length < 2) {
-                        lainnyaTable.innerHTML = '<tbody><tr><td class="text-center">Tidak ada data tabel.</td></tr></tbody>';
-                        return;
-                    }
+            // Jika tidak ada header atau data
+            if (data.length < 2) {
+                lainnyaTable.innerHTML = '<tbody><tr><td class="text-center">Tidak ada data tabel.</td></tr></tbody>';
+                return;
+            }
 
-                    // Baris kedua adalah Header Tabel
-                    const headers = data[1];
-                    let html = `<thead><tr>`;
-                    
-                    // Kita hanya ambil 2 kolom sesuai permintaan (Nama Warga dan Checkbox)
-                    html += `<th>${headers[0] || 'Nama Warga'}</th>`;
-                    html += `<th class="text-center">${headers[1] || 'Status'}</th>`;
-                    html += `</tr></thead><tbody>`;
-                    
-                    // Baris ketiga dan seterusnya adalah Isi Data
-                    for (let i = 2; i < data.length; i++) {
-                        if (!data[i] || !data[i][0]) continue; // Skip baris kosong
-                        
-                        html += '<tr>';
-                        // Kolom 1: Nama Warga
-                        html += `<td>${data[i][0] || '-'}</td>`;
-                        
-                        // Kolom 2: Checkbox (Ceklis)
-                        const val = (data[i][1] || "").toString().trim().toUpperCase();
-                        const isChecked = val === 'TRUE' || val === 'YA' || val === '1' || val === 'V' || val === 'X' || val === '✓';
-                        
-                        html += `<td class="text-center">
-                            <div class="checkbox-container">
-                                <input type="checkbox" ${isChecked ? 'checked' : ''} disabled>
-                            </div>
-                        </td>`;
-                        
-                        html += '</tr>';
-                    }
-                    
-                    lainnyaTable.innerHTML = html + '</tbody>';
-                    updateLastUpdateTime();
-                })
-                .finally(() => showLoading(false));
-        }
+            // Baris kedua adalah Header Tabel
+            const headers = data[1];
+            let html = `<thead><tr>`;
+            
+            // Kolom 1: Nama Warga
+            html += `<th>${headers[0] || 'Nama Warga'}</th>`;
+            
+            // Kolom 2: Ceklis Pertama (Status 1)
+            html += `<th class="text-center">${headers[1] || 'Status 1'}</th>`;
+            
+            // Kolom 3: Ceklis Kedua (Status 2) - BARU
+            html += `<th class="text-center">${headers[2] || 'Status 2'}</th>`;
+            
+            html += `</tr></thead><tbody>`;
+            
+            // Baris ketiga dan seterusnya adalah Isi Data
+            for (let i = 2; i < data.length; i++) {
+                if (!data[i] || !data[i][0]) continue; // Skip baris kosong
+                
+                html += '<tr>';
+                // Kolom 1: Nama Warga
+                html += `<td>${data[i][0] || '-'}</td>`;
+                
+                // Kolom 2: Checkbox Pertama
+                const val1 = (data[i][1] || "").toString().trim().toUpperCase();
+                const isChecked1 = val1 === 'TRUE' || val1 === 'YA' || val1 === '1' || val1 === 'V' || val1 === 'X' || val1 === '✓';
+                
+                html += `<td class="text-center">
+                    <div class="checkbox-container">
+                        <input type="checkbox" ${isChecked1 ? 'checked' : ''} disabled>
+                    </div>
+                </td>`;
+                
+                // Kolom 3: Checkbox Kedua - BARU
+                const val2 = (data[i][2] || "").toString().trim().toUpperCase();
+                const isChecked2 = val2 === 'TRUE' || val2 === 'YA' || val2 === '1' || val2 === 'V' || val2 === 'X' || val2 === '✓';
+                
+                html += `<td class="text-center">
+                    <div class="checkbox-container">
+                        <input type="checkbox" ${isChecked2 ? 'checked' : ''} disabled>
+                    </div>
+                </td>`;
+                
+                html += '</tr>';
+            }
+            
+            lainnyaTable.innerHTML = html + '</tbody>';
+            updateLastUpdateTime();
+        })
+        .finally(() => showLoading(false));
+}
     </script>
     
     <!-- Panggil File JS Countdown Terpisah -->
-    <script src="countdown.js"></script>
+   <!-- <script src="countdown.js"></script> -->
 </body>
 </html>
